@@ -1,2 +1,2 @@
 
-[![Deeg Logo](http://imgur.com/ylMlnSA)](https://github.com/IrakliK/Deeg)
+[![Deeg Logo](http://i.imgur.com/ylMlnSA.png)](https://github.com/IrakliK/Deeg)
