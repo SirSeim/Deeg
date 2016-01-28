@@ -3,6 +3,8 @@
 
 ##List of Potential Features
 
+######We've worked really hard on this
+
 - Object oriented
 - First class functions
 - Indentation instead of curly braces
