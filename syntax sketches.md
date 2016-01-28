@@ -2,7 +2,7 @@
 
     {comment}
     //comment
-    #comment
+    #comment yes
     <comment>
 
 #### Object Construction:
@@ -72,6 +72,30 @@
     n.Set_head 15
     n.Get
 
+## Option 3:
+    
+    form Node:
+        
+        constr:
+            head:double ?= value
+            next:Node = Node n
+
+        Get:
+            get head
+
+        Set argument:
+            value = argument
+
+        form Tree of Node:
+            constr:
+                head = value:Node
+
+        Main:
+            n:Node = Node 14
+            t = Tree n
+            t.Set 3
+            t.Get
+
 
 #### Random Statements:
 
@@ -80,17 +104,20 @@
 
     for(i<double> <= limit,0.5):
         do stuff
+    
+    for(i::double <= limit, 1):
+        do things
 
     for x in [1,2,3,4], x -> x * 2
 
-    for [1,2,3,4] -> value * 2 //value refers to the pointer
+    for [1,2,3,4] -> value * 2 // value refers to the pointer
 
     [1,2,3] + [4] = [1,2,3,4]
     [1,2,3] + 4 = [1,2,3,4]
-    4 + [1,2,3] = [4,1,2,3] //if find an array in evaluation, change path to array addition
-                            //this will be very hard lol
+    4 + [1,2,3] = [4,1,2,3] // if find an array in evaluation, change path to array addition
+                            // this will be very hard lol
 
-    1 + 2 + [3,4] + 5 = [1,2,3,4,5] //will translate to [1] + [2] + [3,4] + [5]
+    1 + 2 + [3,4] + 5 = [1,2,3,4,5] // will translate to [1] + [2] + [3,4] + [5]
 
     if true then dothing1,dothing2,dothing3 else dothing4
     if boolean1:
@@ -122,11 +149,27 @@
         count += 1
 
 
-    s:String = "world"
-    s<String> = "world"
-    s = "world"
-    String s = "world"
+    var s:String = "world"
+    var s::String = "world"
+    var s<String> = "world"
+    var s = "world"
+    var String s = "world"
     "hello <s>"
     "hello " + s
     "hello {s}"
     "hello *s*"
+
+    let x = 2 in
+        foo(x)
+
+    var y = 2 // type inferred is int
+    var z = 2.0 // type inferred is double
+    var y_plus_z = y + z // type inferred is double
+
+    var a::String = "dup" * 3 // "dupdupdup"
+    var b = "dup" + "licate" // "duplicate"
+    
+    var c = 4 * "dup" // syntax error or "dupdupdupdup"
+    var d = "5" * "2" // how strong is our type inferencing
+    var e::int = "5" * "2" // error or let it go as 10?
+    
