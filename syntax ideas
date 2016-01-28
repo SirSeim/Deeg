@@ -1,0 +1,132 @@
+comments:
+
+{comment}
+//comment
+#comment
+<comment>
+
+making an object:
+
+Option1: 	value is a keyword referring to construction argument when only have 1
+			if value is in the constructor, then the object requires one arg
+			can set the type of value
+			keyword of gives inheritance
+			keyword form is like class
+			keyword constr is the constructor
+			keyword get is equivalent to return 
+			head and next are local fields
+			head:double is declaring the type of head
+			?= means if value is not defined, head will be set to nil
+
+form Node ->
+
+	constr ->
+		head:double ?= value
+		next:Node = Node n
+
+	Get ->
+		get head
+
+	Set argument->
+		value = argument
+
+
+
+form Tree of Node ->
+
+	constr ->
+		head = value:Node
+
+Main ->
+
+	n:Node = Node 14
+	t = Tree n
+	t.Set 3
+	t.Get
+
+Option2:
+
+class Node argument:
+
+	Node:
+		head = argument
+
+	Get_head:
+		return head
+
+	Set_head argument:
+		head = argument
+
+class Binary_tree of Node argument<Node>:
+
+	Binary_tree:
+		head = argument
+		left = new Tree l
+		right = new Tree r
+		
+Main:
+
+	n1<Node> = new Node 3
+	n2 = new Node 14
+	b_t = new Binary_tree n2
+	n.Set_head 15
+	n.Get
+
+
+Random Statements:
+
+	for(i <= limit,1):
+		do stuff
+
+	for(i<double> <= limit,0.5):
+		do stuff
+
+	for x in [1,2,3,4], x -> x * 2
+
+	for [1,2,3,4] -> value * 2 //value refers to the pointer
+
+	[1,2,3] + [4] = [1,2,3,4]
+	[1,2,3] + 4 = [1,2,3,4]
+	4 + [1,2,3] = [4,1,2,3] //if find an array in evaluation, change path to array addition
+							//this will be very hard lol
+
+	1 + 2 + [3,4] + 5 = [1,2,3,4,5] //will translate to [1] + [2] + [3,4] + [5]
+
+	if true then dothing1,dothing2,dothing3 else dothing4
+	if boolean1:
+		dothing1
+		dothing2
+	elif boolean2:
+		dothing3
+	else:
+		dothing4
+
+
+	if boolean1 -> dothing1,dothing2 else -> dothing3
+	if boolean1 ->
+		dothing1
+		dothing2
+	else ->
+		dothing3
+
+	limit:int = 5
+	count:int = 0
+	while limit ->
+		limit -= 1
+		count += 1
+
+	limit<int> = 5
+	count<int> = 0
+	while limit:
+		limit -= 1
+		count += 1
+
+
+	s:String = "world"
+	s<String> = "world"
+	s = "world"
+	String s = "world"
+	"hello <s>"
+	"hello " + s
+	"hello {s}"
+	"hello *s*"
