@@ -1,7 +1,7 @@
 [![Deeg Logo](http://i.imgur.com/ylMlnSA.png)](https://github.com/IrakliK/Deeg)
 #Deeg
 
-**List of Potential Features**
+##List of Potential Features
 
 - Object oriented
 - First class functions
