@@ -126,20 +126,20 @@
         dothing4
 
 
-    if boolean1 -> dothing1,dothing2 else -> dothing3
+    if boolean1 -> dothing1,dothing2 else -> dothing3 // I dont think we should use arrows - eko
     if boolean1 ->
         dothing1
         dothing2
     else ->
         dothing3
 
-    limit:int = 5
+    limit:int = 5 // Like this better - eko 
     count:int = 0
     while limit ->
         limit -= 1
         count += 1
 
-    limit<int> = 5
+    limit<int> = 5 // Don't like < > - eko
     count<int> = 0
     while limit:
         limit -= 1
