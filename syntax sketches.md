@@ -1,9 +1,6 @@
 #### Comments:
 
-    {comment}
-    //comment
     #comment yes
-    <comment>
 
 #### Object Construction:
 
