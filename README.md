@@ -7,6 +7,7 @@
 
 - Object oriented
 - First class functions
+- optional parameters/default parameters
 - Indentation instead of curly braces
 - Parenthesis not necessary
 - Optionals
