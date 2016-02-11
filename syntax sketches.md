@@ -3,12 +3,16 @@
     #comment yes
 
     ###
-    multi-line comment
+    multi-line/block comment
     ###
 
-#### Object Construction:
+    ### also valid block comment ###
 
-## Option 1:    value is a keyword referring to construction argument when only have 1
+#### ~~Object Construction:~~
+
+_Still deciding if we want java like objects_
+
+## ~~Option 1:  value is a keyword referring to construction argument when only have 1~~
                 if value is in the constructor, then the object requires one arg
                 can set the type of value
                 keyword of gives inheritance
@@ -45,7 +49,7 @@
             t.Set 3
             t.Get
 
-## Option 2:
+## ~~Option 2:~~
 
     class Node argument:
 
@@ -73,7 +77,7 @@
     n.Set_head 15
     n.Get
 
-## Option 3:
+## ~~Option 3:~~
     
     form Node:
         
@@ -97,6 +101,44 @@
             t.Set 3
             t.Get
 
+#### Optionals
+
+    make array = ["Hello", "Goodbye"]
+    make i = array.indexOf("Hi")
+
+    ###
+    equivalent to:
+    make i:int? = array.indexOf("Hi")
+    ###
+
+    ~~print(array[i])~~     # returns error becasue i is i:int? and array[] requires full int
+
+    if i exists
+        print(array[i])
+    else
+        print("not found")
+
+#### Functions
+
+    make add(x,y) = deeg x + y
+
+    ###
+    equivalent to
+    make add:(x:int, y:int):int = deeg x + y
+    ():denotes return type of function
+    ###
+
+maybe have it as follows:
+
+    make add:Function(x:int, y:int):int = deeg x + y
+
+type declaration not required, type inference used
+
+    make complex(a:string) =
+        make add_it = a * 3
+        deeg (str) = deeg str + add_it
+    make fun = complex("hi")
+    print(fun("world"))         # "hihihiworld"
 
 #### Random Statements:
 
@@ -111,12 +153,12 @@
 
     for x in [1,2,3,4], x -> x * 2
 
-    for [1,2,3,4] -> value * 2 // value refers to the pointer
+    for [1,2,3,4] -> value * 2 # value refers to the pointer
 
     [1,2,3] + [4] = [1,2,3,4]
     [1,2,3] + 4 = [1,2,3,4]
-    4 + [1,2,3] = [4,1,2,3] // if find an array in evaluation, change path to array addition
-                            // this will be very hard lol
+    4 + [1,2,3] = [4,1,2,3] # if find an array in evaluation, change path to array addition
+                            # this will be very hard lol
 
     1 + 2 + [3,4] + 5 = [1,2,3,4,5] // will translate to [1] + [2] + [3,4] + [5]
 
@@ -130,20 +172,20 @@
         dothing4
 
 
-    if boolean1 -> dothing1,dothing2 else -> dothing3 // I dont think we should use arrows - eko
+    if boolean1 -> dothing1,dothing2 else -> dothing3 # I dont think we should use arrows - eko
     if boolean1 ->
         dothing1
         dothing2
     else ->
         dothing3
 
-    limit:int = 5 // Like this better - eko 
+    limit:int = 5 # Like this better - eko 
     count:int = 0
     while limit ->
         limit -= 1
         count += 1
 
-    limit<int> = 5 // Don't like < > - eko
+    limit<int> = 5 # Don't like < > - eko
     count<int> = 0
     while limit:
         limit -= 1
@@ -151,26 +193,22 @@
 
 
     make s:string = "world"
-    make s::string = "world"
-    make s<string> = "world"
     make s = "world"
-    make string s = "world"
-    "hello <s>"
-    "hello " + s
-    "hello {s}"
-    "hello *s*"
+    "hello " + s                # option 1 could be in addition to string interpolation
+    "hello {s}"                 # option 2
+    "hello \{s}"                # option 3
 
     let x = 2 in
         foo(x)
 
-    make y = 2 // type inferred is int
-    make z = 2.0 // type inferred is double
-    make y_plus_z = y + z // type inferred is double
+    make y = 2                  # type inferred is int      make y:int = 2
+    make z = 2.0                # type inferred is float    make z:float = 2.0
+    make y_plus_z = y + z       # type inferred is double   make y_plus_z:float = y + z
 
-    make a::string = "dup" * 3 // "dupdupdup"
-    make b = "dup" + "licate" // "duplicate"
+    make a:string = "dup" * 3  # "dupdupdup"
+    make b = "dup" + "licate"   # "duplicate"
     
-    make c = 4 * "dup" // syntax error or "dupdupdupdup"
-    make d = "5" * "2" // how strong is our type inferencing
-    make e::int = "5" * "2" // error or let it go as 10?
+    make c = 4 * "dup"          # "dupdupdupdup"
+    make d = "5" * "2"          # how strong is our type inferencing
+    make e:int = "5" * "2"     # error or let it go as 10?
     
