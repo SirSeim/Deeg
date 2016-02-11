@@ -38,10 +38,16 @@ Deeg is a static, object-oriented, strongly-typed language that has powerful and
 ```
 make example_variable = "this string"
 make example_variable2 = 200
+
+make a = 4
+make b = 8
+a, b = b, a
+
+make c, d = 2, 16
 ```
 
 ###Primitive Types & Reference Types
-We have three primitive types: `int` `float` `bool` `string` and however many reference types: `dict`
+We have four primitive types: `int` `float` `bool` `string` and however many reference types: `Dict` `
 
 ####Type Inference and Static Typing
 
@@ -55,9 +61,40 @@ make number_of_people:string = 56  # Forced to be "56"
 
 make mapping:dict = {
     key to "value",
-    key2 to 91
+    key2 to 91,
+    funKey to (x, y) = x * y;,
+    funKey2 to (a, b) =
+        deeg a + b
 }
 ```
+
+###Ranges and Slices for Iterables
+
+###If Statements
+
+```
+if (is_correct) then print "CORRECT!" end
+
+if (is_wrong) then
+    print "WRONGO-BONGO!"
+else
+    print "good job, sport"
+end
+
+if (is_zebra) then
+    print "you are a zebra"
+else if (is_tiger) then
+    print "you are a tiger"
+else
+    print "you aren't a tiger or a zebra"
+end
+```
+
+###For Loops
+
+###While Loops
+
+###Functions
 
 ##Example Programs
 
@@ -75,3 +112,13 @@ make bar:string = 69                                           var bar = "69";
 ```
 
 ###Function Declarations
+```
+make adder(a:int, b = 10):int = deeg a + b
+
+make even_and_true(x:int, f():bool) =
+    if (f(x)) then
+        deeg x + 2
+    else
+        deeg x + 4
+    end
+```
