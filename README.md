@@ -49,15 +49,11 @@ make c, d = 2, 16
 ###Primitive Types & Reference Types
 We have four primitive types: `int` `float` `bool` `string` and however many reference types: `Dict` `Function` `List`
 
-####Type Inference and Static Typing
-
 ```
-make year = 99                     # Inferred int
-make fraction = 2.5                # Inferred float
-make is_finished = true            # Inferred bool
+make boo = "far"
 
-make grade:float = 95              # Forced to be 95.0
-make number_of_people:string = 56  # Forced to be "56"
+make friends_list = ["Bob", "Donna", "Shaggy"]
+make grades_list:int = [99, 95, 90, 96]
 
 make mapping:dict = {
     key to "value",
@@ -66,6 +62,18 @@ make mapping:dict = {
     funKey2 to (a, b) =
         deeg a + b
 }
+```
+
+####Type Inference and Static Typing
+
+```
+make year = 99                     # Inferred int
+make fraction = 2.5                # Inferred float
+make is_finished = true            # Inferred bool
+make name = "Deeg"                 # Inferred string
+
+make grade:float = 95              # Forced to be 95.0
+make number_of_people:string = 56  # Forced to be "56"
 ```
 
 ###Ranges and Slices for Iterables
@@ -94,11 +102,17 @@ else
 
 ###Functions
 
-make add_pizazz(bore:String) =
+```
+make add_pizazz(bore:string) =
     deeg bore + "!"
 
 make f(a, b):Function =
     deeg (a, b) = deeg a + b
+
+make deeginator(x, y:float):bool =
+    make total = x - y * 2
+    deeg total
+```
 
 ###Optionals
 Optionals are not the default type for variables.
@@ -119,22 +133,25 @@ Deeg on the left, JavaScript on the right
 
 ###Hello World
 ```
-print "hello world"                                            console.log("hello world");
+print "hello world"                             console.log("hello world");
 ```
 
 ###Variable Declarations
 ```
-make foo = 69                                                  var foo = 69;
-make bar:string = 69                                           var bar = "69";
+make foo = 69                                   var foo = 69;
+make bar:string = 69                            var bar = "69";
 ```
 
 ###Function Declarations
 ```
-make adder(a:int, b = 10):int = deeg a + b
+make adder(a:int, b = 10):int = deeg a + b      var adder = function (a, b) {
+                                                     
+                                                }
 
-make even_and_true(x:int, f():bool) =
-    if (f(x)) then
+make even_and_true(x:int, f():bool) =           var even_and_true = function (x, f) {
+    if (f(x)) then                                   
         deeg x + 2
     else
         deeg x + 4
+                                                }
 ```
