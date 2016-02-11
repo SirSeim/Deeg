@@ -47,7 +47,7 @@ make c, d = 2, 16
 ```
 
 ###Primitive Types & Reference Types
-We have four primitive types: `int` `float` `bool` `string` and however many reference types: `Dict` `
+We have four primitive types: `int` `float` `bool` `string` and however many reference types: `Dict` `Function` `List`
 
 ####Type Inference and Static Typing
 
@@ -79,7 +79,6 @@ if (is_wrong) then
     print "WRONGO-BONGO!"
 else
     print "good job, sport"
-end
 
 if (is_zebra) then
     print "you are a zebra"
@@ -87,7 +86,6 @@ else if (is_tiger) then
     print "you are a tiger"
 else
     print "you aren't a tiger or a zebra"
-end
 ```
 
 ###For Loops
@@ -95,6 +93,25 @@ end
 ###While Loops
 
 ###Functions
+
+make add_pizazz(bore:String) =
+    deeg bore + "!"
+
+make f(a, b):Function =
+    deeg (a, b) = deeg a + b
+
+###Optionals
+Optionals are not the default type for variables.
+
+```
+make toys = ["bear"]
+make unicorn:? = toys.indexOf("unicorn")
+
+if unicorn exists
+    print unicorn
+else
+    print "dreams crushed"
+```
 
 ##Example Programs
 
@@ -120,5 +137,4 @@ make even_and_true(x:int, f():bool) =
         deeg x + 2
     else
         deeg x + 4
-    end
 ```
