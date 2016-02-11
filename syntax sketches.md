@@ -2,6 +2,10 @@
 
     #comment yes
 
+    ###
+    multi-line comment
+    ###
+
 #### Object Construction:
 
 ## Option 1:    value is a keyword referring to construction argument when only have 1
@@ -146,11 +150,11 @@
         count += 1
 
 
-    var s:String = "world"
-    var s::String = "world"
-    var s<String> = "world"
-    var s = "world"
-    var String s = "world"
+    make s:string = "world"
+    make s::string = "world"
+    make s<string> = "world"
+    make s = "world"
+    make string s = "world"
     "hello <s>"
     "hello " + s
     "hello {s}"
@@ -159,14 +163,14 @@
     let x = 2 in
         foo(x)
 
-    var y = 2 // type inferred is int
-    var z = 2.0 // type inferred is double
-    var y_plus_z = y + z // type inferred is double
+    make y = 2 // type inferred is int
+    make z = 2.0 // type inferred is double
+    make y_plus_z = y + z // type inferred is double
 
-    var a::String = "dup" * 3 // "dupdupdup"
-    var b = "dup" + "licate" // "duplicate"
+    make a::string = "dup" * 3 // "dupdupdup"
+    make b = "dup" + "licate" // "duplicate"
     
-    var c = 4 * "dup" // syntax error or "dupdupdupdup"
-    var d = "5" * "2" // how strong is our type inferencing
-    var e::int = "5" * "2" // error or let it go as 10?
+    make c = 4 * "dup" // syntax error or "dupdupdupdup"
+    make d = "5" * "2" // how strong is our type inferencing
+    make e::int = "5" * "2" // error or let it go as 10?
     
