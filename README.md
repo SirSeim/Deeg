@@ -78,19 +78,23 @@ make number_of_people:string = 56  # Forced to be "56"
 
 ###Ranges and Slices for Iterables
 
+```
+not discussed
+```
+
 ###If Statements
 
 ```
-if (is_correct) then print "CORRECT!" end
+if (is_correct) print "CORRECT!"
 
-if (is_wrong) then
+if (is_wrong)
     print "WRONGO-BONGO!"
 else
     print "good job, sport"
 
-if (is_zebra) then
+if (is_zebra)
     print "you are a zebra"
-else if (is_tiger) then
+else if (is_tiger)
     print "you are a tiger"
 else
     print "you aren't a tiger or a zebra"
@@ -98,7 +102,16 @@ else
 
 ###For Loops
 
+```
+not discussed
+```
+
 ###While Loops
+
+```
+while (is_running)
+    runFaster()
+```
 
 ###Functions
 
