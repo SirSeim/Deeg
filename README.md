@@ -85,19 +85,22 @@ not discussed
 ###If Statements
 
 ```
-if (is_correct) print "CORRECT!"
-
-if (is_wrong)
-    print "WRONGO-BONGO!"
+if bool_expression then
+    # perform action
 else
-    print "good job, sport"
+    # other action
 
-if (is_zebra)
-    print "you are a zebra"
-else if (is_tiger)
-    print "you are a tiger"
+
+if bool_expression then
+    # action
+else if bool_expression then
+    # other conditional action
 else
-    print "you aren't a tiger or a zebra"
+    # if nothing else
+
+if bool_expression then ###action### else ###if nothing else###
+
+make interesting_result = "happy times" if bool_expression else "sad times"
 ```
 
 ###For Loops
@@ -138,6 +141,68 @@ if unicorn exists
     print unicorn
 else
     print "dreams crushed"
+
+make array = ["Hello", "Goodbye"]
+make i = array.indexOf("Hi")
+
+###
+equivalent to:
+make i:int? = array.indexOf("Hi")
+###
+
+print(array[i])    # returns error becasue i is i:int? and array[] requires full int
+
+if i exists
+    print(array[i])
+else
+    print("not found")
+
+make str = array[i] if i exists else "not found"
+```
+
+###Arrays/Lists and Dictionaries
+
+```
+make array = ["Hello", "Goodbye"]
+make dict = { name to "Bob", age:int to 35, isPresident to false}
+
+print(array[0])                     # prints "Hello"
+print(array[2])                     # maybe array[2] returns an optional, else this errors
+
+make combo = array + dict           # combo is an object with keys 0 and 1
+
+print(size(dict))                   # prints 3
+print(size(array))                  # prints 2
+print(size(combo))                  # prints 5
+
+make array_multi = array * 3        # array_multi is ["Hello", "Goodbye", "Hello", "Goodbye", "Hello", "Goodbye"]
+
+make array_combine = array + ["Hi"] # array_combine is ["Hello", "Goodbye", "Hi"]
+make array_alt = ["Hi"] + array     # array_alt is ["Hi", "Hello", "Goodbye"]
+
+make array_str = array + "Hi"       # array_str is ["Hello", "Goodbye", "Hi"]
+make arr:List:float = array         # convert to array of floats
+make dict = array + {}              # convert array to dict
+make dict1 = array:Dict             # convert array to dict
+make dict2:Dict = array             # convert array to dict
+make arr = map(array_str, (a) does deeg a:float)
+
+make int_array:List:int = [2, 3]         # arrays are homogeneous
+make all_dict:Dict = {                   # dictionaries are heterogeneous
+    fun:bool to true,
+    days to 3
+}
+
+print(int_array + all_dict)         
+###
+prints
+{
+    0:int to 2,
+    1:int to 3,
+    days:int to 3,
+    fun:bool to true
+}
+###
 ```
 
 ##Example Programs
