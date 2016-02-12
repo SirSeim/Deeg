@@ -12,7 +12,7 @@
 
 _Still deciding if we want java like objects_
 
-## ~~Option 1:  value is a keyword referring to construction argument when only have 1~~
+<!-- ## ~~Option 1:  value is a keyword referring to construction argument when only have 1~~
                 if value is in the constructor, then the object requires one arg
                 can set the type of value
                 keyword of gives inheritance
@@ -99,7 +99,46 @@ _Still deciding if we want java like objects_
             n:Node = Node 14
             t = Tree n
             t.Set 3
-            t.Get
+            t.Get -->
+
+#### Arrays and Dictionaries
+
+    make array = ["Hello", "Goodbye"]
+    make dict = { name to "Bob", age:int to 35, isPresident to false}
+
+    print(array[0])                     # prints "Hello"
+    print(array[2])                     # maybe array[2] returns an optional, else this errors
+
+    make combo = array + dict           # combo is an object with keys 0 and 1
+
+    print(dict.size())                  # prints 3
+    print(array.size())                 # prints 2
+    print(combo.size())                 # prints 5
+
+    make error_dict = { size to 3 }     # error, size is reserved in dictionaries
+
+    make array_multi = array * 2        # array_multi is ["Hello", "Goodbye", "Hello", "Goodbye", "Hello", "Goodbye"]
+
+    make array_combine = array + ["Hi"] # array_combine is ["Hello", "Goodbye", "Hi"]
+    
+    make array_str = array + "Hi"       # array_str is ["Hello", "Goodbye", "Hi"]
+
+    make int_array:int = [2, 3]         # arrays are homogeneous
+    make all_dict = {                   # dictionaries are heterogeneous
+        fun:bool to true,
+        days to 3
+    }
+
+    print(int_array + all_dict)         
+    ###
+    prints
+    {
+        0:int to 2,
+        1:int to 3,
+        days:int to 3,
+        fun:bool to true
+    }
+    ###
 
 #### Optionals
 
@@ -111,12 +150,33 @@ _Still deciding if we want java like objects_
     make i:int? = array.indexOf("Hi")
     ###
 
-    ~~print(array[i])~~     # returns error becasue i is i:int? and array[] requires full int
+    print(array[i])    # returns error becasue i is i:int? and array[] requires full int
 
     if i exists
         print(array[i])
     else
         print("not found")
+
+    make str = array[i] if i exists else "not found"
+
+#### Conditionals
+    if bool_expression then
+        # perform action
+    else
+        # other action
+
+
+    if bool_expression then
+        # action
+    else if bool_expression then
+        # other conditional action
+    else
+        # if nothing else
+
+    if bool_expression then ###action### else ###if nothing else###
+
+    make interesting_result = "happy times" if bool_expression else "sad times"
+
 
 #### Functions
 
