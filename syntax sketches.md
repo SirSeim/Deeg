@@ -101,7 +101,7 @@ _Still deciding if we want java like objects_
             t.Set 3
             t.Get -->
 
-#### Arrays and Dictionaries
+#### Arrays/Lists and Dictionaries
 
     make array = ["Hello", "Goodbye"]
     make dict = { name to "Bob", age:int to 35, isPresident to false}
@@ -111,20 +111,24 @@ _Still deciding if we want java like objects_
 
     make combo = array + dict           # combo is an object with keys 0 and 1
 
-    print(dict.size())                  # prints 3
-    print(array.size())                 # prints 2
-    print(combo.size())                 # prints 5
+    print(size(dict))                   # prints 3
+    print(size(array))                  # prints 2
+    print(size(combo))                  # prints 5
 
-    make error_dict = { size to 3 }     # error, size is reserved in dictionaries
-
-    make array_multi = array * 2        # array_multi is ["Hello", "Goodbye", "Hello", "Goodbye", "Hello", "Goodbye"]
+    make array_multi = array * 3        # array_multi is ["Hello", "Goodbye", "Hello", "Goodbye", "Hello", "Goodbye"]
 
     make array_combine = array + ["Hi"] # array_combine is ["Hello", "Goodbye", "Hi"]
+    make array_alt = ["Hi"] + array     # array_alt is ["Hi", "Hello", "Goodbye"]
     
     make array_str = array + "Hi"       # array_str is ["Hello", "Goodbye", "Hi"]
+    make arr:List:float = array         # convert to array of floats
+    make dict = array + {}              # convert array to dict
+    make dict1 = array:Dict             # convert array to dict
+    make dict2:Dict = array             # convert array to dict
+    make arr = map(array_str, (a) does deeg a:float)
 
-    make int_array:int = [2, 3]         # arrays are homogeneous
-    make all_dict = {                   # dictionaries are heterogeneous
+    make int_array:List:int = [2, 3]         # arrays are homogeneous
+    make all_dict:Dict = {                   # dictionaries are heterogeneous
         fun:bool to true,
         days to 3
     }
