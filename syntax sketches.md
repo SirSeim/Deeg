@@ -160,6 +160,7 @@ _Still deciding if we want java like objects_
         print(array[i])
     else
         print("not found")
+    end
 
     make str = array[i] if i exists else "not found"
 
@@ -168,6 +169,7 @@ _Still deciding if we want java like objects_
         # perform action
     else
         # other action
+    end
 
 
     if bool_expression then
@@ -176,10 +178,13 @@ _Still deciding if we want java like objects_
         # other conditional action
     else
         # if nothing else
+    end
 
-    if bool_expression then ###action### else ###if nothing else###
+    if bool_expression then ###action### else ###other action### end
 
-    make interesting_result = "happy times" if bool_expression else "sad times"
+    make interesting_result = "happy times" when bool_expression else "sad times"
+
+    ###action### unless boolean_expression
 
 
 #### Functions
