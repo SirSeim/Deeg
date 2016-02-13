@@ -55,11 +55,11 @@ make boo = "far"
 make friends_list = ["Bob", "Donna", "Shaggy"]
 make grades_list:int = [99, 95, 90, 96]
 
-make mapping:dict = {
+make mapping:Dict = {
     key to "value",
     key2 to 91,
-    funKey to (x, y) = x * y;,
-    funKey2 to (a, b) =
+    funKey to (x, y) does deeg x * y,
+    funKey2 to (a, b) does
         deeg a + b
 }
 ```
@@ -89,6 +89,7 @@ if bool_expression then
     # perform action
 else
     # other action
+end
 
 
 if bool_expression then
@@ -97,8 +98,9 @@ else if bool_expression then
     # other conditional action
 else
     # if nothing else
+end
 
-if bool_expression then ###action### else ###if nothing else###
+if bool_expression then ###action### else ###else action### end
 
 make interesting_result = "happy times" if bool_expression else "sad times"
 ```
@@ -112,22 +114,23 @@ not discussed
 ###While Loops
 
 ```
-while (is_running)
+while is_running then
     runFaster()
+end
 ```
 
 ###Functions
 
 ```
-make add_pizazz(bore:string) =
+make add_pizazz = (bore:string) does
     deeg bore + "!"
 
-make f(a, b):Function =
+make f = (a, b):Function does
     deeg (a, b) = deeg a + b
 
-make deeginator(x, y:float):bool =
-    make total = x - y * 2
-    deeg total
+make deeginator = (x, y:float):bool does
+    make isAwesome = (x - y * 2 == 69)
+    deeg isAwesome
 ```
 
 ###Optionals
@@ -135,12 +138,13 @@ Optionals are not the default type for variables.
 
 ```
 make toys = ["bear"]
-make unicorn:? = toys.indexOf("unicorn")
+make unicorn:int? = toys.indexOf("unicorn")
 
 if unicorn exists
-    print unicorn
+    print(unicorn)
 else
-    print "dreams crushed"
+    print("dreams crushed")
+end
 
 make array = ["Hello", "Goodbye"]
 make i = array.indexOf("Hi")
@@ -156,6 +160,7 @@ if i exists
     print(array[i])
 else
     print("not found")
+end
 
 make str = array[i] if i exists else "not found"
 ```
@@ -166,29 +171,29 @@ make str = array[i] if i exists else "not found"
 make array = ["Hello", "Goodbye"]
 make dict = { name to "Bob", age:int to 35, isPresident to false}
 
-print(array[0])                     # prints "Hello"
-print(array[2])                     # maybe array[2] returns an optional, else this errors
+print(array[0])                         # prints "Hello"
+print(array[2])                         # maybe array[2] returns an optional, else this errors
 
-make combo = array + dict           # combo is an object with keys 0 and 1
+make combo = array + dict               # combo is an object with keys 0 and 1
 
-print(size(dict))                   # prints 3
-print(size(array))                  # prints 2
-print(size(combo))                  # prints 5
+print(size(dict))                       # prints 3
+print(size(array))                      # prints 2
+print(size(combo))                      # prints 5
 
-make array_multi = array * 3        # array_multi is ["Hello", "Goodbye", "Hello", "Goodbye", "Hello", "Goodbye"]
+make array_multi = array * 3            # array_multi is ["Hello", "Goodbye", "Hello", "Goodbye", "Hello", "Goodbye"]
 
-make array_combine = array + ["Hi"] # array_combine is ["Hello", "Goodbye", "Hi"]
-make array_alt = ["Hi"] + array     # array_alt is ["Hi", "Hello", "Goodbye"]
+make array_combine = array + ["Hi"]     # array_combine is ["Hello", "Goodbye", "Hi"]
+make array_alt = ["Hi"] + array         # array_alt is ["Hi", "Hello", "Goodbye"]
 
-make array_str = array + "Hi"       # array_str is ["Hello", "Goodbye", "Hi"]
-make arr:List:float = array         # convert to array of floats
-make dict = array + {}              # convert array to dict
-make dict1 = array:Dict             # convert array to dict
-make dict2:Dict = array             # convert array to dict
+make array_str = array + "Hi"           # array_str is ["Hello", "Goodbye", "Hi"]
+make arr:List:float = array             # convert to array of floats
+make dict = array + {}                  # convert array to dict
+make dict1 = array:Dict                 # convert array to dict
+make dict2:Dict = array                 # convert array to dict
 make arr = map(array_str, (a) does deeg a:float)
 
-make int_array:List:int = [2, 3]         # arrays are homogeneous
-make all_dict:Dict = {                   # dictionaries are heterogeneous
+make int_array:List:int = [2, 3]        # arrays are homogeneous
+make all_dict:Dict = {                  # dictionaries are heterogeneous
     fun:bool to true,
     days to 3
 }
@@ -211,25 +216,26 @@ Deeg on the left, JavaScript on the right
 
 ###Hello World
 ```
-print "hello world"                             console.log("hello world");
+print "hello world"                                 console.log("hello world");
 ```
 
 ###Variable Declarations
 ```
-make foo = 69                                   var foo = 69;
-make bar:string = 69                            var bar = "69";
+make foo = 69                                       var foo = 69;
+make bar:string = 69                                var bar = "69";
 ```
 
 ###Function Declarations
 ```
-make adder(a:int, b = 10):int = deeg a + b      var adder = function (a, b) {
+make adder = (a:int, b=10):int does deeg a + b      var adder = function (a, b) {
                                                      
-                                                }
+                                                    }
 
-make even_and_true(x:int, f():bool) =           var even_and_true = function (x, f) {
-    if (f(x)) then                                   
-        deeg x + 2
-    else
-        deeg x + 4
-                                                }
+make even_and_true = (x:int, f():bool) does         var even_and_true = function (x, f) {
+    if (f(x)) then                                      if (f(x)) {
+        deeg x + 2                                          return x + 2
+    else                                                } else {
+        deeg x + 4                                          return x + 4
+    end                                                 }
+                                                    }
 ```
