@@ -105,15 +105,15 @@ if bool_expression then ###action### else ###else action### end
 make interesting_result = "happy times" if bool_expression else "sad times"
 ```
 
-###For Loops
+###For and While Loops
 
 ```
-not discussed
-```
+make x = 0
 
-###While Loops
+for (make i = 0; i < 3; i++) then
+    x++
+end
 
-```
 while is_running then
     runFaster()
 end
