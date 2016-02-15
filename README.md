@@ -108,10 +108,16 @@ make interesting_result = "happy times" if bool_expression else "sad times"
 ###For and While Loops
 
 ```
-make x = 0
+for cat in cat_array then
+    print("mr. " + cat)
+end
 
-for (make i = 0; i < 3; i++) then
-    x++
+for count int_expression then
+    print("hello")
+end
+
+for i counts int_expression then
+    print(i + " hello(s)")
 end
 
 while is_running then
@@ -216,7 +222,7 @@ Deeg on the left, JavaScript on the right
 
 ###Hello World
 ```
-print "hello world"                                 console.log("hello world");
+print("hello world")                                console.log("hello world");
 ```
 
 ###Variable Declarations
