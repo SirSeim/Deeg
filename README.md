@@ -240,6 +240,7 @@ make func = (x) does
         > 5 then deeg true
         > 72 then deeg true
         > _ then deeg false
+    end
 end
 ```
 
