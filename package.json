@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/SirSeim/Deeg/issues"
   },
-  "homepage": "https://github.com/SirSeim/Deeg#readme"
+  "homepage": "https://github.com/SirSeim/Deeg#readme",
+  "dependencies": {
+    "coffee-script": "^1.10.0",
+    "yargs": "^4.1.0"
+  }
 }
