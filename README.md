@@ -19,6 +19,7 @@ Deeg is a static, object-oriented, strongly-typed language that has powerful and
 - Specify type with :
 - Optional type specify with ?
 - List Comprehensions
+- Pattern Matching
 
 ##Features
 
@@ -230,6 +231,16 @@ prints
     fun:bool to true
 }
 ###
+```
+
+###Pattern Matching!
+```
+make func = (x) does
+    match x with
+        > 5 then deeg true
+        > 72 then deeg true
+        > _ then deeg false
+end
 ```
 
 ##Example Programs
