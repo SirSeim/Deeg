@@ -146,6 +146,7 @@ make f = (a, b):Function does
 
 make deeginator = (x, y:float):bool does
     make isAwesome = (x - y * 2 == 69)
+    # isAwesome should alway be true
     deeg isAwesome
 ```
 
@@ -204,9 +205,9 @@ make array_alt = ["Hi"] + array         # array_alt is ["Hi", "Hello", "Goodbye"
 make array_str = array + "Hi"           # array_str is ["Hello", "Goodbye", "Hi"]
 make arr:List:float = array             # convert to array of floats
 make dict = array + {}                  # convert array to dict
-make dict1 = array:Dict                 # convert array to dict
+make dict1 = Dict(array)                 # convert array to dict
 make dict2:Dict = array                 # convert array to dict
-make arr = map(array_str, (a) does deeg a:float)
+make arr = map(array_str, (a) does deeg float(a))
 
 make int_array:List:int = [2, 3]        # arrays are homogeneous
 make all_dict:Dict = {                  # dictionaries are heterogeneous
@@ -244,14 +245,14 @@ make bar:string = 69                                var bar = "69";
 ###Function Declarations
 ```
 make adder = (a:int, b=10):int does deeg a + b      var adder = function (a, b) {
-                                                     
+                                                        return a + b;
                                                     }
 
 make even_and_true = (x:int, f():bool) does         var even_and_true = function (x, f) {
     if (f(x)) then                                      if (f(x)) {
-        deeg x + 2                                          return x + 2
+        deeg x + 2                                          return x + 2;
     else                                                } else {
-        deeg x + 4                                          return x + 4
+        deeg x + 4                                          return x + 4;
     end                                                 }
                                                     }
 ```
