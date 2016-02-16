@@ -188,9 +188,9 @@ make str = array[i] if i exists else "not found"
 make array = ["Hello", "Goodbye"]
 make dict = { name to "Bob", age:int to 35, isPresident to false}
 
-dict.name:string
+dict.name:string                        # every key of a dictionary has a specific type
 dict.age:int
-dict.isPresident:boolean
+dict.isPresident:bool
 
 print(array[0])                         # prints "Hello"
 print(array[2])                         # maybe array[2] returns an optional, else this errors
@@ -208,10 +208,11 @@ make array_alt = ["Hi"] + array         # array_alt is ["Hi", "Hello", "Goodbye"
 
 make array_str = array + "Hi"           # array_str is ["Hello", "Goodbye", "Hi"]
 make arr:List:float = array             # convert to array of floats
+
+# TODO: should lists be allowed to auto convert to dictionaries
 make dict = array + {}                  # convert array to dict
-make dict1 = Dict(array)                 # convert array to dict
+make dict1 = Dict(array)                # convert array to dict
 make dict2:Dict = array                 # convert array to dict
-make arr = map(array_str, (a) does deeg float(a))
 
 make int_array:List:int = [2, 3]        # arrays are homogeneous
 make all_dict:Dict = {                  # dictionaries are heterogeneous
