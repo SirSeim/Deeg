@@ -188,6 +188,10 @@ make str = array[i] if i exists else "not found"
 make array = ["Hello", "Goodbye"]
 make dict = { name to "Bob", age:int to 35, isPresident to false}
 
+dict.name:string
+dict.age:int
+dict.isPresident:boolean
+
 print(array[0])                         # prints "Hello"
 print(array[2])                         # maybe array[2] returns an optional, else this errors
 
