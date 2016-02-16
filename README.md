@@ -66,11 +66,11 @@ make mapping:Dict = {
 
 ####Type Inference and Static Typing
 
-Heirachy of types:
+Hierarchy of types:
 
 bool -> int -> float -> string -> List -> Dict
 
-This heirachy is what determines auto conversions. A type can be upconverted automatically if needed. If you want to convert down the tree, then you need to specify it with a type converter function like `int()` or 'float()'. Some conversions may return optionals if conversion cannot be guaranteed
+This hierarchy is what determines auto conversions. A type can be upconverted automatically if needed. If you want to convert down the tree, then you need to specify it with a type converter function like `int()` or 'float()'. Some conversions may return optionals if conversion cannot be guaranteed
 
 
 ```
@@ -136,6 +136,7 @@ end
 ```
 
 ###Functions
+In place of a `return` keyword, we have `deeg`.
 
 ```
 make add_pizazz = (bore:string) does
@@ -146,7 +147,7 @@ make f = (a, b):Function does
 
 make deeginator = (x, y:float):bool does
     make isAwesome = (x - y * 2 == 69)
-    # isAwesome should alway be true
+    # isAwesome should always be true
     deeg isAwesome
 ```
 
@@ -208,11 +209,6 @@ make array_alt = ["Hi"] + array         # array_alt is ["Hi", "Hello", "Goodbye"
 
 make array_str = array + "Hi"           # array_str is ["Hello", "Goodbye", "Hi"]
 make arr:List:float = array             # convert to array of floats
-
-# TODO: should lists be allowed to auto convert to dictionaries
-make dict = array + {}                  # convert array to dict
-make dict1 = Dict(array)                # convert array to dict
-make dict2:Dict = array                 # convert array to dict
 
 make int_array:List:int = [2, 3]        # arrays are homogeneous
 make all_dict:Dict = {                  # dictionaries are heterogeneous
