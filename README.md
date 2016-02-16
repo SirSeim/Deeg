@@ -61,6 +61,7 @@ make mapping:Dict = {
     funKey to (x, y) does deeg x * y,
     funKey2 to (a, b) does
         deeg a + b
+    end
 }
 ```
 
@@ -141,14 +142,17 @@ In place of a `return` keyword, we have `deeg`.
 ```
 make add_pizazz = (bore:string) does
     deeg bore + "!"
+end
 
 make f = (a, b):Function does
     deeg (a, b) = deeg a + b
+end
 
 make deeginator = (x, y:float):bool does
     make isAwesome = (x - y * 2 == 69)
     # isAwesome should always be true
     deeg isAwesome
+end
 ```
 
 ###Optionals
