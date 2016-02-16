@@ -1,0 +1,22 @@
+{
+  "name": "deeg",
+  "version": "0.0.0",
+  "description": "The night is darkest just before the dawn. And I promise you, the dawn is coming.",
+  "main": "deeg.coffee",
+  "scripts": {
+    "test": "mocha --compilers coffee:coffee-script/register ./test/ --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SirSeim/Deeg.git"
+  },
+  "keywords": [
+    "Deeg"
+  ],
+  "author": "SirSeim <sirseim@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SirSeim/Deeg/issues"
+  },
+  "homepage": "https://github.com/SirSeim/Deeg#readme"
+}
