@@ -6,11 +6,11 @@ Deeg is a static, object-oriented, strongly-typed language that has powerful and
 
 ##List of Features
 
-- Object oriented
+- ~~Object oriented~~
 - First class functions
 - Optional parameters/default parameters
 - Indentation instead of curly braces
-- Parenthesis are optional
+- Parenthesis are optional, except for functions
 - Optionals
 - .deeg file extension
 - String Interpolation
@@ -18,7 +18,6 @@ Deeg is a static, object-oriented, strongly-typed language that has powerful and
 - make usage
 - Specify type with :
 - Optional type specify with ?
-- let <expression> in <body>
 - List Comprehensions
 
 ##Features
@@ -51,9 +50,10 @@ We have four primitive types: `int` `float` `bool` `string` and however many ref
 
 ```
 make boo = "far"
+make hap:string = "py"
 
 make friends_list = ["Bob", "Donna", "Shaggy"]
-make grades_list:int = [99, 95, 90, 96]
+make grades_list:List:int = [99, 95, 90, 96]
 
 make mapping:Dict = {
     key to "value",
@@ -66,14 +66,24 @@ make mapping:Dict = {
 
 ####Type Inference and Static Typing
 
-```
-make year = 99                     # Inferred int
-make fraction = 2.5                # Inferred float
-make is_finished = true            # Inferred bool
-make name = "Deeg"                 # Inferred string
+Heirachy of types:
 
-make grade:float = 95              # Forced to be 95.0
-make number_of_people:string = 56  # Forced to be "56"
+bool -> int -> float -> string -> List -> Dict
+
+This heirachy is what determines auto conversions. A type can be upconverted automatically if needed. If you want to convert down the tree, then you need to specify it with a type converter function like `int()` or 'float()'. Some conversions may return optionals if conversion cannot be guaranteed
+
+
+```
+make year = 99                      # Inferred int
+make fraction = 2.5                 # Inferred float
+make is_finished = true             # Inferred bool
+make name = "Deeg"                  # Inferred string
+
+make grade:float = 95               # Forced to be 95.0
+make number_of_people:string = 56   # Forced to be "56"
+
+make grade:int = int(95.0)          # manual conversion down heirarchy
+make gpa:int? = int('none')         # ex. converting from strings to nums return optionals
 ```
 
 ###Ranges and Slices for Iterables
