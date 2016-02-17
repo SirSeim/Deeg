@@ -6,7 +6,6 @@ Deeg is a static, object-oriented, strongly-typed language that has powerful and
 
 ##List of Features
 
-- ~~Object oriented~~
 - First class functions
 - Optional parameters/default parameters
 - Indentation instead of curly braces
@@ -70,7 +69,7 @@ make mapping:Dict = {
 
 Hierarchy of types:
 
-bool -> int -> float -> string -> List -> Dict
+int -> float -> string ~> List
 
 This hierarchy is what determines auto conversions. A type can be upconverted automatically if needed. If you want to convert down the tree, then you need to specify it with a type converter function like `int()` or 'float()'. Some conversions may return optionals if conversion cannot be guaranteed
 
@@ -88,10 +87,18 @@ make grade:int = int(95.0)          # manual conversion down heirarchy
 make gpa:int? = int('none')         # ex. converting from strings to nums return optionals
 ```
 
-###Ranges and Slices for Iterables
+###List Comprehensions & Slices
 
 ```
-not discussed
+[1 thru 10]                         # 1 up to 10, inclusive
+[1 till 10]                         # 1 up to 10, exclusive
+
+[1 thru 9 by 3]                     # [1, 4, 7]
+
+make meal:string = "artichokes"
+meal[0,1,2]                         # We grab "art"
+meal[0 till 3]                      # Since [0 till 3] == [0,1,2] this is also "art"
+meal[0 till 8 by 3]                 # We grab "aio"
 ```
 
 ###If Statements
@@ -124,13 +131,25 @@ for cat in cat_array then
     print("mr. " + cat)
 end
 
+for duck in duck_array and dog in dog_array then
+    print(duck + " and " + dog)
+end
+
 for count int_expression then
     print("hello")
 end
 
+for count 5 then
+    print("sup")
+end
+
+
+
 for i counts int_expression then
     print(i + " hello(s)")
 end
+
+
 
 while is_running then
     runFaster()
