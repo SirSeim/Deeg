@@ -1,5 +1,8 @@
-[![Deeg Logo](http://i.imgur.com/ylMlnSA.png)](https://github.com/SirSeim/Deeg)
-[![Build Status](https://travis-ci.org/SirSeim/Deeg.svg?branch=master)](https://travis-ci.org/SirSeim/Deeg)
+[![Deeg Logo][deeg-img]][deeg-url]
+[![Build Status][travis-img]][travis-url]
+[![Codecov][codecov-img]][codecov-url]
+[![Dependency Status][dependency-img]][dependency-url]
+[![Dev Dependency Status][dev-dependency-img]][dev-dependency-url]
 
 ##Introduction
 Deeg is a static, object-oriented, strongly-typed language that has powerful and efficient features, including type inferencing, list comprehensions, optionals, string interpolation and first class functions. Deeg compiles nicely into JavaScript. Deeg is the future, and if you don't think so, then you are living in the past, buddy.
@@ -261,3 +264,18 @@ make even_and_true = (x:int, f():bool) does         var even_and_true = function
     end                                                 }
                                                     }
 ```
+
+[deeg-img]: https://i.imgur.com/ylMlnSA.png
+[deeg-url]: https://github.com/SirSeim/Deeg
+
+[travis-img]: https://travis-ci.org/SirSeim/Deeg.svg?branch=master
+[travis-url]: https://travis-ci.org/SirSeim/Deeg?branch=master
+
+[codecov-img]: https://codecov.io/github/SirSeim/Deeg/coverage.svg?branch=master
+[codecov-url]: https://codecov.io/github/SirSeim/Deeg?branch=master
+
+[dependency-img]:https://img.shields.io/david/SirSeim/Deeg/master.svg
+[dependency-url]:https://david-dm.org/SirSeim/Deeg
+
+[dev-dependency-img]:https://img.shields.io/david/dev/SirSeim/Deeg/master.svg
+[dev-dependency-url]:https://david-dm.org/SirSeim/Deeg#info=devDependencies
