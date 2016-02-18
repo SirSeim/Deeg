@@ -3,10 +3,10 @@ node_js:
 - '0.12'
 script:
 - npm test
-- find -path ./node_modules -prune -o -name "*.coffee" -exec $(npm bin)/coffeelint
-  "{}" +
-after_script:
-- npm run-script coverage
+# - find -path ./node_modules -prune -o -name "*.coffee" -exec $(npm bin)/coffeelint
+#   "{}" +
+# after_script:
+# - npm run-script coverage
 notifications:
   slack:
     secure: LSNeed9AAexUHgjSq09ViCxl+emM4Nx4gr4ONUsdz6CURj3mJMNywPLU1gXsd+2bJLZp/mViBCifwIAVl6id5cvWdC3hYpIvW+blrNNN1C/TAvfWbVUKNz7wvVgxfZsTKxmrYmUHXi23UB1xx3yV691wm0JgGRbNfn8bCbMtLGoSZ1rQteFeOm/AljmD9T2EA8wLrIkLAszq+fCXMsA7Sexsm1043zPbFwtyCQiKHztxhhN7zte7b1XEwfOQAkJysh4pbGupoBWFLrf442b3wmd0Nrjk3BfLc0SJMTVqO7aT+0mYoSPZ6piEyVIDZ0wfEjlCJP5Fd8i6KMJQ7IGLqlKbV1CnlEBLYdP63u2FBVTb5vN0mPV4UeiQQhmOWleacsnsbKY/xIWFBhegD8bLzS9x049K60pV4MNrW0T1NFYwu8OxkH+TbdSX9XyWQp4GGQ6I5Tg24GVo00URrAdMmgKj9Tn30xkMFb4NRjadUZEmLXzpLO9Ldkav3Snw/luRGaUz9CkqJJKK7NOyGrG979+YVWPO3PUFAKDt1mYCL56U8XzqEVsjSBheEh3OGAUZkbwDWze3C1076qLPAFPQKqeLKPlinpVemKn/69KmXNlax9LR3Z5lbmq8lHkupJr+TGlCEx4dmWvM3VJln0dJ9zPN/xxaG6Pd6IeUdEtuTyg=
