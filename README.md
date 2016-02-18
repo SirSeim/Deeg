@@ -6,11 +6,10 @@ Deeg is a static, object-oriented, strongly-typed language that has powerful and
 
 ##List of Features
 
-- Object oriented
 - First class functions
 - Optional parameters/default parameters
 - Indentation instead of curly braces
-- Parenthesis are optional
+- Parenthesis are optional, except for functions
 - Optionals
 - .deeg file extension
 - String Interpolation
@@ -18,8 +17,8 @@ Deeg is a static, object-oriented, strongly-typed language that has powerful and
 - make usage
 - Specify type with :
 - Optional type specify with ?
-- let <expression> in <body>
 - List Comprehensions
+- Pattern Matching
 
 ##Features
 
@@ -51,80 +50,129 @@ We have four primitive types: `int` `float` `bool` `string` and however many ref
 
 ```
 make boo = "far"
+make hap:string = "py"
 
 make friends_list = ["Bob", "Donna", "Shaggy"]
-make grades_list:int = [99, 95, 90, 96]
+make grades_list:List:int = [99, 95, 90, 96]
 
-make mapping:dict = {
+make mapping:Dict = {
     key to "value",
     key2 to 91,
-    funKey to (x, y) = x * y;,
-    funKey2 to (a, b) =
+    funKey to (x, y) does deeg x * y,
+    funKey2 to (a, b) does
         deeg a + b
+    end
 }
 ```
 
 ####Type Inference and Static Typing
 
-```
-make year = 99                     # Inferred int
-make fraction = 2.5                # Inferred float
-make is_finished = true            # Inferred bool
-make name = "Deeg"                 # Inferred string
+Hierarchy of types:
 
-make grade:float = 95              # Forced to be 95.0
-make number_of_people:string = 56  # Forced to be "56"
-```
+int -> float -> string ~> List
 
-###Ranges and Slices for Iterables
+This hierarchy is what determines auto conversions. A type can be upconverted automatically if needed. If you want to convert down the tree, then you need to specify it with a type converter function like `int()` or 'float()'. Some conversions may return optionals if conversion cannot be guaranteed
+
 
 ```
-not discussed
+make year = 99                      # Inferred int
+make fraction = 2.5                 # Inferred float
+make is_finished = true             # Inferred bool
+make name = "Deeg"                  # Inferred string
+
+make grade:float = 95               # Forced to be 95.0
+make number_of_people:string = 56   # Forced to be "56"
+
+make grade:int = int(95.0)          # manual conversion down heirarchy
+make gpa:int? = int('none')         # ex. converting from strings to nums return optionals
+```
+
+###List Comprehensions & Slices
+
+```
+[1 thru 10]                         # 1 up to 10, inclusive
+[1 till 10]                         # 1 up to 10, exclusive
+
+[1 thru 9 by 3]                     # [1, 4, 7]
+
+make meal:string = "artichokes"
+meal[0,1,2]                         # We grab "art"
+meal[0 till 3]                      # Since [0 till 3] == [0,1,2] this is also "art"
+meal[0 till 8 by 3]                 # We grab "aio"
 ```
 
 ###If Statements
 
 ```
-if (is_correct) print "CORRECT!"
-
-if (is_wrong)
-    print "WRONGO-BONGO!"
+if bool_expression then
+    # perform action
 else
-    print "good job, sport"
+    # other action
+end
 
-if (is_zebra)
-    print "you are a zebra"
-else if (is_tiger)
-    print "you are a tiger"
+
+if bool_expression then
+    # action
+else if bool_expression then
+    # other conditional action
 else
-    print "you aren't a tiger or a zebra"
+    # if nothing else
+end
+
+if bool_expression then ###action### else ###else action### end
+
+make interesting_result = "happy times" if bool_expression else "sad times"
 ```
 
-###For Loops
+###For and While Loops
 
 ```
-not discussed
-```
+for cat in cat_array then
+    print("mr. " + cat)
+end
 
-###While Loops
+for duck in duck_array and dog in dog_array then
+    print(duck + " and " + dog)
+end
 
-```
-while (is_running)
+for count int_expression then
+    print("hello")
+end
+
+for count 5 then
+    print("sup")
+end
+
+
+
+for i counts int_expression then
+    print(i + " hello(s)")
+end
+
+
+
+while is_running then
     runFaster()
+end
 ```
 
 ###Functions
+In place of a `return` keyword, we have `deeg`.
 
 ```
-make add_pizazz(bore:string) =
+make add_pizazz = (bore:string) does
     deeg bore + "!"
+end
 
-make f(a, b):Function =
+make f = (a, b):Function does
     deeg (a, b) = deeg a + b
+end
 
-make deeginator(x, y:float):bool =
-    make total = x - y * 2
-    deeg total
+make deeginator = (x, y:float):bool does
+    make isAwesome = (x - y * 2 == 69)
+    # isAwesome should always be true
+    deeg isAwesome
+end
 ```
 
 ###Optionals
@@ -132,12 +180,87 @@ Optionals are not the default type for variables.
 
 ```
 make toys = ["bear"]
-make unicorn:? = toys.indexOf("unicorn")
+make unicorn:int? = toys.indexOf("unicorn")
 
 if unicorn exists
-    print unicorn
+    print(unicorn)
 else
-    print "dreams crushed"
+    print("dreams crushed")
+end
+
+make array = ["Hello", "Goodbye"]
+make i = array.indexOf("Hi")
+
+###
+equivalent to:
+make i:int? = array.indexOf("Hi")
+###
+
+print(array[i])    # returns error becasue i is i:int? and array[] requires full int
+
+if i exists
+    print(array[i])
+else
+    print("not found")
+end
+
+make str = array[i] if i exists else "not found"
+```
+
+###Arrays/Lists and Dictionaries
+
+```
+make array = ["Hello", "Goodbye"]
+make dict = { name to "Bob", age:int to 35, isPresident to false}
+
+dict.name:string                        # every key of a dictionary has a specific type
+dict.age:int
+dict.isPresident:bool
+
+print(array[0])                         # prints "Hello"
+print(array[2])                         # maybe array[2] returns an optional, else this errors
+
+make combo = array + dict               # combo is an object with keys 0 and 1
+
+print(size(dict))                       # prints 3
+print(size(array))                      # prints 2
+print(size(combo))                      # prints 5
+
+make array_multi = array * 3            # array_multi is ["Hello", "Goodbye", "Hello", "Goodbye", "Hello", "Goodbye"]
+
+make array_combine = array + ["Hi"]     # array_combine is ["Hello", "Goodbye", "Hi"]
+make array_alt = ["Hi"] + array         # array_alt is ["Hi", "Hello", "Goodbye"]
+
+make array_str = array + "Hi"           # array_str is ["Hello", "Goodbye", "Hi"]
+make arr:List:float = array             # convert to array of floats
+
+make int_array:List:int = [2, 3]        # arrays are homogeneous
+make all_dict:Dict = {                  # dictionaries are heterogeneous
+    fun:bool to true,
+    days to 3
+}
+
+print(int_array + all_dict)         
+###
+prints
+{
+    0:int to 2,
+    1:int to 3,
+    days:int to 3,
+    fun:bool to true
+}
+###
+```
+
+###Pattern Matching!
+```
+make func = (x) does
+    match x with
+        > 5 then deeg true
+        > 72 then deeg true
+        > _ then deeg false
+    end
+end
 ```
 
 ##Example Programs
@@ -146,25 +269,26 @@ Deeg on the left, JavaScript on the right
 
 ###Hello World
 ```
-print "hello world"                             console.log("hello world");
+print("hello world")                                console.log("hello world");
 ```
 
 ###Variable Declarations
 ```
-make foo = 69                                   var foo = 69;
-make bar:string = 69                            var bar = "69";
+make foo = 69                                       var foo = 69;
+make bar:string = 69                                var bar = "69";
 ```
 
 ###Function Declarations
 ```
-make adder(a:int, b = 10):int = deeg a + b      var adder = function (a, b) {
-                                                     
-                                                }
+make adder = (a:int, b=10):int does deeg a + b      var adder = function (a, b) {
+                                                        return a + b;
+                                                    }
 
-make even_and_true(x:int, f():bool) =           var even_and_true = function (x, f) {
-    if (f(x)) then                                   
-        deeg x + 2
-    else
-        deeg x + 4
-                                                }
+make even_and_true = (x:int, f():bool) does         var even_and_true = function (x, f) {
+    if (f(x)) then                                      if (f(x)) {
+        deeg x + 2                                          return x + 2;
+    else                                                } else {
+        deeg x + 4                                          return x + 4;
+    end                                                 }
+                                                    }
 ```
