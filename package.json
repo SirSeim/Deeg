@@ -4,8 +4,10 @@
   "description": "The night is darkest just before the dawn. And I promise you, the dawn is coming.",
   "main": "deeg.coffee",
   "scripts": {
-    "test": "mocha --compilers coffee:coffee-script/register ./test/ --recursive",
-    "coffeelint": "$(npm bin)/coffeelint $(npm bin)/../../"
+    "test": "mocha --recursive --compilers coffee:coffee-script/register --require coffee-coverage/register-istanbul ./test/ && istanbul report text-summary lcov",
+    "coffeelint": "$(npm bin)/coffeelint $(npm bin)/../../",
+    "report": "istanbul report",
+    "codecov": "mocha --recursive --compilers coffee:coffee-script/register --require coffee-coverage/register-istanbul ./test/ && istanbul report && codecov"
   },
   "repository": {
     "type": "git",
@@ -28,7 +30,10 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "codecov": "^1.0.1",
+    "coffee-coverage": "^1.0.1",
     "coffeelint": "^1.14.2",
+    "istanbul": "^0.4.2",
     "mocha": "^2.4.5"
   }
 }
