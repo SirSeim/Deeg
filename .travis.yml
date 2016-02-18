@@ -3,8 +3,7 @@ node_js:
 - '0.12'
 script:
 - npm test
-# - find -path ./node_modules -prune -o -name "*.coffee" -exec $(npm bin)/coffeelint
-#   "{}" +
+- npm run coffeelint -silent
 # after_script:
 # - npm run-script coverage
 notifications:
