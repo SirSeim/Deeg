@@ -261,6 +261,25 @@ make func = (x) does
         > _ then deeg false
     end
 end
+
+
+make func = (l) does
+    match l with
+        > head|tail when head > 5 then deeg head
+        > _|tail then deeg false
+    end
+end
+
+make func = (param) does
+    match param with
+        > _:int then deeg true
+        > _:float then deeg false
+        > _:string then deeg "Hello, World!"
+        > _ then deeg "Get with the primitives."
+    end
+end
+
+    
 ```
 
 ##Example Programs
