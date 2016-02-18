@@ -74,7 +74,7 @@ Hierarchy of types:
 
 int -> float -> string ~> List
 
-This hierarchy is what determines auto conversions. A type can be upconverted automatically if needed. If you want to convert down the tree, then you need to specify it with a type converter function like `int()` or 'float()'. Some conversions may return optionals if conversion cannot be guaranteed
+This hierarchy is what determines auto conversions. A type can be upconverted automatically if needed. If you want to convert down the tree, then you need to specify it with a type converter function like `int()` or `float()`. Some conversions may return optionals if conversion cannot be guaranteed
 
 
 ```
