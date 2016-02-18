@@ -1,5 +1,5 @@
-[![Deeg Logo](http://i.imgur.com/ylMlnSA.png)](https://github.com/IrakliK/Deeg)
-#Deeg
+[![Deeg Logo](http://i.imgur.com/ylMlnSA.png)](https://github.com/SirSeim/Deeg)
+[![Build Status](https://travis-ci.org/SirSeim/Deeg.svg?branch=master)](https://travis-ci.org/SirSeim/Deeg)
 
 ##Introduction
 Deeg is a static, object-oriented, strongly-typed language that has powerful and efficient features, including type inferencing, list comprehensions, optionals, string interpolation and first class functions. Deeg compiles nicely into JavaScript. Deeg is the future, and if you don't think so, then you are living in the past, buddy.
