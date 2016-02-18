@@ -4,7 +4,8 @@
   "description": "The night is darkest just before the dawn. And I promise you, the dawn is coming.",
   "main": "deeg.coffee",
   "scripts": {
-    "test": "mocha --compilers coffee:coffee-script/register ./test/ --recursive"
+    "test": "mocha --compilers coffee:coffee-script/register ./test/ --recursive",
+    "coffeelint": "$(npm bin)/coffeelint $(npm bin)/../../"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "coffeelint": "^1.14.2",
     "mocha": "^2.4.5"
   }
 }
