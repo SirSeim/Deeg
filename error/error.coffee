@@ -14,12 +14,6 @@ error = (message, location) ->
         message += " at line #{location.line}"
         if location.col
             message += ", column #{location.col}"
-    if not error.quiet
-        console.log "Error: #{message}"
-    error.count++
-
-error.quiet = false
-
-error.count = 0
+    { message: message }
 
 module.exports = error
