@@ -4,10 +4,10 @@
 [![Dependency Status][dependency-img]][dependency-url]
 [![Dev Dependency Status][dev-dependency-img]][dev-dependency-url]
 
-##Introduction
+## Introduction
 Deeg is a static, object-oriented, strongly-typed language that has powerful and efficient features, including type inferencing, list comprehensions, optionals, string interpolation and first class functions. Deeg compiles nicely into JavaScript. Deeg is the future, and if you don't think so, then you are living in the past, buddy.
 
-##List of Features
+## List of Features
 
 - First class functions
 - Optional parameters/default parameters
@@ -23,9 +23,24 @@ Deeg is a static, object-oriented, strongly-typed language that has powerful and
 - List Comprehensions
 - Pattern Matching
 
-##Features
+### Microsyntax
 
-###Comments
+The rules here are ordered. Matches are attempted from top to bottom.
+
+```
+newline    ::= \s* (\r*\n)+
+```
+
+### Macrosyntax
+
+```
+Program        ::= Block
+Block          ::= (Stmt newline)*
+```
+
+## Features
+
+### Comments
 
 ```
 # commented to the end of line
@@ -35,7 +50,7 @@ Deeg is a static, object-oriented, strongly-typed language that has powerful and
 ###
 ```
 
-###Assignments
+### Assignments
 
 ```
 make example_variable = "this string"
@@ -48,7 +63,7 @@ a, b = b, a
 make c, d = 2, 16
 ```
 
-###Primitive Types & Reference Types
+### Primitive Types & Reference Types
 We have four primitive types: `int` `float` `bool` `string` and however many reference types: `Dict` `Function` `List`
 
 ```
@@ -68,7 +83,7 @@ make mapping:Dict = {
 }
 ```
 
-####Type Inference and Static Typing
+### Type Inference and Static Typing
 
 Hierarchy of types:
 
@@ -90,7 +105,7 @@ make grade:int = int(95.0)          # manual conversion down heirarchy
 make gpa:int? = int('none')         # ex. converting from strings to nums return optionals
 ```
 
-###List Comprehensions & Slices
+### List Comprehensions & Slices
 
 ```
 [1 thru 10]                         # 1 up to 10, inclusive
@@ -104,7 +119,7 @@ meal[0 till 3]                      # Since [0 till 3] == [0,1,2] this is also "
 meal[0 till 8 by 3]                 # We grab "aio"
 ```
 
-###If Statements
+### If Statements
 
 ```
 if bool_expression then
@@ -127,7 +142,7 @@ if bool_expression then ###action### else ###else action### end
 make interesting_result = "happy times" if bool_expression else "sad times"
 ```
 
-###For and While Loops
+### For and While Loops
 
 ```
 for cat in cat_array then
@@ -159,7 +174,7 @@ while is_running then
 end
 ```
 
-###Functions
+### Functions
 In place of a `return` keyword, we have `deeg`.
 
 ```
@@ -178,7 +193,7 @@ make deeginator = (x, y:float):bool does
 end
 ```
 
-###Optionals
+### Optionals
 Optionals are not the default type for variables.
 
 ```
@@ -210,7 +225,7 @@ end
 make str = array[i] if i exists else "not found"
 ```
 
-###Arrays/Lists and Dictionaries
+### Arrays/Lists and Dictionaries
 
 ```
 make array = ["Hello", "Goodbye"]
@@ -255,7 +270,7 @@ prints
 ###
 ```
 
-###Pattern Matching!
+### Pattern Matching!
 ```
 make func = (x) does
     match x with
@@ -285,22 +300,22 @@ end
     
 ```
 
-##Example Programs
+## Example Programs
 
 Deeg on the left, JavaScript on the right
 
-###Hello World
+### Hello World
 ```
 print("hello world")                                console.log("hello world");
 ```
 
-###Variable Declarations
+### Variable Declarations
 ```
 make foo = 69                                       var foo = 69;
 make bar:string = 69                                var bar = "69";
 ```
 
-###Function Declarations
+### Function Declarations
 ```
 make adder = (a:int, b=10):int does deeg a + b      var adder = function (a, b) {
                                                         return a + b;
