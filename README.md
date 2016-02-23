@@ -29,6 +29,28 @@ The rules here are ordered. Matches are attempted from top to bottom.
 
 ```
 newline    ::= \s* (\r*\n)+
+letter     ::= [a-zA-Z]
+digit      ::= [0-9]
+keyword    ::= 'make' | 'to' 
+             | 'deeg' | 'end' | 'thru' | 'till' | 'by' 
+             | 'and' | 'or' | 'exists' | 'unless' 
+             | 'if'  | 'else' | 'then'
+             | 'not' | 'true' | 'false'
+             | 'for' | 'while' | 'does'
+             | 'match' | 'with' 
+id         ::= (letter | '_') (letter | digit | '_')*
+intlit     ::= digit+
+floatlit   ::= digit+ '.' digit+ <!-- ([Ee] [+-]? digit+)? -->
+relop      ::= '<' | '<=' | '==' | '!=' | '>=' | '>'
+addop      ::= '+' | '-'
+mulop      ::= '*' | '/' | '%'
+prefixop   ::= '-' | 'not' | '!'
+boollit    ::= 'true' | 'false'
+escape     ::= [\\] [rnst'"\\] 
+char       ::= [^\x00-\x1F'"\\] | escape
+stringlit  ::= ('"' char* '"') | (\x27 char* \x27)
+comment    ::= '#' [^\n]* newline
+             | '###' .*? '###'
 ```
 
 ### Macrosyntax
@@ -283,7 +305,7 @@ end
 
 make func = (l) does
     match l with
-        > head|tail when head > 5 then deeg head
+        > head|tail if head > 5 then deeg head
         > _|tail then deeg false
     end
 end
