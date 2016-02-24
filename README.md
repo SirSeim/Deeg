@@ -36,9 +36,9 @@ keyword    ::= 'make' | 'to'
              | 'and' | 'or' | 'exists' | 'unless' 
              | 'if'  | 'else' | 'then'
              | 'not' | 'true' | 'false'
-             | 'for' | 'while' | 'does'
+             | 'for' | 'while' | 'does' | 'count' | 'counts'
              | 'match' | 'with' 
-id         ::= (letter | '_') (letter | digit | '_')*
+id         ::= letter (letter | digit | '_')*
 intlit     ::= digit+
 floatlit   ::= digit+ '.' digit+ <!-- ([Ee] [+-]? digit+)? -->
 relop      ::= '<' | '<=' | '==' | '!=' | '>=' | '>'
@@ -51,6 +51,7 @@ char       ::= [^\x00-\x1F'"\\] | escape
 stringlit  ::= ('"' char* '"') | (\x27 char* \x27)
 comment    ::= '#' [^\n]* newline
              | '###' .*? '###'
+rawtype    ::= 'bool' | 'int' | 'float' | 'string'
 ```
 
 ### Macrosyntax
@@ -58,6 +59,45 @@ comment    ::= '#' [^\n]* newline
 ```
 Program        ::= Block
 Block          ::= (Stmt newline)*
+
+Stmt           ::= 'while' Exp 'then' (newline Block 'end' | Stmt 'end')
+               | 'for' (StdFor | CountFor | CountsFor) 'then' (newline Block 'end' | Stmt 'end')
+               | 'match' id 'with' newline PatBlock
+               | IfStmt
+               | ReturnStmt
+               | Exp
+
+StdFor        ::= id (':' type)? 'in' Exp ('and' id 'in' Exp)*
+CountFor    ::= 'count' Exp
+CountsFor  ::= id (':' type)? 'counts' Exp
+
+ReturnStmt     ::= 'deeg' Exp
+
+Type         ::= 'Dict' | ('List' (':' Type)?) | ('Function(' (Type (',' Type)*)? ')' (':' Type)?)
+
+Exp            ::= VarDeclaration
+               | VarAssignment
+               | ConditionalExp
+               | FunctionExp
+               | Exp0
+
+PatBlock      ::= (Patline newline)*
+
+Patline         ::= '>' (id
+               | WildCard
+               | Head '|' Tail
+               ) (':' type)? ('if')? 'then' Stmt
+
+WildCard     ::= '_'
+Head           ::= id | WildCard
+Tail              ::= id | WildCard | (Head '|' Tail)
+
+VarDeclaration  ::= 'make' id '=' Exp
+VarAssignment  ::= id '=' Exp
+
+IfStmt  ::= 'if' Exp 'then' (newline Block | Stmt) ('else if' Exp 'then' (newline Block | Stmt))* ('else' (newline Block | Stmt ))? 'end'
+
+Exp0            ::= 
 ```
 
 ## Features
@@ -204,7 +244,8 @@ make add_pizazz = (bore:string) does
     deeg bore + "!"
 end
 
-make f = (a, b):Function does
+make f:Function(int, int):int
+f = (a, b) does
     deeg (a, b) = deeg a + b
 end
 
