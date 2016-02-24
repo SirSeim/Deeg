@@ -28,30 +28,30 @@ Deeg is a static, object-oriented, strongly-typed language that has powerful and
 The rules here are ordered. Matches are attempted from top to bottom.
 
 ```
-newline    ::= \s* (\r*\n)+
-letter     ::= [a-zA-Z]
-digit      ::= [0-9]
-keyword    ::= 'make' | 'to' 
-             | 'deeg' | 'end' | 'thru' | 'till' | 'by' 
-             | 'and' | 'or' | 'exists' | 'unless' 
-             | 'if'  | 'else' | 'then'
-             | 'not' | 'true' | 'false'
-             | 'for' | 'while' | 'does' | 'count' | 'counts'
-             | 'match' | 'with' 
-id         ::= letter (letter | digit | '_')*
-intlit     ::= digit+
-floatlit   ::= digit+ '.' digit+ <!-- ([Ee] [+-]? digit+)? -->
-relop      ::= '<' | '<=' | '==' | '!=' | '>=' | '>'
-addop      ::= '+' | '-'
-mulop      ::= '*' | '/' | '%'
-prefixop   ::= '-' | 'not' | '!'
-boollit    ::= 'true' | 'false'
-escape     ::= [\\] [rnst'"\\] 
-char       ::= [^\x00-\x1F'"\\] | escape
-stringlit  ::= ('"' char* '"') | (\x27 char* \x27)
-comment    ::= '#' [^\n]* newline
-             | '###' .*? '###'
-rawtype    ::= 'bool' | 'int' | 'float' | 'string'
+newline        ::= \s* (\r*\n)+
+letter         ::= [a-zA-Z]
+digit          ::= [0-9]
+keyword        ::= 'make' | 'to' 
+                 | 'deeg' | 'end' | 'thru' | 'till' | 'by' 
+                 | 'and' | 'or' | 'exists' | 'unless' 
+                 | 'if'  | 'else' | 'then'
+                 | 'not' | 'true' | 'false'
+                 | 'for' | 'while' | 'does' | 'count' | 'counts'
+                 | 'match' | 'with' 
+id             ::= letter (letter | digit | '_')*
+intlit         ::= digit+
+floatlit       ::= digit+ '.' digit+ <!-- ([Ee] [+-]? digit+)? -->
+relop          ::= '<' | '<=' | '==' | '!=' | '>=' | '>'
+addop          ::= '+' | '-'
+mulop          ::= '*' | '/' | '%'
+prefixop       ::= '-' | 'not' | '!'
+boollit        ::= 'true' | 'false'
+escape         ::= [\\] [rnst'"\\] 
+char           ::= [^\x00-\x1F'"\\] | escape
+stringlit      ::= ('"' char* '"') | (\x27 char* \x27)
+comment        ::= '#' [^\n]* newline
+                 | '###' .*? '###'
+type           ::= 'bool' | 'int' | 'float' | 'string'
 ```
 
 ### Macrosyntax
@@ -63,8 +63,8 @@ Program        ::= Block
 Block          ::= (Stmt newline)*
 
 Stmt           ::= WhileStmt | ForStmt | MatchStmt | IfStmt
-               | ReturnStmt
-               | Exp
+                 | ReturnStmt
+                 | Exp
 
 StdFor         ::= id Type? 'in' Exp ('and' id 'in' Exp)*
 CountFor       ::= 'count' Exp
@@ -79,17 +79,17 @@ MatchStmt      ::= 'match' id 'with' newline PatBlock
 Type           ::= ':' (type | 'Dict' | ('List' (':' Type)?) | ('Function(' (Type (',' Type)*)? ')' (':' Type)?))
 
 Exp            ::= VarDeclaration
-               | VarAssignment
-               | ConditionalExp
-               | FunctionExp
-               | Exp0
+                 | VarAssignment
+                 | ConditionalExp
+                 | FunctionExp
+                 | Exp0
 
 PatBlock       ::= (Patline newline)*
 
 Patline        ::= '>' (id
                         | WildCard
                         | Head '|' Tail
-               ) Type? ('if')? 'then' Stmt
+                 ) Type? ('if')? 'then' Stmt
 
 WildCard       ::= '_'
 Head           ::= id | WildCard
