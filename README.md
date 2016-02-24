@@ -56,24 +56,27 @@ rawtype    ::= 'bool' | 'int' | 'float' | 'string'
 
 ### Macrosyntax
 
+format can be directly input into Gunther Rademacher's [Railroad Diagram Generator](http://www.bottlecaps.de/rr/ui)
+
 ```
 Program        ::= Block
 Block          ::= (Stmt newline)*
 
-Stmt           ::= 'while' Exp 'then' (newline Block 'end' | Stmt 'end')
-               | 'for' (StdFor | CountFor | CountsFor) 'then' (newline Block 'end' | Stmt 'end')
-               | 'match' id 'with' newline PatBlock
-               | IfStmt
+Stmt           ::= WhileStmt | ForStmt | MatchStmt | IfStmt
                | ReturnStmt
                | Exp
 
-StdFor        ::= id (':' type)? 'in' Exp ('and' id 'in' Exp)*
-CountFor    ::= 'count' Exp
-CountsFor  ::= id (':' type)? 'counts' Exp
+StdFor         ::= id Type? 'in' Exp ('and' id 'in' Exp)*
+CountFor       ::= 'count' Exp
+CountsFor      ::= id 'counts' Exp
 
 ReturnStmt     ::= 'deeg' Exp
+IfStmt         ::= 'if' Exp 'then' (newline Block | Stmt) ('else if' Exp 'then' (newline Block | Stmt))* ('else' (newline Block | Stmt ))? 'end'
+WhileStmt      ::= 'while' Exp 'then' (newline Block 'end' | Stmt 'end')
+ForStmt        ::= 'for' (StdFor | CountFor | CountsFor) 'then' (newline Block 'end' | Stmt 'end')
+MatchStmt      ::= 'match' id 'with' newline PatBlock
 
-Type         ::= 'Dict' | ('List' (':' Type)?) | ('Function(' (Type (',' Type)*)? ')' (':' Type)?)
+Type           ::= ':' (type | 'Dict' | ('List' (':' Type)?) | ('Function(' (Type (',' Type)*)? ')' (':' Type)?))
 
 Exp            ::= VarDeclaration
                | VarAssignment
@@ -81,23 +84,48 @@ Exp            ::= VarDeclaration
                | FunctionExp
                | Exp0
 
-PatBlock      ::= (Patline newline)*
+PatBlock       ::= (Patline newline)*
 
-Patline         ::= '>' (id
-               | WildCard
-               | Head '|' Tail
-               ) (':' type)? ('if')? 'then' Stmt
+Patline        ::= '>' (id
+                        | WildCard
+                        | Head '|' Tail
+               ) Type? ('if')? 'then' Stmt
 
-WildCard     ::= '_'
+WildCard       ::= '_'
 Head           ::= id | WildCard
-Tail              ::= id | WildCard | (Head '|' Tail)
+Tail           ::= id | WildCard | (Head '|' Tail)
 
-VarDeclaration  ::= 'make' id '=' Exp
-VarAssignment  ::= id '=' Exp
+VarDeclaration ::= 'make' id Type? '=' Exp
+VarAssignment  ::= VarExp '=' Exp
+VarExp         ::= id ( '.' Exp8 
+                        | '[' Exp3 ']' 
+                        | (Args ('.' Exp8 | '[' Exp3 ']')) )*
 
-IfStmt  ::= 'if' Exp 'then' (newline Block | Stmt) ('else if' Exp 'then' (newline Block | Stmt))* ('else' (newline Block | Stmt ))? 'end'
+Exp0           ::=  Exp1 ('if' Exp1 ('else' Exp1)?)?
+Exp1           ::=  Exp2 ('or' Exp2)*
+Exp2           ::=  Exp3 ('and' Exp3)*
+Exp3           ::=  Exp4 (relop Exp4)?
+Exp4           ::=  Exp5 (('thru'|'till') Exp5 ('by' Exp5)?)?
+Exp5           ::=  Exp6 (addop Exp6)*
+Exp6           ::=  Exp7 (mulop Exp7)*
+Exp7           ::=  prefixop? Exp8
+Exp8           ::=  Exp9 ('**' Exp5)?
+Exp9           ::=  Exp10 ('.' Exp10 | '[' Exp4 ']' | Args)*
+Exp10          ::=  boollit | intlit | floatlit | id | '(' Exp ')' | stringlit
+                 | DictLit | ListLit
 
-Exp0            ::= 
+ExpList        ::= newline? Exp (',' newline? Exp)* newline?
+ParamList      ::= newline? Exp Type? (',' newline? Exp Type?)* newline?
+
+Args           ::= '(' ExpList ')'
+Params         ::= '(' ParamList ')'
+
+ListLit        ::= '[' ExpList? ']'
+DictLit        ::= '{' BindingList? '}'
+Binding        ::= newline? id Type? 'to' Exp newline?
+BindingList    ::= Binding (',' Binding)*
+
+FunctionExp    ::= Params Type? 'does' (newline Block | Stmt) 'end'
 ```
 
 ## Features
