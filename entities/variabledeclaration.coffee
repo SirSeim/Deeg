@@ -13,6 +13,7 @@ class VariableDeclaration
 
   optimize: -> this
 
-VariableDeclaration.ARBITRARY = new VariableDeclaration '<arbitrary>', Type.ARBITRARY
+VariableDeclaration.ARBITRARY =
+  new VariableDeclaration '<arbitrary>', Type.ARBITRARY
 
 module.exports = VariableDeclaration

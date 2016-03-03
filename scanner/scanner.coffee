@@ -12,23 +12,27 @@ error = require '../error/error'
 LETTER = XRegExp '[\\p{L}]'
 DIGIT = XRegExp '[\\p{Nd}]'
 WORD_CHAR = XRegExp '[\\p{L}\\p{Nd}_]'
-KEYWORDS = /^(?:make|to|deeg|end|thru|till|by|exists|and|or|unless|if|else|then|not|true|false|for|while|does|count|counts|match|with)$/
+KEYWORDS = ///
+  (make|to|deeg|end|thru|till|by|exists|and|or|unless|if|else|then|not)
+  \
+  (true|false|for|while|does|count|counts|match|with)
+///
 
 module.exports = (filename, callback) ->
-    baseStream = fs.createReadStream filename, {encoding: 'utf8'}
-    baseStream.on 'error', (err) -> error(err)
+  baseStream = fs.createReadStream filename, {encoding: 'utf8'}
+  baseStream.on 'error', (err) -> error(err)
 
-    stream = byline baseStream, {keepEmptyLines: true}
-    tokens = []
-    lineNumber = 0
-    stream.on 'readable', () ->
-        scan stream.read(), ++lineNumber, tokens
-    stream.once 'end', () ->
-        tokens.push {kind: 'EOF', lexeme: 'EOF'}
-        callback tokens
+  stream = byline baseStream, {keepEmptyLines: true}
+  tokens = []
+  lineNumber = 0
+  stream.on 'readable', () ->
+    scan stream.read(), ++lineNumber, tokens
+  stream.once 'end', () ->
+    tokens.push {kind: 'EOF', lexeme: 'EOF'}
+    callback tokens
 
-    scanningError = null
-    callback scanningError, tokens
+  scanningError = null
+  callback scanningError, tokens
     
 scan = (line, lineNumber, tokens) ->
   return if not line
@@ -50,11 +54,11 @@ scan = (line, lineNumber, tokens) ->
 
     # Block Comment
     if line[pos] is '#' and line[pos+1] is '#' and line[pos+2] is '#'
-        if !blockCommentStarted
-            blockCommentStarted = true
-        else 
-            blockCommentStarted = false
-        break
+      if !blockCommentStarted
+        blockCommentStarted = true
+      else
+        blockCommentStarted = false
+      break
 
     # Inside of Block Comment
     break if blockCommentStarted

@@ -94,7 +94,8 @@ parseWhileStatement = ->
   match 'end'
   new WhileStatement(condition, body)
 
-# 'for' (StdFor | CountFor | CountsFor) 'then' (newline Block 'end' | Stmt 'end')
+# 'for' (StdFor | CountFor | CountsFor)
+# 'then' (newline Block 'end' | Stmt 'end')
 parseForStatement = ->
   match 'for'
 
@@ -120,7 +121,8 @@ determineForType = ->
   else if exists 'count'
     parseCountFor()
   else
-    error "Expected \"id\" or \"count\" but found \"#{tokens[0].kind}\"", tokens[0]
+    message = "Expected \"id\" or \"count\" but found \"#{tokens[0].kind}\""
+    error message, tokens[0]
 
 parseStdFor = ->
   idexplist = []

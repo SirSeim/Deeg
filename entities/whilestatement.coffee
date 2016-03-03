@@ -9,7 +9,8 @@ class WhileStatement
 
   analyze: (context) ->
     @condition.analyze context
-    @condition.type.mustBeBoolean 'Condition in "while" statement must be boolean'
+    booleanCondition = 'Condition in "while" statement must be boolean'
+    @condition.type.mustBeBoolean booleanCondition
     @body.analyze context
 
   optimize: () ->

@@ -1,3 +1,3 @@
 module.exports = {
-    program1: []
+  program1: []
 }

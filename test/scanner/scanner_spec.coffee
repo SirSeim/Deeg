@@ -7,15 +7,15 @@ invalidScannerPrograms = "#{__dirname}/input_programs/invalid_programs"
 
 describe 'Scanner', ->
 
-    describe 'scanning valid deeg programs', ->
-        describe 'deeg program #1', ->
-            context 'when test program1.deeg is passed through the scanner', ->
-                expectedTokens1 = outputTokens.program1
+  describe 'scanning valid deeg programs', ->
+    describe 'deeg program #1', ->
+      context 'when test program1.deeg is passed through the scanner', ->
+        expectedTokens1 = outputTokens.program1
 
-                scan "#{validScannerPrograms}/program1.deeg", (err, tokens) ->
-                    it 'returns the appropriate tokens', (done) ->
-                        expect(tokens).to.eql expectedTokens1
-                        done()
-                    it 'has no errors', (done) ->
-                        expect(err).to.be.null
-                        done()
+        scan "#{validScannerPrograms}/program1.deeg", (err, tokens) ->
+          it 'returns the appropriate tokens', (done) ->
+            expect(tokens).to.eql expectedTokens1
+            done()
+          it 'has no errors', (done) ->
+            expect(err).to.be.null
+            done()
