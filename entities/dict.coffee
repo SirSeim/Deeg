@@ -1,5 +1,5 @@
 # _ = require 'underscore' from teascript
-Type = require './type'
+Type = require './type.coffee'
 
 class Dict
 

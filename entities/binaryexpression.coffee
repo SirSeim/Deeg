@@ -1,7 +1,7 @@
-Type = require './type'
-IntegerLiteral = require './integerliteral'
-BooleanLiteral = require './booleanliteral'
-VariableReference = require './variablereference'
+Type = require './type.coffee'
+IntegerLiteral = require './integerliteral.coffee'
+BooleanLiteral = require './booleanliteral.coffee'
+VariableReference = require './variablereference.coffee'
 
 class BinaryExpression
 

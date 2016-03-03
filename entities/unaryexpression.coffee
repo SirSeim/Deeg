@@ -1,6 +1,6 @@
-Type = require './type'
-IntegerLiteral = require './integerliteral'
-BooleanLiteral = require './booleanliteral'
+Type = require './type.coffee'
+IntegerLiteral = require './integerliteral.coffee'
+BooleanLiteral = require './booleanliteral.coffee'
 
 class UnaryExpression
 

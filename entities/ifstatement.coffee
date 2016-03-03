@@ -1,4 +1,4 @@
-BooleanLiteral = require './booleanliteral'
+BooleanLiteral = require './booleanliteral.coffee'
 
 class IfStatement
 

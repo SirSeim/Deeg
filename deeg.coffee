@@ -11,4 +11,4 @@ argv = require 'yargs'
     .demand(1)
     .argv
 
-scan = require './scanner/scanner'
+scan = require './scanner/scanner.coffee'
