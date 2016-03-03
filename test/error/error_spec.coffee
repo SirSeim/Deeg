@@ -1,6 +1,6 @@
 chai = require 'chai'
 expect = chai.expect
-error = require '../../error/error'
+error = require '../../error/error.coffee'
 
 describe 'Error', ->
 
