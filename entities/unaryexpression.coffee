@@ -13,13 +13,16 @@ class UnaryExpression
     @operand.analyze context
     switch @op.lexeme
       when 'not'
-        @operand.type.mustBeBoolean 'The "not" operator requires a boolean operand', @op
+        mustBoolean = 'The "not" operator requires a boolean operand'
+        @operand.type.mustBeBoolean mustBoolean, @op
         @type = Type.BOOL
       when '!'
-        @operand.type.mustBeBoolean 'The "!" operator requires a boolean operand', @op
+        mustBoolean = 'The "!" operator requires a boolean operand'
+        @operand.type.mustBeBoolean mustBoolean, @op
         @type = Type.BOOL
       when '-'
-        @operand.type.mustBeInteger 'The "negation" operator requires an integer operand', @op
+        mustBoolean = 'The "negation" operator requires an integer operand'
+        @operand.type.mustBeInteger mustBoolean, @op
         @type = Type.INT
 
   optimize: ->

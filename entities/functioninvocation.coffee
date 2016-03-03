@@ -33,7 +33,8 @@ class FunctionInvocation
   #   error = "#{@func.token.lexeme}() takes exactly
   #            #{params.length} arguments
   #            (#{@args.length} given)"
-  #   throw new CustomError error, location unless (@args.length is params.length)
+  #   throw new CustomError error, location unless
+  #     (@args.length is params.length)
 
   optimize: -> this
 

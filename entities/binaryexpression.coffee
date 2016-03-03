@@ -34,7 +34,8 @@ class BinaryExpression
   #   @right = @right.optimize()
   #   if @left instanceof IntegerLiteral and @right instanceof IntegerLiteral
   #     return foldIntegerConstants @op.lexeme, +@left.value, +@right.value
-  #   else if @left instanceof BooleanLiteral and @right instanceof BooleanLiteral
+  #   else if @left instanceof BooleanLiteral and
+  #     @right instanceof BooleanLiteral
   #     return foldBooleanConstants @op.lexeme, @left.value(), @right.value()
   #   else
   #     switch @op.lexeme
@@ -72,7 +73,9 @@ class BinaryExpression
 #   operand instanceof IntegerLiteral and operand.value is value
 
 # sameVariable = (exp1, exp2) ->
-#   exp1 instanceof VariableReference and exp2 instanceof VariableReference and exp1.referent is exp2.referent
+#   exp1 instanceof VariableReference and
+#     exp2 instanceof VariableReference and
+#     exp1.referent is exp2.referent
 
 foldIntegerConstants = (op, d, g) ->
   switch op

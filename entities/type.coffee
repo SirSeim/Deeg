@@ -39,7 +39,9 @@ class Type
 
   isCompatibleWith: (otherType) ->
     # In more sophisticated languages, comapatibility would be more complex
-    return this is otherType or this is Type.ARBITRARY or otherType is Type.ARBITRARY
+    return this is otherType or
+      this is Type.ARBITRARY or
+      otherType is Type.ARBITRARY
 
 module.exports =
   BOOL: Type.BOOL
