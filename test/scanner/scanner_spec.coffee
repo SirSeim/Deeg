@@ -43,3 +43,15 @@ describe 'Scanner', ->
           scan "#{validScannerPrograms}/program3.deeg", (err, tokens) ->
             expect(err).to.be.null
             done()
+
+    describe 'deeg program #4', ->
+      context 'when test program4.deeg is passed through the scanner', ->
+        expectedTokens4 = outputTokens.program4
+        it 'returns the appropriate tokens', (done) ->
+          scan "#{validScannerPrograms}/program4.deeg", (err, tokens) ->
+            expect(tokens).to.eql(expectedTokens4)
+            done()
+        it 'has no errors', (done) ->
+          scan "#{validScannerPrograms}/program4.deeg", (err, tokens) ->
+            expect(err).to.be.null
+            done()
