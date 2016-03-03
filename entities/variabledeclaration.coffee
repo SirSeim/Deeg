@@ -2,14 +2,14 @@ Type = require './type.coffee'
 
 class VariableDeclaration
 
-  constructor: (@id, @type) ->
+  constructor: (@id, @value, @type) ->
 
   toString: ->
-    "(Var :#{@id.lexeme} #{@type})"
+    "(VarDec :#{@id.lexeme} of type: #{@type} = #{@value})"
 
-  analyze: (context) ->
-    context.variableMustNotBeAlreadyDeclared @id
-    context.addVariable @id.lexeme, this
+  # analyze: (context) ->
+  #   context.variableMustNotBeAlreadyDeclared @id
+  #   context.addVariable @id.lexeme, this
 
   optimize: -> this
 

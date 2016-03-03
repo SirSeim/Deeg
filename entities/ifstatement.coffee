@@ -1,15 +1,15 @@
-BooleanLiteral = require './booleanliteral.coffee'
+BooleanLiteral = require './booleanliteral'
 
-class WhileStatement
+class IfStatement
 
   constructor: (@condition, @body) ->
 
   toString: () ->
-    "(While #{@condition} then #{@body})"
+    "(If #{@condition} then #{@body})"
 
   # analyze: (context) ->
   #   @condition.analyze context
-  #   booleanCondition = 'Condition in "while" statement must be boolean'
+  #   booleanCondition = 'Condition in "if" statement must be boolean'
   #   @condition.type.mustBeBoolean booleanCondition
   #   @body.analyze context
 
@@ -20,4 +20,4 @@ class WhileStatement
   #     return null
   #   return this
 
-module.exports = WhileStatement
+module.exports = IfStatement
