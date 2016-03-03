@@ -3,38 +3,38 @@
 #   parse = require './parser'
 #   program = parse tokens
 
-scanner = require '../scanner/scanner'
-error = require '../error/error'
+scanner = require '../scanner/scanner.coffee'
+error = require '../error/error.coffee'
 
-Program = require './entities/program'
-Block = require './entities/block'
-Type = require './entities/type'
+Program = require './entities/program.coffee'
+Block = require './entities/block.coffee'
+Type = require './entities/type.coffee'
 
-VariableDeclaration = require './entities/variabledeclaration'
+VariableDeclaration = require './entities/variabledeclaration.coffee'
 
-ForStatement = require './entities/forstatement'
-StdFor = require './entities/stdfor'
-StdForIdExp = require './entities/stdforidexp'
-CountFor = require './entities/countfor'
-CountsFor = require './entities/countsfor'
+ForStatement = require './entities/forstatement.coffee'
+StdFor = require './entities/stdfor.coffee'
+StdForIdExp = require './entities/stdforidexp.coffee'
+CountFor = require './entities/countfor.coffee'
+CountsFor = require './entities/countsfor.coffee'
 
-IfStatement = require './entities/ifstatement'
-WhileStatement = require './entities/whilestatement'
-ReturnStatement = require './entities/returnstatement'
+IfStatement = require './entities/ifstatement.coffee'
+WhileStatement = require './entities/whilestatement.coffee'
+ReturnStatement = require './entities/returnstatement.coffee'
 
-IntegerLiteral = require './entities/integerliteral'
-FloatLiteral = require './entities/floatliteral'
-BooleanLiteral = require './entities/booleanliteral'
-StringLiteral = require './entities/stringliteral'
+IntegerLiteral = require './entities/integerliteral.coffee'
+FloatLiteral = require './entities/floatliteral.coffee'
+BooleanLiteral = require './entities/booleanliteral.coffee'
+StringLiteral = require './entities/stringliteral.coffee'
 
-List = require './entities/list'
-Dict = require './entities/dict'
-Function = require './entities/function'
+List = require './entities/list.coffee'
+Dict = require './entities/dict.coffee'
+Function = require './entities/function.coffee'
 
-FunctionInvocation = require '../entities/functioninvocation'
-VariableReference = require './entities/variablereference'
-BinaryExpression = require './entities/binaryexpression'
-UnaryExpression = require './entities/unaryexpression'
+FunctionInvocation = require '../entities/functioninvocation.coffee'
+VariableReference = require './entities/variablereference.coffee'
+BinaryExpression = require './entities/binaryexpression.coffee'
+UnaryExpression = require './entities/unaryexpression.coffee'
 
 tokens = []
 

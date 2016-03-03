@@ -7,39 +7,37 @@
 fs = require 'fs'
 byline = require 'byline'
 XRegExp = require 'xregexp'
-error = require '../error/error'
+error = require '../error/error.coffee'
 
 LETTER = XRegExp '[\\p{L}]'
 DIGIT = XRegExp '[\\p{Nd}]'
 WORD_CHAR = XRegExp '[\\p{L}\\p{Nd}_]'
 KEYWORDS = ///
-  (make|to|deeg|end|thru|till|by|exists|and|or|unless|if|else|then|not)
-  \
-  (true|false|for|while|does|count|counts|match|with)
+  (make|to|deeg|end|thru|till|by|exists|and|or|unless|if|else|then|not|
+  true|false|for|while|does|count|counts|match|with)
 ///
 
 module.exports = (filename, callback) ->
+  scanningError = null
   baseStream = fs.createReadStream filename, {encoding: 'utf8'}
-  baseStream.on 'error', (err) -> error(err)
+  baseStream.on 'error', (err) -> console.log error err
 
   stream = byline baseStream, {keepEmptyLines: true}
   tokens = []
   lineNumber = 0
+  blockComment = {
+    yes: false
+  }
   stream.on 'readable', () ->
-    scan stream.read(), ++lineNumber, tokens
+    scan stream.read(), ++lineNumber, tokens, blockComment
   stream.once 'end', () ->
     tokens.push {kind: 'EOF', lexeme: 'EOF'}
-    callback tokens
-
-  scanningError = null
-  callback scanningError, tokens
+    callback scanningError, tokens
     
-scan = (line, lineNumber, tokens) ->
+scan = (line, lineNumber, tokens, blockComment) ->
   return if not line
 
   [start, pos] = [0, 0]
-
-  blockCommentStarted = false
 
   emit = (kind, lexeme) ->
     tokens.push {kind, lexeme: lexeme or kind, line: lineNumber, col: start+1}
@@ -53,15 +51,11 @@ scan = (line, lineNumber, tokens) ->
     break if pos >= line.length
 
     # Block Comment
-    if line[pos] is '#' and line[pos+1] is '#' and line[pos+2] is '#'
-      if !blockCommentStarted
-        blockCommentStarted = true
-      else
-        blockCommentStarted = false
-      break
+    if /(?:###)/.test line.substring(pos, pos+3)
+      blockComment.yes = not blockComment.yes
 
     # Inside of Block Comment
-    break if blockCommentStarted
+    break if blockComment.yes
 
     # Comment
     break if line[pos] is '#'
@@ -87,5 +81,6 @@ scan = (line, lineNumber, tokens) ->
       emit 'intlit', line.substring start, pos
 
     else
-      error "Illegal character: #{line[pos]}", {line: lineNumber, col: pos+1}
+      console.log error "Illegal character: #{line[pos]}",
+        {line: lineNumber, col: pos+1}
       pos++
