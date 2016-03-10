@@ -11,13 +11,13 @@ Deeg is a static, object-oriented, strongly-typed language that has powerful and
 
 - First class functions
 - Optional parameters/default parameters
-- Indentation instead of curly braces
+- Terminal 'end' instead of curly braces
 - Parenthesis are optional, except for functions
 - Optionals
 - .deeg file extension
 - String Interpolation
 - Type Inference
-- make usage
+- "make" usage
 - Specify type with :
 - Optional type specify with ?
 - List Comprehensions
@@ -47,7 +47,7 @@ mulop          ::= '*' | '/' | '%'
 prefixop       ::= '-' | 'not' | '!'
 boollit        ::= 'true' | 'false'
 escape         ::= [\\] [rnst'"\\] 
-char           ::= [^\x00-\x1F'"\\] | escape
+char           ::= [^\p{Cc}'"\\] | escape
 stringlit      ::= ('"' char* '"') | (\x27 char* \x27)
 comment        ::= '#' [^\n]* newline
                  | '###' .*? '###'
@@ -80,20 +80,23 @@ Type           ::= ':' (type | 'Dict' | ('List' (':' Type)?) | ('Function(' (Typ
 
 Exp            ::= VarDeclaration
                  | VarAssignment
-                 | ConditionalExp
                  | FunctionExp
                  | Exp0
 
 PatBlock       ::= (Patline newline)*
 
-Patline        ::= '>' (id
+<!-- Patline        ::= '>' (id
                         | WildCard
                         | Head '|' Tail
-                 ) Type? ('if')? 'then' Stmt
+                 ) Type? ('if')? Exp 'then' Stmt -->
 
-WildCard       ::= '_'
+Patline        ::= '>' Patterns ('if' Exp)? 'then' Stmt
+Patterns       ::= Pattern ('|' Pattern)*
+Pattern        ::= (id | WildCard) Type?
+
+<!-- WildCard       ::= '_'
 Head           ::= id | WildCard
-Tail           ::= id | WildCard | (Head '|' Tail)
+Tail           ::= id | WildCard | (Head '|' Tail) -->
 
 VarDeclaration ::= 'make' id Type? '=' Exp
 VarAssignment  ::= VarExp '=' Exp
