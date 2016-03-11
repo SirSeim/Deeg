@@ -1,4 +1,4 @@
-initialContext = require('../analyzer/analyzer.coffee').initialContext
+# initialContext = require('../analyzer/analyzer.coffee').initialContext
 # HashMap = require('hashmap.coffee').HashMap
 
 class Program
