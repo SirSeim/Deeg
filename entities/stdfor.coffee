@@ -2,9 +2,9 @@ Type = require './type.coffee'
 
 class StdFor
 
-  constructor: (@idexplist)->
+  constructor: (@idexplist, @body)->
 
-  toString: -> "(StdFor idexplist:#{idexplist.map toString})"
+  toString: -> "(StdFor idexplist:#{@idexplist.join(' ')} body:#{@body})"
 
 
   # analyze: (context) ->
