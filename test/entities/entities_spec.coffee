@@ -50,12 +50,28 @@ describe 'Entities', ->
   describe 'Type Entity', ->
     context 'when constructing a type', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new Type 'bool').toString()).to.eql('bool')
+        expect((Type.BOOL).toString()).to.eql('bool')
         done()
 
   describe 'VariableDeclaration Entity', ->
     context 'when constructing a variable declaration', ->
-      it ''
+      it 'constructs and toStrings correctly', (done) ->
+        token = {
+          kind: 'id',
+          lexeme: 'foo',
+          line: 3,
+          col: 1
+        }
+        expect((new VariableDeclaration token, 3, 'bool').toString())
+          .to.eql('(VarDec :foo of type: bool = 3)')
+        done()
+
+  describe 'StdFor Entity', ->
+    context 'when constructing a standard for', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new StdFor ['(foo in bar)'], 'Body').toString())
+          .to.eql('(StdFor idexplist:(foo in bar) body:Body)')
+        done()
 
   # describe 'scanning valid deeg programs', ->
   #   describe 'deeg program #1', ->
