@@ -423,6 +423,18 @@ make even_and_true = (x:int, f():bool) does         var even_and_true = function
                                                     }
 ```
 
+### Fibonacci Function example
+
+```
+make fibonacci = (x:int) does                       function fibonacci(x) {
+    make a:int = 0, b:int = 1, c:int                    var a = 0, b = 1, c;
+    if (x < 3) deeg 1                                   if (x < 3) return 1;
+    while(--x)                                          while (--n)
+        c = a + b, a = b, b = c                             c = a + b, a = b, b = c;
+    deeg c                                              return c;
+                                                    }
+
+```
 [deeg-img]: https://i.imgur.com/ylMlnSA.png
 [deeg-url]: https://github.com/SirSeim/Deeg
 
