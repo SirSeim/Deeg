@@ -73,7 +73,7 @@ ReturnStmt     ::= 'deeg' Exp
 IfStmt         ::= 'if' Exp 'then' (newline Block | Stmt) ('else if' Exp 'then' (newline Block | Stmt))* ('else' (newline Block | Stmt ))? 'end'
 WhileStmt      ::= 'while' Exp 'then' (newline Block 'end' | Stmt 'end')
 ForStmt        ::= 'for' (StdFor | CountFor | CountsFor) 'then' (newline Block 'end' | Stmt 'end')
-MatchStmt      ::= 'match' id 'with' newline PatBlock
+MatchStmt      ::= 'match' Exp 'with' newline PatBlock
 
 Type           ::= ':' (type | 'Dict' | ('List' (':' Type)?) | ('Function(' (Type (',' Type)*)? ')' (':' Type)?))
 
@@ -84,18 +84,9 @@ Exp            ::= VarDeclaration
 
 PatBlock       ::= (Patline newline)*
 
-<!-- Patline        ::= '>' (id
-                        | WildCard
-                        | Head '|' Tail
-                 ) Type? ('if')? Exp 'then' Stmt -->
-
 Patline        ::= '>>' Patterns ('if' Exp)? 'then' Stmt
 Patterns       ::= Pattern ('|' Pattern)*
 Pattern        ::= (id | WildCard) Type?
-
-<!-- WildCard       ::= '_'
-Head           ::= id | WildCard
-Tail           ::= id | WildCard | (Head '|' Tail) -->
 
 VarDeclaration ::= 'make' id Type? '=' Exp
 VarAssignment  ::= VarExp '=' Exp
