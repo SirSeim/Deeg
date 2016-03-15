@@ -368,26 +368,26 @@ prints
 ```
 make func = (x) does
     match x with
-        > 5 then deeg true
-        > 72 then deeg true
-        > _ then deeg false
+        >> 5 then deeg true
+        >> 72 then deeg true
+        >> _ then deeg false
     end
 end
 
 
 make func = (l) does
     match l with
-        > head|tail if head > 5 then deeg head
-        > _|tail then deeg false
+        >> head|tail if head > 5 then deeg head
+        >> _|tail then deeg false
     end
 end
 
 make func = (param) does
     match param with
-        > _:int then deeg true
-        > _:float then deeg false
-        > _:string then deeg "Hello, World!"
-        > _ then deeg "Get with the primitives."
+        >> _:int then deeg true
+        >> _:float then deeg false
+        >> _:string then deeg "Hello, World!"
+        >> _ then deeg "Get with the primitives."
     end
 end
 
