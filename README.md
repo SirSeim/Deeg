@@ -435,6 +435,16 @@ make fibonacci = (x:int) does                       function fibonacci(x) {
                                                     }
 
 ```
+
+### GCD Function example
+```
+make gcd = (a:int, b:int):int does                  var gcd = function(a, b) {
+    if (!b) exists                                      if ( ! b) {
+        deeg a                                              return a;
+    deeg gcd(b, a % b)                                  }
+                                                        return gcd(b, a % b);
+                                                    };
+```
 [deeg-img]: https://i.imgur.com/ylMlnSA.png
 [deeg-url]: https://github.com/SirSeim/Deeg
 
