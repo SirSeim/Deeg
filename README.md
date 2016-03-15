@@ -18,8 +18,7 @@ Deeg is a static, object-oriented, strongly-typed language that has powerful and
 - String Interpolation
 - Type Inference
 - "make" usage
-- Specify type with :
-- Optional type specify with ?
+- Specify type with `:`, optionaly specifying as optional with trailing `?`
 - List Comprehensions
 - Pattern Matching
 
@@ -90,7 +89,7 @@ PatBlock       ::= (Patline newline)*
                         | Head '|' Tail
                  ) Type? ('if')? Exp 'then' Stmt -->
 
-Patline        ::= '>' Patterns ('if' Exp)? 'then' Stmt
+Patline        ::= '>>' Patterns ('if' Exp)? 'then' Stmt
 Patterns       ::= Pattern ('|' Pattern)*
 Pattern        ::= (id | WildCard) Type?
 
