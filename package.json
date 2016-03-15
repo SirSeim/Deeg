@@ -4,9 +4,10 @@
   "description": "The night is darkest just before the dawn. And I promise you, the dawn is coming.",
   "main": "deeg.coffee",
   "scripts": {
-    "test": "mocha --recursive --compilers coffee:coffee-script/register --require coffee-coverage/register-istanbul 'test/**/*.coffee' || istanbul report text-summary lcov",
+    "test": "mocha --recursive --compilers coffee:coffee-script/register --require coffee-coverage/register-istanbul 'test/**/*.coffee' && istanbul report text-summary lcov",
     "coffeelint": "$(npm bin)/coffeelint $(npm bin)/../../",
     "report": "istanbul report",
+    "report-summary": "istanbul report text-summary lcov",
     "codecov": "mocha --recursive --compilers coffee:coffee-script/register --require coffee-coverage/register-istanbul 'test/**/*.coffee' && istanbul report && codecov",
     "rm-js": "find . -name '*.js' -type f -delete"
   },
