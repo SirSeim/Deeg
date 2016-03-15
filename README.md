@@ -429,20 +429,20 @@ make even_and_true = (x:int, f():bool) does         var even_and_true = function
 make fibonacci = (x) does                           function fibonacci(x) {
     make a = 0, b = 1, c                                var a = 0, b = 1, c;
     if (x < 3) deeg 1                                   if (x < 3) return 1;
-    while(--x > 0)                                      while (--x > 0) {
+    while (--x > 0) does                                while (--x > 0) {
         c = a + b, a = b, b = c                             c = a + b, a = b, b = c;
-    deeg c                                              }
-                                                        return c;
-                                                    }
+    end                                                 }
+    deeg c                                              return c;
+end                                                 }
 
 ```
 
 ### GCD Function example
 ```
-make gcd = (a:int, b:int):int does                  var gcd = function(a, b) {
-    if (!b) exists                                      if ( ! b) {
-        deeg a                                              return a;
-    deeg gcd(b, a % b)                                  }
+make gcd = (a, b) does                              var gcd = function(a, b) {
+    if (!b) exists deeg a end                           if ( ! b) {
+    deeg gcd(b, a % b)                                      return a;
+end                                                     }
                                                         return gcd(b, a % b);
                                                     };
 ```
