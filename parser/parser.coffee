@@ -120,7 +120,7 @@ parseIfStatement = ->
   oneLiner = true
   match 'if'
 
-  IfExpression = determineIfType()
+  IfExpression = parseIf()
 
   match 'then'
 
@@ -148,7 +148,7 @@ parseIfStatement = ->
 matchElseIfStatements =->
   match 'else if'
 
-  IfExpression = determineIfType()
+  IfExpression = parseIf()
 
   match 'then'
   if exists '\n' && !oneLiner
@@ -174,7 +174,7 @@ determineForType = ->
     message = "Expected \"id\" or \"count\" but found \"#{tokens[0].kind}\""
     error message, tokens[0]
 
-determineIfType = ->
+parseIf = ->
   return 
 
 parseStdFor = ->
