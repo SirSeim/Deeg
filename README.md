@@ -288,6 +288,8 @@ class Living
     toString to () does
         deeg "I'm alive"
     end
+
+    age to 21
 end
 ###
 
