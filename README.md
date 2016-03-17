@@ -62,13 +62,14 @@ Program        ::= Block
 Block          ::= (Stmt newline)*
 
 Stmt           ::= WhileStmt | ForStmt | MatchStmt | IfStmt
-                 | ReturnStmt
+                 | ReturnStmt | ClassDef | Binding
                  | Exp
 
 StdFor         ::= id Type? 'in' Exp ('and' id 'in' Exp)*
 CountFor       ::= 'count' Exp
 CountsFor      ::= id 'counts' Exp
 
+ClassDef       ::= 'class' id ('extends' id)? (newline Block | Stmt) 'end'
 ReturnStmt     ::= 'deeg' Exp
 IfStmt         ::= 'if' Exp 'then' (newline Block | Stmt) ('else if' Exp 'then' (newline Block | Stmt))* ('else' (newline Block | Stmt ))? 'end'
 WhileStmt      ::= 'while' Exp 'then' (newline Block 'end' | Stmt 'end')
@@ -274,6 +275,25 @@ make deeginator = (x, y:float):bool does
     make isAwesome = (x - y * 2 == 69)
     # isAwesome should always be true
     deeg isAwesome
+end
+```
+
+### Classes
+Classes that are also extendable
+```
+class Living toString to () does deeg "I'm alive" end end
+
+### Equivalent to above
+class Living
+    toString to () does
+        deeg "I'm alive"
+    end
+end
+###
+
+class Animal extends Living
+    constructor to (@name) does end
+    toString to () does deeg "\{@name} is alive" end
 end
 ```
 
