@@ -140,9 +140,10 @@ parseIfStatement = ->
       message = "Expected one line if statement but found new line"
       error message, tokens[0]
     match 'end'
-    new IfStatement(IfExpression,ifBody,elseIfExpressions)
+    new IfElseStatement(IfExpression,ifBody,elseIfExpressions,elseBody) 
   else 
-    new IfElseStatement(IfExpression,ifBody,elseIfExpressions,elseBody)
+    match 'end'
+    new IfStatement(IfExpression,ifBody,elseIfExpressions)
 
 matchElseIfStatements =->
   match 'else if'
@@ -173,9 +174,9 @@ determineForType = ->
     message = "Expected \"id\" or \"count\" but found \"#{tokens[0].kind}\""
     error message, tokens[0]
 
-determineIfType =->
+determineIfType = ->
   return 
-  
+
 parseStdFor = ->
   idexplist = []
   idexplist.push(parseStdForIdExp())
