@@ -113,6 +113,55 @@ parseForStatement = ->
 
   new ForStatement(forIterate, body)
 
+#parseMatchStatement = ->
+ # match 'match'
+
+parseIfStatement = ->
+  oneLiner = true
+  match 'if'
+
+  IfExpression = determineIfType()
+
+  match 'then'
+
+  if exists '\n'
+    oneLiner = false
+    match '\n'
+    ifBody = parseBlock()
+  if exists 'else if'
+    elseIfExpressions = {}
+    matchElseIfStatements()
+  if exists 'else'
+    match 'else'
+    if exists '\n' && !oneLiner
+      match '\n'
+      elseBody = parseBlock()
+    else if exists '\n' && oneLiner
+      message = "Expected one line if statement but found new line"
+      error message, tokens[0]
+    match 'end'
+    new IfStatement(IfExpression,ifBody,elseIfExpressions)
+  else 
+    new IfElseStatement(IfExpression,ifBody,elseIfExpressions,elseBody)
+
+matchElseIfStatements =->
+  match 'else if'
+
+  IfExpression = determineIfType()
+
+  match 'then'
+  if exists '\n' && !oneLiner
+    match '\n'
+    elseIfbody = parseBlock()
+    elseIfExpressions.push({IfExpression:elseIfbody})
+  else if exists '\n' && oneLiner
+    message = "Expected one line if statement but found new line"
+    error message, tokens[0]
+  if exists 'else if'
+    matchElseIfStatements()
+  else 
+    return
+
 determineForType = ->
   if exists 'id' and optionalTypeCheck() # true if StdFor
     parseStdFor()
@@ -124,6 +173,9 @@ determineForType = ->
     message = "Expected \"id\" or \"count\" but found \"#{tokens[0].kind}\""
     error message, tokens[0]
 
+determineIfType =->
+  return 
+  
 parseStdFor = ->
   idexplist = []
   idexplist.push(parseStdForIdExp())
