@@ -4,28 +4,127 @@
 [![Dependency Status][dependency-img]][dependency-url]
 [![Dev Dependency Status][dev-dependency-img]][dev-dependency-url]
 
-##Introduction
+## Introduction
 Deeg is a static, object-oriented, strongly-typed language that has powerful and efficient features, including type inferencing, list comprehensions, optionals, string interpolation and first class functions. Deeg compiles nicely into JavaScript. Deeg is the future, and if you don't think so, then you are living in the past, buddy.
 
-##List of Features
+## List of Features
 
 - First class functions
 - Optional parameters/default parameters
-- Indentation instead of curly braces
+- Terminal 'end' instead of curly braces
 - Parenthesis are optional, except for functions
 - Optionals
 - .deeg file extension
 - String Interpolation
 - Type Inference
-- make usage
-- Specify type with :
-- Optional type specify with ?
+- "make" usage
+- Specify type with `:`, optionaly specifying as optional with trailing `?`
 - List Comprehensions
 - Pattern Matching
 
-##Features
+### Microsyntax
 
-###Comments
+The rules here are ordered. Matches are attempted from top to bottom.
+
+```
+newline        ::= \s* (\r*\n)+
+letter         ::= [a-zA-Z]
+digit          ::= [0-9]
+keyword        ::= 'make' | 'to' 
+                 | 'deeg' | 'end' | 'thru' | 'till' | 'by' 
+                 | 'and' | 'or' | 'exists' | 'unless' 
+                 | 'if'  | 'else' | 'then'
+                 | 'not' | 'true' | 'false'
+                 | 'for' | 'while' | 'does' | 'count' | 'counts'
+                 | 'match' | 'with' 
+id             ::= letter (letter | digit | '_')*
+intlit         ::= digit+
+floatlit       ::= digit+ '.' digit+ <!-- ([Ee] [+-]? digit+)? -->
+relop          ::= '<' | '<=' | '==' | '!=' | '>=' | '>'
+addop          ::= '+' | '-'
+mulop          ::= '*' | '/' | '%'
+prefixop       ::= '-' | 'not' | '!'
+boollit        ::= 'true' | 'false'
+escape         ::= [\\] [rnst'"\\] 
+char           ::= [^\p{Cc}'"\\] | escape
+stringlit      ::= ('"' char* '"') | (\x27 char* \x27)
+comment        ::= '#' [^\n]* newline
+                 | '###' .*? '###'
+type           ::= 'bool' | 'int' | 'float' | 'string'
+```
+
+### Macrosyntax
+
+format can be directly input into Gunther Rademacher's [Railroad Diagram Generator](http://www.bottlecaps.de/rr/ui)
+
+```
+Program        ::= Block
+Block          ::= (Stmt newline)*
+
+Stmt           ::= WhileStmt | ForStmt | MatchStmt | IfStmt
+                 | ReturnStmt | ClassDef | Binding
+                 | Exp
+
+StdFor         ::= id Type? 'in' Exp ('and' id 'in' Exp)*
+CountFor       ::= 'count' Exp
+CountsFor      ::= id 'counts' Exp
+
+ClassDef       ::= 'class' id ('extends' id)? (newline Block | Stmt) 'end'
+ReturnStmt     ::= 'deeg' Exp
+IfStmt         ::= 'if' Exp 'then' (newline Block | Stmt) ('else if' Exp 'then' (newline Block | Stmt))* ('else' (newline Block | Stmt ))? 'end'
+WhileStmt      ::= 'while' Exp 'then' (newline Block 'end' | Stmt 'end')
+ForStmt        ::= 'for' (StdFor | CountFor | CountsFor) 'then' (newline Block 'end' | Stmt 'end')
+MatchStmt      ::= 'match' Exp 'with' newline PatBlock
+
+Type           ::= ':' (type | 'Dict' | ('List' (':' Type)?) | ('Function(' (Type (',' Type)*)? ')' (':' Type)?))
+
+Exp            ::= VarDeclaration
+                 | VarAssignment
+                 | FunctionExp
+                 | Exp0
+
+PatBlock       ::= (Patline newline)*
+
+Patline        ::= '>>' Patterns ('if' Exp)? 'then' Stmt
+Patterns       ::= Pattern ('|' Pattern)*
+Pattern        ::= (id | WildCard) Type?
+
+VarDeclaration ::= 'make' id Type? '=' Exp
+VarAssignment  ::= VarExp '=' Exp
+VarExp         ::= id ( '.' Exp8 
+                        | '[' Exp3 ']' 
+                        | (Args ('.' Exp8 | '[' Exp3 ']')) )*
+
+Exp0           ::=  Exp1 ('if' Exp1 ('else' Exp1)?)?
+Exp1           ::=  Exp2 ('or' Exp2)*
+Exp2           ::=  Exp3 ('and' Exp3)*
+Exp3           ::=  Exp4 (relop Exp4)?
+Exp4           ::=  Exp5 (('thru'|'till') Exp5 ('by' Exp5)?)?
+Exp5           ::=  Exp6 (addop Exp6)*
+Exp6           ::=  Exp7 (mulop Exp7)*
+Exp7           ::=  prefixop? Exp8
+Exp8           ::=  Exp9 ('**' Exp5)?
+Exp9           ::=  Exp10 ('.' Exp10 | '[' Exp4 ']' | Args)*
+Exp10          ::=  boollit | intlit | floatlit | id | '(' Exp ')' | stringlit
+                 | DictLit | ListLit
+
+ExpList        ::= newline? Exp (',' newline? Exp)* newline?
+ParamList      ::= newline? Exp Type? (',' newline? Exp Type?)* newline?
+
+Args           ::= '(' ExpList ')'
+Params         ::= '(' ParamList ')'
+
+ListLit        ::= '[' ExpList? ']'
+DictLit        ::= '{' BindingList? '}'
+Binding        ::= newline? id Type? 'to' Exp newline?
+BindingList    ::= Binding (',' Binding)*
+
+FunctionExp    ::= Params Type? 'does' (newline Block | Stmt) 'end'
+```
+
+## Features
+
+### Comments
 
 ```
 # commented to the end of line
@@ -35,7 +134,7 @@ Deeg is a static, object-oriented, strongly-typed language that has powerful and
 ###
 ```
 
-###Assignments
+### Assignments
 
 ```
 make example_variable = "this string"
@@ -48,7 +147,7 @@ a, b = b, a
 make c, d = 2, 16
 ```
 
-###Primitive Types & Reference Types
+### Primitive Types & Reference Types
 We have four primitive types: `int` `float` `bool` `string` and however many reference types: `Dict` `Function` `List`
 
 ```
@@ -68,7 +167,7 @@ make mapping:Dict = {
 }
 ```
 
-####Type Inference and Static Typing
+### Type Inference and Static Typing
 
 Hierarchy of types:
 
@@ -90,7 +189,7 @@ make grade:int = int(95.0)          # manual conversion down heirarchy
 make gpa:int? = int('none')         # ex. converting from strings to nums return optionals
 ```
 
-###List Comprehensions & Slices
+### List Comprehensions & Slices
 
 ```
 [1 thru 10]                         # 1 up to 10, inclusive
@@ -104,7 +203,7 @@ meal[0 till 3]                      # Since [0 till 3] == [0,1,2] this is also "
 meal[0 till 8 by 3]                 # We grab "aio"
 ```
 
-###If Statements
+### If Statements
 
 ```
 if bool_expression then
@@ -127,7 +226,7 @@ if bool_expression then ###action### else ###else action### end
 make interesting_result = "happy times" if bool_expression else "sad times"
 ```
 
-###For and While Loops
+### For and While Loops
 
 ```
 for cat in cat_array then
@@ -159,7 +258,7 @@ while is_running then
 end
 ```
 
-###Functions
+### Functions
 In place of a `return` keyword, we have `deeg`.
 
 ```
@@ -167,7 +266,8 @@ make add_pizazz = (bore:string) does
     deeg bore + "!"
 end
 
-make f = (a, b):Function does
+make f:Function(int, int):int
+f = (a, b) does
     deeg (a, b) = deeg a + b
 end
 
@@ -178,7 +278,28 @@ make deeginator = (x, y:float):bool does
 end
 ```
 
-###Optionals
+### Classes
+Classes that are also extendable
+```
+class Living toString to () does deeg "I'm alive" end end
+
+### Equivalent to above
+class Living
+    toString to () does
+        deeg "I'm alive"
+    end
+
+    age to 21
+end
+###
+
+class Animal extends Living
+    constructor to (@name) does end
+    toString to () does deeg "\{@name} is alive" end
+end
+```
+
+### Optionals
 Optionals are not the default type for variables.
 
 ```
@@ -210,7 +331,7 @@ end
 make str = array[i] if i exists else "not found"
 ```
 
-###Arrays/Lists and Dictionaries
+### Arrays/Lists and Dictionaries
 
 ```
 make array = ["Hello", "Goodbye"]
@@ -255,33 +376,52 @@ prints
 ###
 ```
 
-###Pattern Matching!
+### Pattern Matching!
 ```
 make func = (x) does
     match x with
-        > 5 then deeg true
-        > 72 then deeg true
-        > _ then deeg false
+        >> 5 then deeg true
+        >> 72 then deeg true
+        >> _ then deeg false
     end
 end
+
+
+make func = (l) does
+    match l with
+        >> head|tail if head > 5 then deeg head
+        >> _|tail then deeg false
+    end
+end
+
+make func = (param) does
+    match param with
+        >> _:int then deeg true
+        >> _:float then deeg false
+        >> _:string then deeg "Hello, World!"
+        >> _ then deeg "Get with the primitives."
+    end
+end
+
+    
 ```
 
-##Example Programs
+## Example Programs
 
 Deeg on the left, JavaScript on the right
 
-###Hello World
+### Hello World
 ```
 print("hello world")                                console.log("hello world");
 ```
 
-###Variable Declarations
+### Variable Declarations
 ```
 make foo = 69                                       var foo = 69;
 make bar:string = 69                                var bar = "69";
 ```
 
-###Function Declarations
+### Function Declarations
 ```
 make adder = (a:int, b=10):int does deeg a + b      var adder = function (a, b) {
                                                         return a + b;
@@ -296,6 +436,29 @@ make even_and_true = (x:int, f():bool) does         var even_and_true = function
                                                     }
 ```
 
+### Fibonacci Function example
+
+```
+make fibonacci = (x) does                           function fibonacci(x) {
+    make a = 0, b = 1, c                                var a = 0, b = 1, c;
+    if (x < 3) deeg 1                                   if (x < 3) return 1;
+    while (--x > 0) does                                while (--x > 0) {
+        c = a + b, a = b, b = c                             c = a + b, a = b, b = c;
+    end                                                 }
+    deeg c                                              return c;
+end                                                 }
+
+```
+
+### GCD Function example
+```
+make gcd = (a, b) does                              var gcd = function(a, b) {
+    if (!b) exists deeg a end                           if ( ! b) {
+    deeg gcd(b, a % b)                                      return a;
+end                                                     }
+                                                        return gcd(b, a % b);
+                                                    };
+```
 [deeg-img]: https://i.imgur.com/ylMlnSA.png
 [deeg-url]: https://github.com/SirSeim/Deeg
 
