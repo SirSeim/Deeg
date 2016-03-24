@@ -27,7 +27,7 @@ Deeg is a static, object-oriented, strongly-typed language that has powerful and
 The rules here are ordered. Matches are attempted from top to bottom.
 
 ```
-newline        ::= \s* (\r*\n)+
+newline        ::= (\s* \r* \n*)+
 letter         ::= [a-zA-Z]
 digit          ::= [0-9]
 keyword        ::= 'make' | 'to' 
