@@ -95,7 +95,8 @@ VarDeclaration ::= 'make' id Type? '=' Exp
 VarAssignment  ::= VarExp '=' Exp
 VarExp         ::= id ( '.' Exp8 
                         | '[' Exp3 ']' 
-                        | (Args ('.' Exp8 | '[' Exp3 ']')) )*
+                        | (Args ('.' Exp9 | '[' Exp3 ']')) )*
+                        <!-- this ^ bothers me. love, josh -->
 Args           ::= '(' ExpList ')'
 ExpList        ::= newline? Exp (',' newline? Exp)* newline?
 

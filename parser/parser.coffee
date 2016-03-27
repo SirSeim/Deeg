@@ -40,6 +40,7 @@ FunctionExp = require './entities/functionexp.coffee'
 Params = require './entities/params.coffee'
 ParamList = require './entities/paramlist.coffee'
 
+TrailingIf = require './entities/trailingif.coffee'
 VariableReference = require './entities/variablereference.coffee'
 IntegerLiteral = require './entities/integerliteral.coffee'
 FloatLiteral = require './entities/floatliteral.coffee'
@@ -428,37 +429,81 @@ parseParamList = ->
 #   else 
 #     return
 
-parseExp0 = ->
+parseExp0 = -> # the trailing if and possible else
+  direction = parseExp1()
+  if exists 'if'
+    match 'if'
+    condition = parseExp1()
+    instruction = null
+    direction = new TrailingIf(direction, condition, instruction)
+    if exists 'else'
+      match 'else'
+      instruction = parseExp1()
+      direction = new TrailingIf(direction, condition, instruction)
+
+  direction
+
+parseExp1 = -> # the or
+  left = parseExp2()
+  while exists 'or'
+    match 'or'
+    right = parseExp2()
+    left = new BinaryExpression('or', left, right)
+  left
+
+parseExp2 = -> # the and
+  left = parseExp3()
+  while exists 'and'
+    match 'and'
+    right = parseExp3()
+    left = new BinaryExpression('and', left, right)
+  left
+
+parseExp3 = -> # the relops
+  left = parseExp4()
+  if at ['<', '<=', '==', '!=', '>=', '>']
+    op = match()
+    right = parseExp4()
+    left = new BinaryExpression(op, left, right)
+
+parseExp4 = -> # list comprehension i think i.e. thru till by
   
 
-parseExp1 = ->
+parseExp5 = -> # addition subtraction
+  left = parseExp6()
+  while at ['+', '-']
+    op = match()
+    right = parseExp6()
+    left = new BinaryExpression(op, left, right)
+  left
+
+parseExp6 = -> # multiplication division
+  left = parseExp7()
+  while at ['*', '/', '%']
+    op = match()
+    right = parseExp7()
+    left = new BinaryExpression op, left, right
+  left
+
+parseExp7 = -> # the prefix ops
+  if at ['-', 'not', '!']
+    op = match()
+    operand = parseExp8()
+    new UnaryExpression op, operand
+  else
+    parseExp8()
+
+parseExp8 = -> # the power (**)
+  left = parseExp9()
+  if exists '**'
+    match '**'
+    left = new BinaryExpression('**', left, parseExp5())
+  left
+
+parseExp9 = -> # property, set, args
   
 
-parseExp2 = ->
-  
-
-parseExp3 = ->
-  
-
-parseExp4 = ->
-  
-
-parseExp5 = ->
-  
-
-parseExp6 = ->
-  
-
-parseExp7 = ->
-  
-
-parseExp8 = ->
-  
-
-parseExp9 = ->
-  
-
-parseExp10 = ->
+parseExp10 = -> # literals, id, expression in parens
   
 
 exists = (kind) ->
