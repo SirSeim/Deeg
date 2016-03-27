@@ -10,11 +10,6 @@ Program = require './entities/program.coffee'
 Block = require './entities/block.coffee'
 Type = require './entities/type.coffee'
 
-VariableDeclaration = require './entities/variabledeclaration.coffee'
-VariableAssignment = require './entities/variableassignment.coffee'
-VariableExpression = require './entities/variableexpression.coffee'
-VariableReference = require './entities/variablereference.coffee'
-
 ForStatement = require './entities/forstatement.coffee'
 StdFor = require './entities/stdfor.coffee'
 StdForIdExp = require './entities/stdforidexp.coffee'
@@ -35,6 +30,17 @@ WhileStatement = require './entities/whilestatement.coffee'
 ReturnStatement = require './entities/returnstatement.coffee'
 # ClassDefinition = require './entities/classdefinition.coffee'
 
+VariableDeclaration = require './entities/variabledeclaration.coffee'
+VariableAssignment = require './entities/variableassignment.coffee'
+VariableExpression = require './entities/variableexpression.coffee'
+Args = require './entities/args.coffee'
+ExpList = require './entities/explist.coffee'
+
+FunctionExp = require './entities/functionexp.coffee'
+Params = require './entities/params.coffee'
+ParamList = require './entities/paramlist.coffee'
+
+VariableReference = require './entities/variablereference.coffee'
 IntegerLiteral = require './entities/integerliteral.coffee'
 FloatLiteral = require './entities/floatliteral.coffee'
 BooleanLiteral = require './entities/booleanliteral.coffee'
@@ -42,9 +48,8 @@ StringLiteral = require './entities/stringliteral.coffee'
 
 List = require './entities/list.coffee'
 Dict = require './entities/dict.coffee'
-Function = require './entities/function.coffee'
+# Function = require './entities/function.coffee' i have no idea how this differs from FunctionExp
 
-FunctionExp = require '../entities/functionexp.coffee'
 BinaryExpression = require './entities/binaryexpression.coffee'
 UnaryExpression = require './entities/unaryexpression.coffee'
 
@@ -84,16 +89,6 @@ parseStatement = ->
     parseBinding()
   else
     parseExpression()
-
-areParams = ->
-  parens = 0
-  position = 0
-  for token in tokens
-    parens++ if token.kind is '('
-    parens-- if token.kind is ')'
-    position++
-    break if parens is 0
-  tokens[position].kind is 'then'
 
 parseClassDefinition = ->
   match 'class'
@@ -283,6 +278,16 @@ parseExpression = ->
   else
     parseExp0()
 
+areParams = ->
+  parens = 0
+  position = 0
+  for token in tokens
+    parens++ if token.kind is '('
+    parens-- if token.kind is ')'
+    position++
+    break if parens is 0
+  tokens[position].kind is 'then'
+
 parseVariableDeclaration = ->
   match 'make'
   id = match 'id'
@@ -317,6 +322,60 @@ parseVariableExpression = ->
       match ']'
   new VariableExpression(id, args, exp8, exp3)
 
+parseArgs = ->
+  match '('
+  expList = parseExpList()
+  match ')'
+  new Args(expList)
+
+parseExpList = ->
+  expList = [] 
+
+  if exists 'newline'
+    match 'newline'
+  expList.push parseExpression()
+  while exists ','
+    match ','
+    if exists 'newline'
+      match 'newline'
+    expList.push parseExpression()
+  if exists 'newline'
+    match 'newline'
+  new ExpList(expList)
+
+parseFunctionExp = ->
+  params = parseParams()
+  type = optionalTypeMatch()
+  match 'does'
+  body = parseBlock()
+  match 'end'
+  new FunctionExp(params, type, body)
+
+parseParams = ->
+  match '('
+  paramList = parseParamList()
+  match ')'
+  new Params(paramList)
+
+parseParamList = ->
+  paramList = [] 
+  # this list will have expressions and types may follow right after
+  # null will follow if no type specified
+  # e.g. (5:int, "two", "hello":string)
+  # ==> [5, int, "two", null, "hello", string]
+  if exists 'newline'
+    match 'newline'
+  paramList.push parseExpression()
+  paramList.push optionalTypeMatch()
+  while exists ','
+    match ','
+    if exists 'newline'
+      match 'newline'
+    paramList.push parseExpression()
+    paramList.push optionalTypeMatch()
+  if exists 'newline'
+    match 'newline'
+  new ParamList(paramList)
 
 
 # parseIfStatement = ->

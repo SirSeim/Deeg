@@ -3,10 +3,10 @@ error = require '../error/error.coffee'
 
 class FunctionExp
 
-  constructor: (@func, @args) ->
+  constructor: (@params, @type, @body) ->
 
   toString: ->
-    "(Invoke #{@func} (#{@args.join(', ')}))"
+    "go function go" # disclaimer: this is wrong
 
   # analyze: (context) ->
   #   location = EntityUtils.findLocation @func

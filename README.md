@@ -96,8 +96,12 @@ VarAssignment  ::= VarExp '=' Exp
 VarExp         ::= id ( '.' Exp8 
                         | '[' Exp3 ']' 
                         | (Args ('.' Exp8 | '[' Exp3 ']')) )*
+Args           ::= '(' ExpList ')'
+ExpList        ::= newline? Exp (',' newline? Exp)* newline?
 
 FunctionExp    ::= Params Type? 'does' (newline Block | Stmt) 'end'
+Params         ::= '(' ParamList ')'
+ParamList      ::= newline? Exp Type? (',' newline? Exp Type?)* newline?
 
 Exp0           ::=  Exp1 ('if' Exp1 ('else' Exp1)?)?
 Exp1           ::=  Exp2 ('or' Exp2)*
@@ -112,16 +116,11 @@ Exp9           ::=  Exp10 ('.' Exp10 | '[' Exp4 ']' | Args)*
 Exp10          ::=  boollit | intlit | floatlit | id | '(' Exp ')' | stringlit
                  | DictLit | ListLit
 
-Args           ::= '(' ExpList ')'
-Params         ::= '(' ParamList ')'
-
-ExpList        ::= newline? Exp (',' newline? Exp)* newline?
-ParamList      ::= newline? Exp Type? (',' newline? Exp Type?)* newline?
-
 ListLit        ::= '[' ExpList? ']'
 DictLit        ::= '{' BindingList? '}'
-Binding        ::= newline? id Type? 'to' Exp newline?
+
 BindingList    ::= Binding (',' Binding)*
+Binding        ::= newline? id Type? 'to' Exp newline?
 ```
 
 ## Features
