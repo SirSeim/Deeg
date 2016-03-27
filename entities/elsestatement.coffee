@@ -1,11 +1,11 @@
 BooleanLiteral = require './booleanliteral.coffee'
 
-class IfStatement
+class ElseStatement
 
-  constructor: (@condition, @body, @elseIfStatement, @elseStatement) ->
+  constructor: (@body) ->
 
   toString: () ->
-    "(If #{@condition} then #{@body})" 
+    "(else #{@body})" 
   # disclaimer: toString will be more complicated because of possible else
   # and else if stuff
 
@@ -22,4 +22,4 @@ class IfStatement
   #     return null
   #   return this
 
-module.exports = IfStatement
+module.exports = ElseStatement

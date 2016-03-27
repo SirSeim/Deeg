@@ -2,12 +2,12 @@ Type = require './type.coffee'
 
 class StdForIdExp
 
-  constructor: (@id, @exp)->
+  constructor: (@idList, @typeList, @expList) -> 
 
   # value: ->
   #   @name is 'true'
 
-  toString: -> "(#{@id.lexeme} in #{@exp})"
+  toString: -> "ids and exps yay" # disclaimer: not correct
 
 
   # analyze: (context) ->

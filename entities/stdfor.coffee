@@ -2,7 +2,7 @@ Type = require './type.coffee'
 
 class StdFor
 
-  constructor: (@idexplist, @body)->
+  constructor: (@id, @type, @range, @additionalList)->
 
   toString: -> "(StdFor idexplist:#{@idexplist.join(' ')} body:#{@body})"
 

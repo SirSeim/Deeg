@@ -65,16 +65,24 @@ Stmt           ::= WhileStmt | ForStmt | MatchStmt | IfStmt
                  | ReturnStmt | ClassDef | Binding
                  | Exp
 
-StdFor         ::= id Type? 'in' Exp ('and' id 'in' Exp)*
-CountFor       ::= 'count' Exp
-CountsFor      ::= id 'counts' Exp
-
 ClassDef       ::= 'class' id ('extends' id)? (newline Block | Stmt) 'end'
-ReturnStmt     ::= 'deeg' Exp
 IfStmt         ::= 'if' Exp 'then' (newline Block | Stmt) ('else if' Exp 'then' (newline Block | Stmt))* ('else' (newline Block | Stmt ))? 'end'
 WhileStmt      ::= 'while' Exp 'then' (newline Block 'end' | Stmt 'end')
+
+MatchStmt      ::= 'match' Exp 'with' newline PatBlock 'end'
+
+PatBlock       ::= (Patline newline)*
+Patline        ::= '>>' Patterns ('if' Exp)? 'then' Stmt
+Patterns       ::= Pattern ('|' Pattern)*
+Pattern        ::= (id | WildCard) Type?
+
 ForStmt        ::= 'for' (StdFor | CountFor | CountsFor) 'then' (newline Block 'end' | Stmt 'end')
-MatchStmt      ::= 'match' Exp 'with' newline PatBlock
+
+StdFor         ::= id Type? 'in' Exp ('and' id Type? 'in' Exp)*
+CountsFor      ::= id 'counts' Exp
+CountFor       ::= 'count' Exp
+ReturnStmt     ::= 'deeg' Exp
+
 
 Type           ::= ':' (type | 'Dict' | ('List' (':' Type)?) | ('Function(' (Type (',' Type)*)? ')' (':' Type)?))
 
@@ -83,17 +91,13 @@ Exp            ::= VarDeclaration
                  | FunctionExp
                  | Exp0
 
-PatBlock       ::= (Patline newline)*
-
-Patline        ::= '>>' Patterns ('if' Exp)? 'then' Stmt
-Patterns       ::= Pattern ('|' Pattern)*
-Pattern        ::= (id | WildCard) Type?
-
 VarDeclaration ::= 'make' id Type? '=' Exp
 VarAssignment  ::= VarExp '=' Exp
 VarExp         ::= id ( '.' Exp8 
                         | '[' Exp3 ']' 
                         | (Args ('.' Exp8 | '[' Exp3 ']')) )*
+
+FunctionExp    ::= Params Type? 'does' (newline Block | Stmt) 'end'
 
 Exp0           ::=  Exp1 ('if' Exp1 ('else' Exp1)?)?
 Exp1           ::=  Exp2 ('or' Exp2)*
@@ -108,18 +112,16 @@ Exp9           ::=  Exp10 ('.' Exp10 | '[' Exp4 ']' | Args)*
 Exp10          ::=  boollit | intlit | floatlit | id | '(' Exp ')' | stringlit
                  | DictLit | ListLit
 
-ExpList        ::= newline? Exp (',' newline? Exp)* newline?
-ParamList      ::= newline? Exp Type? (',' newline? Exp Type?)* newline?
-
 Args           ::= '(' ExpList ')'
 Params         ::= '(' ParamList ')'
+
+ExpList        ::= newline? Exp (',' newline? Exp)* newline?
+ParamList      ::= newline? Exp Type? (',' newline? Exp Type?)* newline?
 
 ListLit        ::= '[' ExpList? ']'
 DictLit        ::= '{' BindingList? '}'
 Binding        ::= newline? id Type? 'to' Exp newline?
 BindingList    ::= Binding (',' Binding)*
-
-FunctionExp    ::= Params Type? 'does' (newline Block | Stmt) 'end'
 ```
 
 ## Features

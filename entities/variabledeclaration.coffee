@@ -2,7 +2,7 @@ Type = require './type.coffee'
 
 class VariableDeclaration
 
-  constructor: (@id, @value, @type) ->
+  constructor: (@id, @type, @value) ->
 
   toString: ->
     "(VarDec :#{@id.lexeme} of type: #{@type} = #{@value})"

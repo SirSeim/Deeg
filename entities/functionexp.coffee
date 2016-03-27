@@ -1,7 +1,7 @@
 Type = require './type.coffee'
 error = require '../error/error.coffee'
 
-class FunctionInvocation
+class FunctionExp
 
   constructor: (@func, @args) ->
 
@@ -40,4 +40,4 @@ class FunctionInvocation
 
   
 
-module.exports = FunctionInvocation
+module.exports = FunctionExp

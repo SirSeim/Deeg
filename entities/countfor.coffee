@@ -2,9 +2,9 @@ Type = require './type.coffee'
 
 class CountFor
 
-  constructor: (@exp)->
+  constructor: (@tally)->
 
-  toString: -> "(CountFor count #{@exp})"
+  toString: -> "(CountFor count #{@tally})"
 
 
   # analyze: (context) ->
