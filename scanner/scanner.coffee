@@ -66,7 +66,7 @@ scan = (line, lineNumber, tokens, blockComment) ->
       pos += 2
 
     # One-character tokens
-    else if /[+\-*\/(),:;=<>]/.test line[pos]
+    else if /[+\-*\/(),:=<>]/.test line[pos]
       emit line[pos++]
 
     # Reserved words or identifiers
@@ -78,7 +78,13 @@ scan = (line, lineNumber, tokens, blockComment) ->
     # Numeric literals
     else if DIGIT.test line[pos]
       pos++ while DIGIT.test line[pos]
-      emit 'intlit', line.substring start, pos
+
+      if /\./.test line[pos+1]
+        pos++
+        pos++ while DIGIT.test line[pos]
+        emit 'floatlit', line.substring start, pos
+      else
+        emit 'intlit', line.substring start, pos
 
     else
       console.log error "Illegal character: #{line[pos]}",
