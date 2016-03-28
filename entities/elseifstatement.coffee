@@ -2,7 +2,7 @@ BooleanLiteral = require './booleanliteral.coffee'
 
 class ElseIfStatement
 
-  constructor: (@condition, @body, @elseIfStatement, @elseStatement) ->
+  constructor: (@condition, @body, @elseIfStatement) ->
 
   toString: () ->
     "(else if #{@condition} then #{@body})" 

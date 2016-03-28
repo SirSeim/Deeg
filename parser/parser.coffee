@@ -73,9 +73,9 @@ parseProgram = ->
 parseBlock = ->
   statements = []
   loop
-    statements.push parseStatement()
+    statements.push parseStatement() # What if there's `newline` before the Stmt
     match 'newline'
-    break unless at ['EOF', 'end', 'else']
+    break if at ['EOF', 'end', 'else']
   new Block(statements)
 
 parseStatement = -> 
@@ -98,7 +98,7 @@ parseStatement = ->
 
 parseClassDefinition = ->
   match 'class'
-  id = match 'id'
+  id = match 'id' 
 
   if exists 'extends'
     match 'extends'
@@ -128,9 +128,7 @@ parseElseIfStatement = ->
   body = parseBlock()
   if exists 'else if'
     elseIfStatement = parseElseIfStatement()
-  if exists 'else'
-    elseStatement = parseElseStatement()
-  new ElseIfStatement(condition, body, elseIfStatement, elseStatement)
+  new ElseIfStatement(condition, body, elseIfStatement)
 
 parseElseStatement = ->
   match 'else'
@@ -149,16 +147,18 @@ parseMatchStatement = ->
   match 'match'
   matchee = parseExpression()
   match 'with'
-  match 'newline'
+  match 'newline' # maybe optional
   patBlock = parsePatBlock()
   match 'end'
   new MatchStatement(matchee, patBlock)
 
 parsePatBlock = ->
-  unless exists 'newline'
-    patLine = parsePatLine()
+  patLines = []
+  loop
+    patLines.push parsePatLine() # What if there's `newline` before the Stmt
     match 'newline'
-  new PatBlock(patLine)
+    break if at 'end'
+  new PatBlock(patLines)
 
 parsePatLine = ->
   match '>>'
@@ -174,7 +174,7 @@ parsePatterns = ->
   tails = []
   head = parsePattern()
   while exists '|'
-    match "|"
+    match '|'
     tails.push parsePattern()
   new Patterns(head, tails)
 
@@ -212,9 +212,9 @@ determineForType = ->
     message = "Expected \"id\" or \"count\" but found \"#{tokens[0].kind}\""
     error message, tokens[0]
 
-parseStdFor = ->
+parseStdFor = -> # use array of ids to range
   id = match 'id'
-  optionalTypeMatch()
+  type = optionalTypeMatch()
   match 'in'
   range = parseExpression()
   if exists 'and'
@@ -224,10 +224,11 @@ parseStdFor = ->
 parseStdForIdExp = ->
   idList = []
   expList = []
+  typeList = []
   while exists 'and'
     match 'and'
     idList.push match 'id'
-    optionalTypeMatch()
+    typeList.push optionalTypeMatch()
     match 'in'
     expList.push parseExpression()
   new StdForIdExp(idList, typeList, expList)
@@ -247,7 +248,7 @@ parseReturnStatement = ->
   match 'deeg'
   new ReturnStatement(parseExpression())
 
-parseType = ->
+parseType = -> # TODO: needs work for class types, be more generalized
   if at ['bool', 'int', 'float', 'string', 'Dict']
     Type.forName match().lexeme
   else if at 'List'
@@ -269,7 +270,7 @@ parseType = ->
 optionalTypeMatch = ->
   if optionalTypeCheck()
     match ':'
-    type = parseType()
+    parseType()
 
 optionalTypeCheck = ->
   exists ':'
@@ -284,12 +285,12 @@ parseExpression = ->
   else
     parseExp0()
 
-areParams = ->
+areParams = -> # WTF
   parens = 0
   position = 0
   for token in tokens
-    parens++ if token.kind is '('
-    parens-- if token.kind is ')'
+    parens++ if exists '('
+    parens-- if exists ')'
     position++
     break if parens is 0
   tokens[position].kind is 'then'
@@ -297,7 +298,7 @@ areParams = ->
 parseVariableDeclaration = ->
   match 'make'
   id = match 'id'
-  optionalTypeMatch()
+  type = optionalTypeMatch()
   match '='
   value = parseExpression()
   new VariableDeclaration(id, type, value)
