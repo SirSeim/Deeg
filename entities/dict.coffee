@@ -3,7 +3,7 @@ Type = require './type.coffee'
 
 class Dict
 
-  constructor: (@keys, @values) ->
+  constructor: (@bindingList) ->
 
   # toString: ->
   #   '{' + _.zip(@keys, @values).map((val) ->

@@ -42,6 +42,9 @@ ParamList = require './entities/paramlist.coffee'
 
 TrailingIf = require './entities/trailingif.coffee'
 VariableReference = require './entities/variablereference.coffee'
+FieldAccess = require './entities/fieldaccess.coffee'
+IterableItem = require './entities/iterableitem.coffee'
+Range = require './entities/range.coffee'
 IntegerLiteral = require './entities/integerliteral.coffee'
 FloatLiteral = require './entities/floatliteral.coffee'
 BooleanLiteral = require './entities/booleanliteral.coffee'
@@ -49,6 +52,8 @@ StringLiteral = require './entities/stringliteral.coffee'
 
 List = require './entities/list.coffee'
 Dict = require './entities/dict.coffee'
+BindingList = require './entities/bindinglist.coffee'
+Binding = require './entities/binding.coffee'
 # Function = require './entities/function.coffee' i have no idea how this differs from FunctionExp
 
 BinaryExpression = require './entities/binaryexpression.coffee'
@@ -467,7 +472,17 @@ parseExp3 = -> # the relops
     left = new BinaryExpression(op, left, right)
 
 parseExp4 = -> # list comprehension i think i.e. thru till by
-  
+  left = parseExp5()
+  if ((exists 'thru') or (exists 'till'))
+    op = match()
+    right = parseExp5()
+    if exists 'by'
+      # include skip factor in range
+      match 'by'
+      left = new Range op, left, right, parseExp5()
+    else
+      left = new Range op, left, right
+  left
 
 parseExp5 = -> # addition subtraction
   left = parseExp6()
@@ -501,16 +516,94 @@ parseExp8 = -> # the power (**)
   left
 
 parseExp9 = -> # property, set, args
-  
+  input = parseExp9()
+  while (at ['.', '[', '('])
+    while exists '.'
+      match '.'
+      input = new FieldAccess(input, parseExp10())
+    while exists '['
+      match '['
+      input = new IterableItem(input, parseExp4())
+      match ']'
+    while exists '('
+      input = new FunctionExp(input, parseArgs())
+  input  
 
 parseExp10 = -> # literals, id, expression in parens
-  
+  if at ['true', 'false']
+    new BooleanLiteral match()
+  else if at 'INTLIT'
+    new IntegerLiteral match()
+  else if at 'FLOATLIT'
+    new FloatLiteral match()
+  else if at 'id'
+    new VariableReference match()
+  else if at '('
+    match()
+    expression = parseExpression()
+    match ')'
+    expression
+  else if at 'STRINGLIT'
+    new StringLiteral match()
+  else if exists '{'
+    parseDict()
+  else if exists '['
+    parseList()
+  else
+    CustomError 'Unlawful start of expression', tokens[0]
+
+parseList = ->
+  listicles = []
+  match '['
+
+  if not exists ']'
+    listicles = parseExpList()
+
+  if exists 'newline'
+    match 'newline'
+  match ']'
+  new List(listicles)
+
+parseDict = ->
+  bindingList = []
+  match '{'
+
+  if not exists '}'
+    bindingList = parseBindingList()
+
+  if exists 'newline'
+    match 'newline'
+  match '}'
+  new Dict(bindingList)
+
+parseBindingList = ->
+  bindingList = []
+
+  bindingList.push parseBinding()
+
+  while exists ','
+    match ','
+    bindingList.push parseBinding()
+  new BindingList(bindingList)
+
+parseBinding = ->
+  if exists 'newline'
+    match 'newline'
+
+  key = match 'id'
+  type = optionalTypeMatch()
+
+  match 'to'
+  value = parseExpression()
+
+  if exists 'newline'
+    match 'newline'
+  new Binding(key, type, value)
 
 exists = (kind) ->
   if tokens.length is 0
     error 'Unexpected end of source program'
   kind is undefined or kind is tokens[0].kind
-
 
 match = (kind, optional=false) ->
   if tokens.length is 0
