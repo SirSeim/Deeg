@@ -12,7 +12,7 @@ describe 'Scanner', ->
   describe 'scanning valid deeg programs', ->
     fs.readdirSync(validScannerPrograms).forEach (name) ->
       context "when #{name} is passed through the scanner", ->
-        console.log name.split(".")[0]
+        # console.log name.split(".")[0]
         it 'returns the appropriate tokens', (done) ->
           scan path.join(validScannerPrograms, name), (err, tokens) ->
             expect(tokens).to.eql(validOutputTokens[name.split(".")[0]])

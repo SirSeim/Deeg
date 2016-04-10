@@ -27,7 +27,7 @@ List = require '#{__dirname}/../../entities/list.coffee'
 Dict = require '#{__dirname}/../../entities/dict.coffee'
 Function = require '#{__dirname}/../../entities/function.coffee'
 
-FunctionInvocation = require '.#{__dirname}/../../entities/functioninvocation.coffee'
+# FunctionInvocation = require '.#{__dirname}/../../entities/functioninvocation.coffee'
 VariableReference = require '#{__dirname}/../../entities/variablereference.coffee'
 BinaryExpression = require '#{__dirname}/../../entities/binaryexpression.coffee'
 UnaryExpression = require '#{__dirname}/../../entities/unaryexpression.coffee'
