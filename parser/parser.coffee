@@ -28,7 +28,7 @@ ElseStatement = require './entities/elsestatement.coffee'
 
 WhileStatement = require './entities/whilestatement.coffee'
 ReturnStatement = require './entities/returnstatement.coffee'
-# ClassDefinition = require './entities/classdefinition.coffee'
+ClassDefinition = require './entities/classdefinition.coffee'
 
 VariableDeclaration = require './entities/variabledeclaration.coffee'
 VariableAssignment = require './entities/variableassignment.coffee'
@@ -383,57 +383,6 @@ parseParamList = ->
   if exists 'newline'
     match 'newline'
   new ParamList(paramList)
-
-
-# parseIfStatement = ->
-#   oneLiner = true
-#   match 'if'
-
-#   IfExpression = parseIf()
-
-#   match 'then'
-
-#   if exists 'newline'
-#     oneLiner = false
-#     match 'newline'
-#     ifBody = parseBlock()
-#   if exists 'else if'
-#     elseIfExpressions = {}
-#     matchElseIfStatements()
-#   if exists 'else'
-#     match 'else'
-#     if exists 'newline' && !oneLiner
-#       match 'newline'
-#       elseBody = parseBlock()
-#     else if exists 'newline' && oneLiner
-#       message = "Expected one line if statement but found new line"
-#       error message, tokens[0]
-#     match 'end'
-#     new IfElseStatement(IfExpression,ifBody,elseIfExpressions,elseBody) 
-#   else 
-#     match 'end'
-#     new IfStatement(IfExpression,ifBody,elseIfExpressions)
-
-# parseIf = ->
-
-
-# matchElseIfStatements = ->
-#   match 'else if'
-
-#   IfExpression = parseIf()
-
-#   match 'then'
-#   if exists 'newline' && !oneLiner
-#     match 'newline'
-#     elseIfbody = parseBlock()
-#     elseIfExpressions.push({IfExpression:elseIfbody})
-#   else if exists 'newline' && oneLiner
-#     message = "Expected one line if statement but found new line"
-#     error message, tokens[0]
-#   if exists 'else if'
-#     matchElseIfStatements()
-#   else 
-#     return
 
 parseExp0 = -> # the trailing if and possible else
   direction = parseExp1()
