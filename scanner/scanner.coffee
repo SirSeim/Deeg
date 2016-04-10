@@ -90,6 +90,7 @@ scan = (line, lineNumber, tokens, blockComment) ->
     # String Literals
     else if QUOTES.test line[pos]
       pos++
+      
 
     else
       console.log error "Illegal character: #{line[pos]}",
