@@ -73,6 +73,25 @@ describe 'Entities', ->
           .to.eql('(StdFor idexplist:(foo in bar) body:Body)')
         done()
 
+  describe 'StdForIdExp', -> #this is not correct. entity declaration is not finished
+    context 'when constructing a standard for id expression', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect(new StdForIdExp ['(foo in bar)'], 'Body').toString().to.eql('(StdForIdExp idexplist:(foo in bar) body:Body)')
+        done()
+
+  describe 'CountFor', ->
+    context 'when constructing a count for', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new CountFor 2).toString().to.eql('(CountFor count 2)'))
+        done()
+
+  describe 'CountsFor Entity', ->
+    context 'when constructing a counts for', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new CountsFor foo 2).toString().to.eql('CountsFor foo count 2'))
+        done()
+
+
   # describe 'scanning valid deeg programs', ->
   #   describe 'deeg program #1', ->
   #     context 'when test program1.deeg is passed through the scanner', ->
