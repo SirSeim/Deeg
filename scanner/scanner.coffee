@@ -11,6 +11,7 @@ error = require '../error/error.coffee'
 
 LETTER = XRegExp '[\\p{L}]'
 DIGIT = XRegExp '[\\p{Nd}]'
+QUOTES = XRegExp '\"|\''
 WORD_CHAR = XRegExp '[\\p{L}\\p{Nd}_]'
 KEYWORDS = ///
   (make|to|deeg|end|thru|till|by|exists|and|or|unless|if|else|then|not|
@@ -85,6 +86,10 @@ scan = (line, lineNumber, tokens, blockComment) ->
         emit 'floatlit', line.substring start, pos
       else
         emit 'intlit', line.substring start, pos
+
+    # String Literals
+    else if QUOTES.test line[pos]
+      pos++
 
     else
       console.log error "Illegal character: #{line[pos]}",
