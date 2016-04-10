@@ -3,11 +3,7 @@ error = require '../error/error.coffee'
 Program = require './entities/program.coffee'
 Block = require './entities/block.coffee'
 Type = require './entities/type.coffee'
-<<<<<<< Updated upstream
 
-=======
-VariableDeclaration = require './entities/variabledeclaration.coffee'
->>>>>>> Stashed changes
 ForStatement = require './entities/forstatement.coffee'
 StdFor = require './entities/stdfor.coffee'
 StdForIdExp = require './entities/stdforidexp.coffee'
@@ -25,7 +21,6 @@ ElseStatement = require './entities/elsestatement.coffee'
 
 WhileStatement = require './entities/whilestatement.coffee'
 ReturnStatement = require './entities/returnstatement.coffee'
-<<<<<<< Updated upstream
 ClassDefinition = require './entities/classdefinition.coffee'
 
 VariableDeclaration = require './entities/variabledeclaration.coffee'
@@ -43,24 +38,17 @@ VariableReference = require './entities/variablereference.coffee'
 FieldAccess = require './entities/fieldaccess.coffee'
 IterableItem = require './entities/iterableitem.coffee'
 Range = require './entities/range.coffee'
-=======
->>>>>>> Stashed changes
 IntegerLiteral = require './entities/integerliteral.coffee'
 FloatLiteral = require './entities/floatliteral.coffee'
 BooleanLiteral = require './entities/booleanliteral.coffee'
 StringLiteral = require './entities/stringliteral.coffee'
+
 List = require './entities/list.coffee'
 Dict = require './entities/dict.coffee'
-<<<<<<< Updated upstream
 BindingList = require './entities/bindinglist.coffee'
 Binding = require './entities/binding.coffee'
 # Function = require './entities/function.coffee' i have no idea how this differs from FunctionExp
 
-=======
-Function = require './entities/function.coffee'
-FunctionInvocation = require '../entities/functioninvocation.coffee'
-VariableReference = require './entities/variablereference.coffee'
->>>>>>> Stashed changes
 BinaryExpression = require './entities/binaryexpression.coffee'
 UnaryExpression = require './entities/unaryexpression.coffee'
 
