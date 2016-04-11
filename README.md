@@ -96,12 +96,11 @@ VarAssignment  ::= VarExp '=' Exp
 VarExp         ::= id ( '.' Exp8 
                         | '[' Exp3 ']' 
                         | (Args ('.' Exp9 | '[' Exp3 ']')) )*
-                        <!-- this ^ bothers me. love, josh -->
-Args           ::= '(' ExpList ')'
+Args           ::= '(' ExpList? ')'
 ExpList        ::= newline? Exp (',' newline? Exp)* newline?
 
 FunctionExp    ::= Params Type? 'does' (newline Block | Stmt) 'end'
-Params         ::= '(' ParamList ')'
+Params         ::= '(' ParamList? ')'
 ParamList      ::= newline? Exp Type? (',' newline? Exp Type?)* newline?
 
 Exp0           ::=  Exp1 ('if' Exp1 ('else' Exp1)?)?

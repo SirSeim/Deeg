@@ -70,11 +70,30 @@ describe 'Entities', ->
     context 'when constructing an args', ->
       it 'constructs and Args correctly', (done) ->
         expect((new Args 'expList').toString()).to.eql('(expList)')
-        
-  # STDFOR NEEDS TO BE WORKED ON
-  # describe 'StdFor Entity', ->
-  #   context 'when constructing a standard for', ->
-  #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new StdFor ['(foo in bar)'], 'Body').toString())
-  #         .to.eql('(StdFor idexplist:(foo in bar) body:Body)')
-  #       done()
+        done()
+
+  describe 'StdFor Entity', ->
+    context 'when constructing a standard for', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new StdFor ['(foo in bar)'], 'Body').toString())
+          .to.eql('(StdFor idexplist:(foo in bar) body:Body)')
+        done()
+
+  describe 'StdForIdExp', -> #this is not correct. entity declaration is not finished
+    context 'when constructing a standard for id expression', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect(new StdForIdExp ['(foo in bar)'], 'Body').toString().to.eql('(StdForIdExp idexplist:(foo in bar) body:Body)')
+        done()
+
+  describe 'CountFor', ->
+    context 'when constructing a count for', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new CountFor 2).toString().to.eql('(CountFor count 2)'))
+        done()
+
+  describe 'CountsFor Entity', ->
+    context 'when constructing a counts for', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new CountsFor foo 2).toString().to.eql('CountsFor foo count 2'))
+        done()
+
