@@ -121,7 +121,7 @@ describe 'Entities', ->
   #   context 'when constructing a counts for', ->
   #     it 'constructs and toStrings correctly', (done) ->
   #       expect((new CountsFor foo 2).toString()).to.eql('(CountsFor foo count 2)')
-          #need to define foo
+  #       #need to define foo
   #       done()
 
   describe 'IfStatement Entity', ->
@@ -160,11 +160,24 @@ describe 'Entities', ->
   #         #(not sure where to put that)
   #       done()
   
-  # describe 'BooleanLiteral Entity', ->
-  #   context 'when constructing a boolean literal', ->
-  #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new BooleanLiteral name ).toString()).to.eql('(name)')
-  #       #also not sure about this one
-  #       done()
+  describe 'BooleanLiteral Entity', ->
+    context 'when constructing a boolean literal', ->
+      it 'constructs and toStrings correctly', (done) ->
+        hiho = true
+        expect((new BooleanLiteral hiho).toString()).to.eql('true')
+        #also not sure about this one
+        done()
 
+  describe 'StringLiteral Entity', ->
+    context 'when constructing a string literal', ->
+      it 'constructs and toStrings correctly', (done) ->
+        token = {
+          lexeme: 'hello'
+        }
+        expect((new StringLiteral token).toString()).to.eql('hello')
+        done()
+
+  # describe 'List Entity', ->
+  #   context 'when constructing a list', ->
+  #     expect((new List []))
 
