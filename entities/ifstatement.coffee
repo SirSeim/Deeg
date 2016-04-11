@@ -5,7 +5,7 @@ class IfStatement
   constructor: (@condition, @body, @elseIfStatement, @elseStatement) ->
 
   toString: () ->
-    "(If #{@condition} then #{@body})" 
+    "(If #{@condition} then #{@body})"
   # disclaimer: toString will be more complicated because of possible else
   # and else if stuff
 

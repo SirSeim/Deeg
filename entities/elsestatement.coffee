@@ -5,7 +5,7 @@ class ElseStatement
   constructor: (@body) ->
 
   toString: () ->
-    "(else #{@body})" 
+    "(else #{@body})"
   # disclaimer: toString will be more complicated because of possible else
   # and else if stuff
 

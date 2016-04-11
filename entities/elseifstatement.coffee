@@ -5,7 +5,7 @@ class ElseIfStatement
   constructor: (@condition, @body, @elseIfStatement) ->
 
   toString: () ->
-    "(else if #{@condition} then #{@body})" 
+    "(else if #{@condition} then #{@body})"
   # disclaimer: toString will be more complicated because of possible else
   # and else if stuff
 
