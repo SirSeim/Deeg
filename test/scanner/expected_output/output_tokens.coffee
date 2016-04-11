@@ -452,4 +452,169 @@ module.exports = {
       lexeme: 'EOF'
     }
   ]
+  program6: [
+    {
+      kind: 'make',
+      lexeme: 'make',
+      line: 1,
+      col: 1
+    },
+    {
+      kind: 'id',
+      lexeme: 'num',
+      line: 1,
+      col: 6
+    },
+    {
+      kind: 'id',
+      lexeme: 'num',
+      line: 1,
+      col: 6
+    },
+    {
+      kind: '=',
+      lexeme: '=',
+      line: 1,
+      col: 10
+    },
+    {
+      kind: 'floatlit',
+      lexeme: '5.422',
+      line: 1,
+      col: 12
+    },
+    {
+      kind: 'make',
+      lexeme: 'make',
+      line: 2,
+      col: 1
+    },
+    {
+      kind: 'id',
+      lexeme: 'string',
+      line: 2,
+      col: 6
+    },
+    {
+      kind: '=',
+      lexeme: '=',
+      line: 2,
+      col: 13
+    },
+    {
+      kind: 'strlit',
+      lexeme: [
+        '61',
+        '62',
+        '63',
+        '20'
+        ],
+      line: 2,
+      col: 15
+    },
+    {
+      kind: '+',
+      lexeme: '+',
+      line: 2,
+      col: 22
+    },
+    {
+      kind: '(',
+      lexeme: '(',
+      line: 2,
+      col: 22
+    },
+    {
+      kind: 'id',
+      lexeme: 'num',
+      line: 2,
+      col: 23
+    },
+    {
+      kind: ')',
+      lexeme: ')',
+      line: 2,
+      col: 26
+    },
+    {
+      kind: '+',
+      lexeme: '+',
+      line: 2,
+      col: 26
+    },
+    {
+      kind: 'strlit',
+      lexeme: [
+        '61',
+        '62',
+        '63'
+        ],
+      line: 2,
+      col: 27
+    },
+    {
+      kind: 'make',
+      lexeme: 'make',
+      line: 3,
+      col: 1
+    },
+    {
+      kind: 'id',
+      lexeme: 'y',
+      line: 3,
+      col: 6
+    },
+    {
+      kind: '=',
+      lexeme: '=',
+      line: 3
+      col: 8
+    },
+    {
+      kind: 'strlit',
+      lexeme: [],
+      line: 3,
+      col: 10
+    },
+    {
+      kind: '+',
+      lexeme: '+',
+      line: 3,
+      col: 12
+    },
+    {
+      kind: '(',
+      lexeme: '(',
+      line: 3,
+      col: 12
+    },
+    {
+      kind: 'id',
+      lexeme: 'num',
+      line: 3,
+      col: 13
+    },
+    {
+      kind: ')',
+      lexeme: ')',
+      line: 3,
+      col: 16
+    },
+    {
+      kind: '+',
+      lexeme: '+',
+      line: 3,
+      col: 16
+    },
+    {
+      kind: 'strlit',
+      lexeme: [],
+      line: 3,
+      col: 17
+    },
+    {
+      kind: 'EOF',
+      lexeme: 'EOF'
+    }
+  ]
 }
