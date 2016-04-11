@@ -19,23 +19,23 @@ KEYWORDS = ///
 ///
 
 module.exports = (filename, callback) ->
-  scanningError = null
   baseStream = fs.createReadStream filename, {encoding: 'utf8'}
   baseStream.on 'error', (err) -> console.log error err
 
   stream = byline baseStream, {keepEmptyLines: true}
   tokens = []
+  scanningError = []
   lineNumber = 0
   blockComment = {
     yes: false
   }
   stream.on 'readable', () ->
-    scan stream.read(), ++lineNumber, tokens, blockComment
+    scan stream.read(), ++lineNumber, tokens, blockComment, scanningError
   stream.once 'end', () ->
     tokens.push {kind: 'EOF', lexeme: 'EOF'}
     callback scanningError, tokens
     
-scan = (line, lineNumber, tokens, blockComment) ->
+scan = (line, lineNumber, tokens, blockComment, scanningError) ->
   return if not line
 
   [start, pos] = [0, 0]
@@ -51,24 +51,26 @@ scan = (line, lineNumber, tokens, blockComment) ->
       num = Math.floor(num/16)
     result
 
-
-  loop
+  run = ->
     # Skip spaces
     pos++ while /\s/.test line[pos]
     start = pos
 
     # Nothing on the line
-    break if pos >= line.length
+    return if pos >= line.length
+
+    # Come back from string interpolation
+    return if /(})/.test line[pos]
 
     # Block Comment
     if /(?:###)/.test line.substring(pos, pos+3)
       blockComment.yes = not blockComment.yes
 
     # Inside of Block Comment
-    break if blockComment.yes
+    return if blockComment.yes
 
     # Comment
-    break if line[pos] is '#'
+    return if line[pos] is '#'
 
     # Two-character tokens
     if /<=|==|>=|!=/.test line.substring(pos, pos+2)
@@ -89,7 +91,7 @@ scan = (line, lineNumber, tokens, blockComment) ->
     else if DIGIT.test line[pos]
       pos++ while DIGIT.test line[pos]
 
-      if /\./.test line[pos+1]
+      if /[.]/.test line[pos]
         pos++
         pos++ while DIGIT.test line[pos]
         emit 'floatlit', line.substring start, pos
@@ -106,27 +108,32 @@ scan = (line, lineNumber, tokens, blockComment) ->
     else if QUOTES.test line[pos]
       pos++
       stringParts = []
-      while not QUOTES.test line[pos]
+      while not QUOTES.test(line[pos]) and pos < line.length
         if /(\\)/.test line[pos]
-          if /n/.test line[pos+1]
+          pos++
+          if /n/.test line[pos]
             stringParts.push "20"
-          else if /\{/.test line[pos]
+            pos++
+          else if /({)/.test line[pos]
             emit 'strlit', stringParts
+            start = pos
             emit '+'
             emit '('
-            # we need to process the contents of the interpolation
-            # and find the closing '}' at the end of the interpolation
+            run()
             emit ')'
             emit '+'
+            start = ++pos
             stringParts = []
         else
           stringParts.push toHex line[pos].charCodeAt(0)
-        pos++
+          pos++
       emit 'strlit', stringParts
       pos++
 
 
     else
-      console.log error "Illegal character: #{line[pos]}",
+      scanningError.push error "Illegal character: #{line[pos]}",
         {line: lineNumber, col: pos+1}
       pos++
+    run()
+  run()
