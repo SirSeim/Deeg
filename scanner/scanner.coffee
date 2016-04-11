@@ -19,12 +19,14 @@ KEYWORDS = ///
 ///
 
 module.exports = (filename, callback) ->
+  scanningError = []
+  tokens = []
   baseStream = fs.createReadStream filename, {encoding: 'utf8'}
-  baseStream.on 'error', (err) -> console.log error err
+  baseStream.on 'error', (err) ->
+    scanningError.push error err
+    callback scanningError, tokens
 
   stream = byline baseStream, {keepEmptyLines: true}
-  tokens = []
-  scanningError = []
   lineNumber = 0
   blockComment = {
     yes: false
@@ -119,6 +121,7 @@ scan = (line, lineNumber, tokens, blockComment, scanningError) ->
             start = pos
             emit '+'
             emit '('
+            pos++
             run()
             emit ')'
             emit '+'
@@ -132,7 +135,7 @@ scan = (line, lineNumber, tokens, blockComment, scanningError) ->
 
 
     else
-      scanningError.push error "Illegal character: #{line[pos]}",
+      scanningError.push error "Illegal character: '#{line[pos]}'",
         {line: lineNumber, col: pos+1}
       pos++
     run()

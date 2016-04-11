@@ -19,14 +19,23 @@ describe 'Scanner', ->
             done()
         it 'has no errors', (done) ->
           scan path.join(validScannerPrograms, name), (err, tokens) ->
-            expect(err).to.be.null
+            expect(err).to.eql([])
             done()
 
   describe 'scanning invalid deeg programs', ->
-    fs.readdirSync(validScannerPrograms).forEach (name) ->
+    fs.readdirSync(invalidScannerPrograms).forEach (name) ->
       context "when #{name} is passed through the scanner", ->
         it 'has the correct errors', (done) ->
-          scan path.join(validScannerPrograms, name), (err, tokens) ->
+          scan path.join(invalidScannerPrograms, name), (err, tokens) ->
             expect(err).to.eql(invalidProgramErrors[name.split(".")[0]])
             done()
+
+  describe 'scanning nonexistent files', ->
+    context 'when non_existent_file.deeg is passed through the scanner', ->
+      it 'error properly catches', (done) ->
+        scan "#{__dirname}/input_programs/non_existent_file.deeg", (err, tokens) ->
+          errMessage = err[0].message.code
+          console.log errMessage
+          expect(errMessage).to.eql('ENOENT')
+          done()
 
