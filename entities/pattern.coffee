@@ -4,7 +4,7 @@ class Pattern
 
   constructor: (@id, @type)->
 
-  toString: -> "(#{@id} #{@type})" #can we make _ an id? 
+  toString: -> "(#{@id} #{@type})" #can we make _ an id?
 
 
   # analyze: (context) ->

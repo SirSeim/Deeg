@@ -72,7 +72,8 @@ class BinaryExpression
       return Type.INT
 
   mustHaveNumOperands: () ->
-    error = "#{@op.lexeme} must have numeric operands -- #{@left.type} and #{@right.type} found --"
+    error = "#{@op.lexeme} must have numeric operands
+    -- #{@left.type} and #{@right.type} found --"
     @left.type.mustBeNumeric error, @op.line
     @right.type.mustBeNumeric error, @op.line
 
