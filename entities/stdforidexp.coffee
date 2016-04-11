@@ -2,7 +2,7 @@ Type = require './type.coffee'
 
 class StdForIdExp
 
-  constructor: (@idList, @typeList, @expList) -> 
+  constructor: (@idList, @typeList, @expList) ->
 
   # value: ->
   #   @name is 'true'

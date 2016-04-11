@@ -47,7 +47,8 @@ List = require './entities/list.coffee'
 Dict = require './entities/dict.coffee'
 BindingList = require './entities/bindinglist.coffee'
 Binding = require './entities/binding.coffee'
-# Function = require './entities/function.coffee' i have no idea how this differs from FunctionExp
+# Function = require './entities/function.coffee'
+# i have no idea how this differs from FunctionExp
 
 BinaryExpression = require './entities/binaryexpression.coffee'
 UnaryExpression = require './entities/unaryexpression.coffee'
@@ -71,7 +72,7 @@ parseBlock = ->
     break if at ['EOF', 'end', 'else']
   new Block(statements)
 
-parseStatement = -> 
+parseStatement = ->
   if at 'while'
     parseWhileStatement()
   else if at 'for'
@@ -91,7 +92,7 @@ parseStatement = ->
 
 parseClassDefinition = ->
   match 'class'
-  id = match 'id' 
+  id = match 'id'
 
   if exists 'extends'
     match 'extends'
@@ -336,7 +337,7 @@ parseArgs = ->
   new Args(expList)
 
 parseExpList = ->
-  expArray = [] 
+  expArray = []
 
   if exists 'newline'
     match 'newline'
@@ -370,7 +371,7 @@ parseParams = ->
   new Params(paramList)
 
 parseParamList = ->
-  paramList = [] 
+  paramList = []
   # this list will have expressions and types may follow right after
   # null will follow if no type specified
   # e.g. (5:int, "two", "hello":string)
@@ -482,7 +483,7 @@ parseExp9 = -> # property, set, args
       match ']'
     while exists '('
       input = new FunctionExp(input, parseArgs())
-  input  
+  input
 
 parseExp10 = -> # literals, id, expression in parens
   if at ['true', 'false']
