@@ -4,7 +4,7 @@ class StdFor
 
   constructor: (@id, @type, @range, @additionalList)->
 
-  toString: -> "(StdFor idexplist:#{@idexplist.join(' ')} body:#{@body})"
+  toString: -> "(StdFor idexplist:#{@idexplist.join ' '} body:#{@body})"
 
 
   # analyze: (context) ->
