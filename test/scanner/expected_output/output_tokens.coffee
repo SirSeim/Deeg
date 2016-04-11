@@ -260,4 +260,54 @@ module.exports = {
       lexeme: 'EOF'
     }
   ]
+  program5: [
+    {
+      kind: 'make',
+      lexeme: 'make',
+      line: 1,
+      col: 1
+    },
+    {
+      kind: 'id',
+      lexeme: 'x',
+      line: 1,
+      col: 7
+    },
+    {
+      kind: '=',
+      lexeme: '=',
+      line: 1,
+      col: 9
+    },
+    {
+      kind: 'intlit',
+      lexeme: '5',
+      line: 1,
+      col: 11
+    },
+    {
+      kind: 'make',
+      lexeme: 'make',
+      line: 2,
+      col: 1
+    },
+    {
+      kind: 'id',
+      lexeme: 'z',
+      line: 2,
+      col: 7
+    },
+    {
+      kind: '=',
+      lexeme: '=',
+      line: 2,
+      col: 9
+    },
+    {
+      kind: 'intlit',
+      lexeme: '5',
+      line: 1,
+      col: 11
+    },
+  ]
 }
