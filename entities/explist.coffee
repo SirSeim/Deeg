@@ -3,10 +3,13 @@ error = require '../error/error.coffee'
 
 class ExpList
 
-  constructor: (@expList) ->
+  constructor: (@expArray) ->
 
   toString: ->
-    "expList goes here" #disclaimer: this is wrong
+    "expArray goes here" #disclaimer: this is wrong
+
+  analyze: (context) ->
+    
 
   optimize: -> this
 

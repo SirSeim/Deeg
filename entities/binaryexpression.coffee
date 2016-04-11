@@ -1,7 +1,17 @@
+ #  ___________________        ____....-----....____
+ # (________________LL_)   ==============================
+ #     ______\   \_______.--'.  `---..._____...---'
+ #     `-------..__            ` ,/
+ #     ___         `-._ -  -  - |
+ #    ( /        /     `-------'
+ #     / __ (   /_
+ #   _/_(_)/_)_/ /_
+ #  //
+ # (/
+
 Type = require './type.coffee'
 IntegerLiteral = require './integerliteral.coffee'
 BooleanLiteral = require './booleanliteral.coffee'
-VariableReference = require './variablereference.coffee'
 
 class BinaryExpression
 
@@ -11,12 +21,12 @@ class BinaryExpression
     "(BinaryOp #{@op.lexeme} #{@left} #{@right})"
 
   analyze: (context) ->
-    @left.analyze(context)
-    @right.analyze(context)
+    @left.analyze context
+    @right.analyze context
     op = @op.lexeme
     switch op
       when '<', '<=', '>=', '>'
-        @mustHaveIntegerOperands()
+        @mustHaveNumOperands()
         @type = Type.BOOL
       when '==', '!='
         @mustHaveCompatibleOperands()
@@ -26,8 +36,8 @@ class BinaryExpression
         @type = Type.BOOL
       else
         # All other binary operators are arithmetic
-        @mustHaveIntegerOperands()
-        @type = Type.INT
+        @mustHaveNumOperands()
+        @type = @getNumType
 
   # optimize: ->
   #   @left = @left.optimize()
@@ -55,27 +65,26 @@ class BinaryExpression
   #         return new IntegerLiteral(1) if sameVariable(@left, @right)
   #   return this
 
-  mustHaveIntegerOperands: () ->
-    error = "#{@op.lexeme} must have integer operands"
-    @left.type.mustBeCompatibleWith(Type.INT, error, @op)
-    @right.type.mustBeCompatibleWith(Type.INT, error, @op)
+  getNumType: ->
+    if @left.type is Type.FLOAT or @right.type is Type.FLOAT
+      return Type.FLOAT
+    else
+      return Type.INT
+
+  mustHaveNumOperands: () ->
+    error = "#{@op.lexeme} must have numeric operands -- #{@left.type} and #{@right.type} found --"
+    @left.type.mustBeNumeric error, @op.line
+    @right.type.mustBeNumeric error, @op.line
 
   mustHaveBooleanOperands: () ->
     error = "#{@op.lexeme} must have boolean operands"
-    @left.type.mustBeCompatibleWith(Type.BOOL, error, @op)
-    @right.type.mustBeCompatibleWith(Type.BOOL, error, @op)
+    @left.type.mustBeBoolean error, @op.line
+    @right.type.mustBeBoolean error, @op.line
 
   mustHaveCompatibleOperands: () ->
     error = "#{@op.lexeme} must have mutually compatible operands"
-    @left.type.mustBeMutuallyCompatibleWith(@right.type, error, @op)
+    @left.type.mustBeMutuallyCompatibleWith @right.type, error, @op.line
 
-# isIntegerLiteral = (operand, value) ->
-#   operand instanceof IntegerLiteral and operand.value is value
-
-# sameVariable = (exp1, exp2) ->
-#   exp1 instanceof VariableReference and
-#     exp2 instanceof VariableReference and
-#     exp1.referent is exp2.referent
 
 foldIntegerConstants = (op, d, g) ->
   switch op
