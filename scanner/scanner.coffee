@@ -28,30 +28,27 @@ module.exports = (filename, callback) ->
 
   stream = byline baseStream, {keepEmptyLines: true}
   lineNumber = 0
-  blockComment = {
-    yes: false
+  state = {
+    blockComment: false,
+    tokens: tokens,
+    scanningError: scanningError
   }
   stream.on 'readable', () ->
-    scan stream.read(), ++lineNumber, tokens, blockComment, scanningError
+    scan stream.read(), ++lineNumber, state
   stream.once 'end', () ->
     tokens.push {kind: 'EOF', lexeme: 'EOF'}
     callback scanningError, tokens
     
-scan = (line, lineNumber, tokens, blockComment, scanningError) ->
+scan = (line, lineNumber, state) ->
   return if not line
 
   [start, pos] = [0, 0]
 
   emit = (kind, lexeme) ->
-    tokens.push {kind, lexeme: lexeme or kind, line: lineNumber, col: start+1}
+    state.tokens.push {kind, lexeme: lexeme or kind, line: lineNumber, col: start+1}
 
-  toHex = (num) ->
-    chars = "0123456789ABCDEFGHIJ"
-    result = ""
-    while num > 0
-      result = chars[num%16] + result
-      num = Math.floor(num/16)
-    result
+  emitError = (message, location) ->
+    state.scanningError.push error message, location
 
   run = ->
     # Skip spaces
@@ -66,10 +63,10 @@ scan = (line, lineNumber, tokens, blockComment, scanningError) ->
 
     # Block Comment
     if /(?:###)/.test line.substring(pos, pos+3)
-      blockComment.yes = not blockComment.yes
+      state.blockComment = not state.blockComment
 
     # Inside of Block Comment
-    return if blockComment.yes
+    return if state.blockComment
 
     # Comment
     return if line[pos] is '#'
@@ -128,14 +125,14 @@ scan = (line, lineNumber, tokens, blockComment, scanningError) ->
             start = ++pos
             stringParts = []
         else
-          stringParts.push toHex line[pos].charCodeAt(0)
+          stringParts.push line[pos].charCodeAt(0).toString(16)
           pos++
       emit 'strlit', stringParts
       pos++
 
 
     else
-      scanningError.push error "Illegal character: '#{line[pos]}'",
+      emitError "Illegal character: '#{line[pos]}'",
         {line: lineNumber, col: pos+1}
       pos++
     run()
