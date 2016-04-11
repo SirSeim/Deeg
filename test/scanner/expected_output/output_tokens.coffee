@@ -355,7 +355,7 @@ module.exports = {
       kind: 'intlit',
       lexeme:  '5',
       line: 3,
-      col: 14
+      col: 16
     },
     {
       kind: 'then',
@@ -374,12 +374,6 @@ module.exports = {
       lexeme: 'true',
       line: 4,
       col: 10
-    },
-    {
-      kind: 'else',
-      lexeme: 'else',
-      line: 5,
-      col: 1
     },
     {
       kind: 'else',
