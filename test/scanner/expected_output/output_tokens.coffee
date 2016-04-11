@@ -466,12 +466,6 @@ module.exports = {
       col: 6
     },
     {
-      kind: 'id',
-      lexeme: 'num',
-      line: 1,
-      col: 6
-    },
-    {
       kind: '=',
       lexeme: '=',
       line: 1,
