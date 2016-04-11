@@ -166,7 +166,11 @@ module.exports = {
     },
     {
       kind: 'strlit',
-      lexeme: 'str',
+      lexeme: [
+        '73',
+        '74',
+        '72'
+      ],
       line: 7,
       col: 1
     },
@@ -176,6 +180,12 @@ module.exports = {
       line: 7,
       col: 7
     },
+    {
+      kind: 'intlit',
+      lexeme: '3',
+      line: 7,
+      col: 9
+    }
     {
       kind: 'make',
       lexeme: 'make',
@@ -189,16 +199,10 @@ module.exports = {
       col: 6
     },
     {
-      kind: ':',
-      lexeme: ':',
-      line: 8,
-      col: 9
-    },
-    {
-      kind: 'string',
+      kind: 'type',
       lexeme: 'string',
       line: 8,
-      col: 10
+      col: 9
     },
     {
       kind: '=',
@@ -208,7 +212,10 @@ module.exports = {
     },
     {
       kind: 'strlit',
-      lexeme: 'Hi',
+      lexeme: [
+        '48',
+        '69',
+      ],
       line: 8,
       col: 19
     },

@@ -43,6 +43,15 @@ scan = (line, lineNumber, tokens, blockComment) ->
   emit = (kind, lexeme) ->
     tokens.push {kind, lexeme: lexeme or kind, line: lineNumber, col: start+1}
 
+  toHex = (num) ->
+    chars = "0123456789ABCDEFGHIJ"
+    result = ""
+    while num > 0
+      result = chars[num%16] + result
+      num = Math.floor(num/16)
+    result
+
+
   loop
     # Skip spaces
     pos++ while /\s/.test line[pos]
@@ -67,7 +76,7 @@ scan = (line, lineNumber, tokens, blockComment) ->
       pos += 2
 
     # One-character tokens
-    else if /[+\-*\/(),:=<>]/.test line[pos]
+    else if /[+\-*\/(),=<>]/.test line[pos]
       emit line[pos++]
 
     # Reserved words or identifiers
@@ -87,10 +96,35 @@ scan = (line, lineNumber, tokens, blockComment) ->
       else
         emit 'intlit', line.substring start, pos
 
+    # Type
+    else if /:/.test line[pos]
+      pos++
+      pos++ while WORD_CHAR.test(line[pos]) and pos < line.length
+      emit 'type', line.substring start+1, pos
+
     # String Literals
     else if QUOTES.test line[pos]
       pos++
-      
+      stringParts = []
+      while not QUOTES.test line[pos]
+        if /(\\)/.test line[pos]
+          if /n/.test line[pos+1]
+            stringParts.push "20"
+          else if /\{/.test line[pos]
+            emit 'strlit', stringParts
+            emit '+'
+            emit '('
+            # we need to process the contents of the interpolation
+            # and find the closing '}' at the end of the interpolation
+            emit ')'
+            emit '+'
+            stringParts = []
+        else
+          stringParts.push toHex line[pos].charCodeAt(0)
+        pos++
+      emit 'strlit', stringParts
+      pos++
+
 
     else
       console.log error "Illegal character: #{line[pos]}",
