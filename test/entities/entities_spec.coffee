@@ -69,7 +69,7 @@ describe 'Entities', ->
   describe "Args Entity" , ->
     context 'when constructing an args', ->
       it 'constructs and Args correctly', (done) ->
-        expect((new Args 'expList').toString())).to.eql('(expList)')
+        expect((new Args 'expList').toString()).to.eql('(expList)')
         
   # STDFOR NEEDS TO BE WORKED ON
   # describe 'StdFor Entity', ->
