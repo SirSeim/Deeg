@@ -30,6 +30,7 @@ module.exports = (filename, callback) ->
   lineNumber = 0
   state = {
     blockComment: false,
+    interpolation: false,
     tokens: tokens,
     scanningError: scanningError
   }
@@ -59,7 +60,7 @@ scan = (line, lineNumber, state) ->
     return if pos >= line.length
 
     # Come back from string interpolation
-    return if /(})/.test line[pos]
+    return state.interpolation = false if /(})/.test(line[pos]) and state.interpolation
 
     # Block Comment
     if /(?:###)/.test line.substring(pos, pos+3)
@@ -119,6 +120,7 @@ scan = (line, lineNumber, state) ->
             emit '+'
             emit '('
             pos++
+            state.interpolation = true
             run()
             emit ')'
             emit '+'
