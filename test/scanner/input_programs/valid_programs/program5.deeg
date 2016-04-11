@@ -1,6 +1,6 @@
 make x = 5
 make z = 5
 if x==5 and z==5 then
-    return true
+    deeg true
 else if x != 5 and z != 6 then
-    return false
+    deeg false

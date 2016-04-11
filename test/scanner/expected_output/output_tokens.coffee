@@ -271,19 +271,19 @@ module.exports = {
       kind: 'id',
       lexeme: 'x',
       line: 1,
-      col: 7
+      col: 6
     },
     {
       kind: '=',
       lexeme: '=',
       line: 1,
-      col: 9
+      col: 8
     },
     {
       kind: 'intlit',
       lexeme: '5',
       line: 1,
-      col: 11
+      col: 10
     },
     {
       kind: 'make',
@@ -295,19 +295,163 @@ module.exports = {
       kind: 'id',
       lexeme: 'z',
       line: 2,
-      col: 7
+      col: 6
     },
     {
       kind: '=',
       lexeme: '=',
       line: 2,
-      col: 9
+      col: 8
     },
     {
       kind: 'intlit',
       lexeme: '5',
       line: 1,
+      col: 10
+    },
+    {
+      kind: 'if',
+      lexeme: 'if',
+      line: 3,
+      col: 1
+    },
+    {
+      kind: 'id',
+      lexeme: 'x',
+      line: 3,
+      col: 4
+    },
+    {
+      kind: '==',
+      lexeme:  '==',
+      line: 3,
+      col: 5
+    },
+    {
+      kind: 'intlit',
+      lexeme: '5',
+      line: 3,
+      col: 7
+    },
+    {
+      kind: 'and',
+      lexeme: 'and',
+      line: 3,
+      col: 9
+    },
+    {
+      kind: 'id',
+      lexeme: 'z',
+      line: 3,
+      col: 13
+    },
+    {
+      kind: '==',
+      lexeme:  '==',
+      line: 3,
+      col: 14
+    },
+    {
+      kind: 'intlit',
+      lexeme:  '5',
+      line: 3,
+      col: 14
+    },
+    {
+      kind: 'then',
+      lexeme: 'then',
+      line: 3,
+      col: 18
+    },
+    {
+      kind: 'deeg',
+      lexeme: 'deeg',
+      line: 4,
+      col: 5
+    },
+    {
+      kind: 'true',
+      lexeme: 'true',
+      line: 4,
+      col: 10
+    },
+    {
+      kind: 'else',
+      lexeme: 'else',
+      line: 5,
+      col: 1
+    },
+    {
+      kind: 'else',
+      lexeme: 'else',
+      line: 5,
+      col: 1
+    },
+    {
+      kind: 'if',
+      lexeme: 'if',
+      line: 5,
+      col: 6
+    },
+    {
+      kind: 'id',
+      lexeme: 'x',
+      line: 5,
+      col: 9
+    },
+    {
+      kind: '!=',
+      lexeme: '!=',
+      line: 5,
       col: 11
+    },
+    {
+      kind: 'intlit',
+      lexeme:  '5',
+      line: 5,
+      col: 14
+    },
+    {
+      kind: 'and',
+      lexeme:  'and',
+      line: 5,
+      col: 16
+    },
+    {
+      kind: 'id',
+      lexeme: 'z',
+      line: 5,
+      col: 20
+    },
+    {
+      kind: '!=',
+      lexeme: '!=',
+      line: 5,
+      col: 22
+    },
+    {
+      kind: 'intlit',
+      lexeme:  '6',
+      line: 5,
+      col: 25
+    },
+    {
+      kind: 'then',
+      lexeme:  'then',
+      line: 5,
+      col: 27
+    },
+    {
+      kind: 'deeg',
+      lexeme: 'deeg',
+      line: 6,
+      col: 5
+    },
+    {
+      kind: 'false',
+      lexeme: 'false',
+      line: 6,
+      col: 10
     },
   ]
 }
