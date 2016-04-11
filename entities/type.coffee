@@ -22,26 +22,27 @@ class Type
     @mustBeCompatibleWith [Type.INT, Type.FLOAT], message, location
 
   mustBeInteger: (message, location) ->
-    @mustBeCompatibleWith Type.INT, message, location
+    @mustBeCompatibleWith [Type.INT], message, location
 
   mustBeBoolean: (message, location) ->
-    @mustBeCompatibleWith Type.BOOL, message, location
+    @mustBeCompatibleWith [Type.BOOL], message, location
 
   mustBeString: (message, location) ->
-    @mustBeCompatibleWith Type.STRING, message, location
+    @mustBeCompatibleWith [Type.STR], message, location
 
-  mustBeCompatibleWith: (otherType, message, location) ->
-    error(message, location) if not @isCompatibleWith(otherType)
+  mustBeCompatibleWith: (otherTypes, message, location) ->
+    # @ is passed to callback when invoked, for use as its this value
+    unless otherTypes.some(@isCompatibleWith, @)
+      throw new CustomError(message, location)
 
   mustBeMutuallyCompatibleWith: (otherType, message, location) ->
     if not (@isCompatibleWith otherType or otherType.isCompatibleWith(this))
-      error(message, location)
+      throw new CustomError message, location
 
   isCompatibleWith: (otherType) ->
-    # In more sophisticated languages, comapatibility would be more complex
     return this is otherType or
-      this is Type.ARBITRARY or
-      otherType is Type.ARBITRARY
+          this is Type.ARBITRARY or
+          otherType is Type.ARBITRARY
 
 module.exports =
   BOOL: Type.BOOL

@@ -325,24 +325,30 @@ parseVariableExpression = ->
 
 parseArgs = ->
   match '('
-  expList = parseExpList()
-  match ')'
-  new Args(expList)
 
-parseExpList = ->
-  expList = [] 
+  if not exists ')'
+    expList = parseExpList()
 
   if exists 'newline'
     match 'newline'
-  expList.push parseExpression()
+  match ')'
+
+  new Args(expList)
+
+parseExpList = ->
+  expArray = [] 
+
+  if exists 'newline'
+    match 'newline'
+  expArray.push parseExpression()
   while exists ','
     match ','
     if exists 'newline'
       match 'newline'
-    expList.push parseExpression()
+    expArray.push parseExpression()
   if exists 'newline'
     match 'newline'
-  new ExpList(expList)
+  new ExpList(expArray)
 
 parseFunctionExp = ->
   params = parseParams()
@@ -354,7 +360,12 @@ parseFunctionExp = ->
 
 parseParams = ->
   match '('
-  paramList = parseParamList()
+
+  if not exists ')'
+    paramList = parseParamList()
+
+  if exists 'newline'
+    match 'newline'
   match ')'
   new Params(paramList)
 
@@ -509,16 +520,16 @@ parseList = ->
   new List(listicles)
 
 parseDict = ->
-  bindingList = []
+  bindingArray = []
   match '{'
 
   if not exists '}'
-    bindingList = parseBindingList()
+    bindingArray = parseBindingList()
 
   if exists 'newline'
     match 'newline'
   match '}'
-  new Dict(bindingList)
+  new Dict(bindingArray)
 
 parseBindingList = ->
   bindingList = []
