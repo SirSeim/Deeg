@@ -306,7 +306,7 @@ module.exports = {
     {
       kind: 'intlit',
       lexeme: '5',
-      line: 1,
+      line: 2,
       col: 10
     },
     {
@@ -453,5 +453,9 @@ module.exports = {
       line: 6,
       col: 10
     },
+    {
+      kind: 'EOF',
+      lexeme: 'EOF'
+    }
   ]
 }
