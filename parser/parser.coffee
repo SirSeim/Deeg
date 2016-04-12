@@ -175,12 +175,12 @@ parsePatterns = ->
   new Patterns(head, tails)
 
 parsePattern = ->
-  if exists 'id'
-    id = match 'id'
-  else if exists '_'
-    id = match '_'
-  optionalTypeMatch()
-  new Pattern(id, type)
+  if exists '_'
+    pattern = match '_'
+  else
+    pattern = parseExpression()
+  type = optionalTypeMatch()
+  new Pattern(pattern, type)
 
 parseForStatement = ->
   match 'for'

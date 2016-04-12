@@ -74,7 +74,7 @@ MatchStmt      ::= 'match' Exp 'with' newline PatBlock 'end'
 PatBlock       ::= (Patline newline)*
 Patline        ::= '>>' Patterns ('if' Exp)? 'then' Stmt
 Patterns       ::= Pattern ('|' Pattern)*
-Pattern        ::= (id | WildCard) Type?
+Pattern        ::= (Exp | WildCard) Type?
 
 ForStmt        ::= 'for' (StdFor | CountFor | CountsFor) 'then' (newline Block 'end' | Stmt 'end')
 

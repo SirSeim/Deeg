@@ -2,9 +2,9 @@ Type = require './type.coffee'
 
 class Pattern
 
-  constructor: (@id, @type)->
+  constructor: (@pattern, @type)->
 
-  toString: -> "(#{@id} #{@type})" #can we make _ an id?
+  toString: -> "(#{@pattern} #{@type})"
 
 
   # analyze: (context) ->
