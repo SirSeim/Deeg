@@ -17,6 +17,16 @@ KEYWORDS = ///
   (make|to|deeg|end|thru|till|by|exists|and|or|unless|if|else|then|not|
   true|false|for|while|does|count|counts|match|with)
 ///
+TWOCHAROPS = XRegExp '<=|==|>=|!='
+ONECHAROPS = XRegExp '[\\+\\-\\*\\/\\(\\)\\,\\=\\<\\>]'
+SPACE = XRegExp '\\s'
+DOT = XRegExp '[.]'
+TYPE = XRegExp ':'
+CLOSECURLEY = XRegExp '(})'
+OPENCURLEY = XRegExp '({)'
+ESCAPE = XRegExp '[\\\\]'
+COMMENTBLOCK = XRegExp '(?:###)'
+
 
 module.exports = (filename, callback) ->
   scanningError = []
@@ -53,17 +63,18 @@ scan = (line, lineNumber, state) ->
 
   run = ->
     # Skip spaces
-    pos++ while /\s/.test line[pos]
+    pos++ while SPACE.test line[pos]
     start = pos
 
     # Nothing on the line
     return if pos >= line.length
 
     # Come back from string interpolation
-    return state.interpolation = false if /(})/.test(line[pos]) and state.interpolation
+    if CLOSECURLEY.test(line[pos]) and state.interpolation
+      return state.interpolation = false
 
     # Block Comment
-    if /(?:###)/.test line.substring(pos, pos+3)
+    if COMMENTBLOCK.test line.substring(pos, pos+3)
       state.blockComment = not state.blockComment
 
     # Inside of Block Comment
@@ -73,12 +84,12 @@ scan = (line, lineNumber, state) ->
     return if line[pos] is '#'
 
     # Two-character tokens
-    if /<=|==|>=|!=/.test line.substring(pos, pos+2)
+    if TWOCHAROPS.test line.substring(pos, pos+2)
       emit line.substring pos, pos+2
       pos += 2
 
     # One-character tokens
-    else if /[+\-*\/(),=<>]/.test line[pos]
+    else if ONECHAROPS.test line[pos]
       emit line[pos++]
 
     # Reserved words or identifiers
@@ -91,7 +102,7 @@ scan = (line, lineNumber, state) ->
     else if DIGIT.test line[pos]
       pos++ while DIGIT.test line[pos]
 
-      if /[.]/.test line[pos]
+      if DOT.test line[pos]
         pos++
         pos++ while DIGIT.test line[pos]
         emit 'floatlit', line.substring start, pos
@@ -99,7 +110,7 @@ scan = (line, lineNumber, state) ->
         emit 'intlit', line.substring start, pos
 
     # Type
-    else if /:/.test line[pos]
+    else if TYPE.test line[pos]
       pos++
       pos++ while WORD_CHAR.test(line[pos]) and pos < line.length
       emit 'type', line.substring start+1, pos
@@ -109,12 +120,12 @@ scan = (line, lineNumber, state) ->
       pos++
       stringParts = []
       while not QUOTES.test(line[pos]) and pos < line.length
-        if /(\\)/.test line[pos]
+        if ESCAPE.test line[pos]
           pos++
           if /n/.test line[pos]
             stringParts.push "20"
             pos++
-          else if /({)/.test line[pos]
+          else if OPENCURLEY.test line[pos]
             emit 'strlit', stringParts
             start = pos
             emit '+'
