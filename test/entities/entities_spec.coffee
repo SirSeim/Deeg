@@ -141,15 +141,33 @@ describe 'Entities', ->
   #     done()
 
   describe 'ReturnStatement Entity', ->
-    context 'when constructing a return statement', ->
+    context 'when constructing a return statement of a string', ->
       it 'constructs and toStrings correctly', (done) ->
         expect((new ReturnStatement 'hello').toString()).to.eql('(Return hello)')
+        done()
+    
+    context 'when constructing a return statement of an int', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new ReturnStatement 5).toString()).to.eql('(Return 5)')
+        done()
+
+    context 'when constructing a return statement of a boolean', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new ReturnStatement true).toString()).to.eql('(Return true)')
         done()
 
   describe 'IntegerLiteral Entity', ->
     context 'when constructing an integer literal', ->
       it 'constructs and toStrings correctly', (done) ->
         expect((new IntegerLiteral 5).toString()).to.eql(5)
+        done()
+    context 'when constructing an integer literal (0)', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new IntegerLiteral 0).toString()).to.eql(0)
+        done()
+    context 'when constructing a negative integer literal', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new IntegerLiteral -10).toString()).to.eql(-10)
         done()
 
   # describe 'FloatLiteral Entity', ->
@@ -162,10 +180,14 @@ describe 'Entities', ->
   
   describe 'BooleanLiteral Entity', ->
     context 'when constructing a boolean literal', ->
-      it 'constructs and toStrings correctly', (done) ->
+      it 'constructs and toStrings correctly (true)', (done) ->
         hiho = true
         expect((new BooleanLiteral hiho).toString()).to.eql('true')
-        #also not sure about this one
+        done()
+    context 'when constructing a boolean literal (false)', ->
+      it 'constructs and toStrings correctly', (done) ->
+        biho = false
+        expect((new BooleanLiteral biho).toString()).to.eql('false')
         done()
 
   describe 'StringLiteral Entity', ->
@@ -176,8 +198,49 @@ describe 'Entities', ->
         }
         expect((new StringLiteral token).toString()).to.eql('hello')
         done()
+    context 'when constructing a string literal longer than one word', ->
+      it 'constructs and toStrings correctly', (done) ->
+        string = {
+          lexeme: 'hello my name is sally'
+        }
+        expect((new StringLiteral string).toString()).to.eql('hello my name is sally')
+        done()
 
   # describe 'List Entity', ->
   #   context 'when constructing a list', ->
-  #     expect((new List []))
+  #     it 'constructs and toStrings correctly', (done) ->
+  #       expect((new List ).toString()).to.eql('[]')
+  #       done()
 
+  # describe 'Dict Entity', ->
+  #   context 'when constructing a dictionary', ->
+  #     it 'constructs and toStrings correctly', (done) ->
+  #       expect((new Dict).toString()).to.eql(#what goes here??)
+  #       done()
+
+  describe 'BindingList Entity', ->
+    context 'when constructing a binding list', ->
+      it 'constructs and toStrings correctly', (done) ->
+        token = ['face'; 'nose'; 'mouth']
+        expect((new BindingList token).toString()).to.eql('face, nose, mouth')
+        done()
+
+  # needs: proper type... tried @INT, int, IntegerLiteral, intlit.... 
+  # describe 'Binding Entity', ->
+  #   context 'when constructing a binding', ->
+  #     it 'constructs and toStrings correctly', (done) ->
+  #       expect((new Binding 'hi', intlit, 5).toString()).to.eql('Binding hi intlit to 5')
+  #       done()
+
+  # needs: operator to have a .lexeme, so token?
+  # describe 'BinaryExpression Entity', ->
+  #   context 'when constructing a binary expression', ->
+  #     it 'constructs and toStrings correctly', (done) ->
+  #       expect((new BinaryExpression == 5 5).toString()).to.eql('(BinaryOp == 5 6)')
+
+  #same as above: needs proper definition of the operator
+  # describe 'UnaryExpression Entity', ->
+  #   context 'when constructing a unary expression', ->
+  #     it 'constructs and toStrings correctly', (done) ->
+  #       expect((new UnaryExpression '-', 5).toString()).to.eql('(UnaryOp - 5)')
+  #       done()
