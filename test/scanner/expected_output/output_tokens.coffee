@@ -32,6 +32,12 @@ module.exports = {
       col: 10
     },
     {
+      kind: 'newline',
+      lexeme: 'newline',
+      line: 1,
+      col: 11
+    }
+    {
       kind: 'EOF',
       lexeme: 'EOF'
     }
@@ -63,6 +69,12 @@ module.exports = {
       col: 6
     },
     {
+      kind: 'newline',
+      lexeme: 'newline',
+      line: 1,
+      col: 7
+    },
+    {
       kind: 'intlit',
       lexeme: '1',
       line: 2,
@@ -79,6 +91,12 @@ module.exports = {
       lexeme: '3',
       line: 2,
       col: 6
+    },
+    {
+      kind: 'newline',
+      lexeme: 'newline',
+      line: 2,
+      col: 7
     },
     {
       kind: 'intlit',
@@ -99,6 +117,12 @@ module.exports = {
       col: 5
     },
     {
+      kind: 'newline',
+      lexeme: 'newline',
+      line: 3,
+      col: 6
+    },
+    {
       kind: 'true',
       lexeme: 'true',
       line: 4,
@@ -117,6 +141,12 @@ module.exports = {
       col: 10
     },
     {
+      kind: 'newline',
+      lexeme: 'newline',
+      line: 4,
+      col: 15
+    },
+    {
       kind: 'intlit',
       lexeme: '5',
       line: 5,
@@ -133,6 +163,12 @@ module.exports = {
       lexeme: '3',
       line: 5,
       col: 5
+    },
+    {
+      kind: 'newline',
+      lexeme: 'newline',
+      line: 5,
+      col: 6
     },
     {
       kind: '-',
@@ -165,6 +201,12 @@ module.exports = {
       col: 7
     },
     {
+      kind: 'newline',
+      lexeme: 'newline',
+      line: 6,
+      col: 8
+    },
+    {
       kind: 'strlit',
       lexeme: [
         '73',
@@ -185,7 +227,13 @@ module.exports = {
       lexeme: '3',
       line: 7,
       col: 9
-    }
+    },
+    {
+      kind: 'newline',
+      lexeme: 'newline',
+      line: 7,
+      col: 10
+    },
     {
       kind: 'make',
       lexeme: 'make',
@@ -218,6 +266,12 @@ module.exports = {
       ],
       line: 8,
       col: 19
+    },
+    {
+      kind: 'newline',
+      lexeme: 'newline',
+      line: 8,
+      col: 23
     },
     {
       kind: 'make',
@@ -256,6 +310,12 @@ module.exports = {
       col: 19
     },
     {
+      kind: 'newline',
+      lexeme: 'newline',
+      line: 9,
+      col: 20
+    },
+    {
       kind: 'EOF',
       lexeme: 'EOF'
     }
@@ -286,6 +346,12 @@ module.exports = {
       col: 10
     },
     {
+      kind: 'newline',
+      lexeme: 'newline',
+      line: 1,
+      col: 11
+    },
+    {
       kind: 'make',
       lexeme: 'make',
       line: 2,
@@ -308,6 +374,12 @@ module.exports = {
       lexeme: '5',
       line: 2,
       col: 10
+    },
+    {
+      kind: 'newline',
+      lexeme: 'newline',
+      line: 2,
+      col: 11
     },
     {
       kind: 'if',
@@ -364,6 +436,12 @@ module.exports = {
       col: 18
     },
     {
+      kind: 'newline',
+      lexeme: 'newline',
+      line: 3,
+      col: 22
+    },
+    {
       kind: 'deeg',
       lexeme: 'deeg',
       line: 4,
@@ -374,6 +452,12 @@ module.exports = {
       lexeme: 'true',
       line: 4,
       col: 10
+    },
+    {
+      kind: 'newline',
+      lexeme: 'newline',
+      line: 4,
+      col: 14
     },
     {
       kind: 'else',
@@ -436,6 +520,12 @@ module.exports = {
       col: 27
     },
     {
+      kind: 'newline',
+      lexeme: 'newline',
+      line: 5,
+      col: 31
+    },
+    {
       kind: 'deeg',
       lexeme: 'deeg',
       line: 6,
@@ -446,6 +536,12 @@ module.exports = {
       lexeme: 'false',
       line: 6,
       col: 10
+    },
+    {
+      kind: 'newline',
+      lexeme: 'newline',
+      line: 6,
+      col: 15
     },
     {
       kind: 'EOF',
@@ -476,6 +572,12 @@ module.exports = {
       lexeme: '5.422',
       line: 1,
       col: 12
+    },
+    {
+      kind: 'newline',
+      lexeme: 'newline',
+      line: 1,
+      col: 17
     },
     {
       kind: 'make',
@@ -547,6 +649,12 @@ module.exports = {
       col: 27
     },
     {
+      kind: 'newline',
+      lexeme: 'newline',
+      line: 2,
+      col: 31
+    },
+    {
       kind: 'make',
       lexeme: 'make',
       line: 3,
@@ -605,6 +713,12 @@ module.exports = {
       lexeme: [],
       line: 3,
       col: 17
+    },
+    {
+      kind: 'newline',
+      lexeme: 'newline',
+      line: 3,
+      col: 18
     },
     {
       kind: 'EOF',

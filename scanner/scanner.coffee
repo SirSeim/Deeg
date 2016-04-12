@@ -61,13 +61,16 @@ scan = (line, lineNumber, state) ->
   emitError = (message, location) ->
     state.scanningError.push error message, location
 
+  exists = (kind) ->
+    kind == state.tokens[state.tokens.length-1]
+
   run = ->
     # Skip spaces
     pos++ while SPACE.test line[pos]
     start = pos
 
     # Nothing on the line
-    return if pos >= line.length
+    return (emit 'newline' if not exists 'newline') if pos >= line.length
 
     # Come back from string interpolation
     if CLOSECURLEY.test(line[pos]) and state.interpolation
