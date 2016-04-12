@@ -225,11 +225,12 @@ describe 'Entities', ->
         expect((new BindingList token).toString()).to.eql('face, nose, mouth')
         done()
 
-  # needs: proper type... tried @INT, int, IntegerLiteral, intlit.... 
+  # needs: proper type... tried @INT, int, IntegerLiteral, intlit....
   # describe 'Binding Entity', ->
   #   context 'when constructing a binding', ->
   #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new Binding 'hi', intlit, 5).toString()).to.eql('Binding hi intlit to 5')
+  #       expect((new Binding 'hi', intlit, 5).toString())
+  #           .to.eql('Binding hi intlit to 5')
   #       done()
 
   # needs: operator to have a .lexeme, so token?
