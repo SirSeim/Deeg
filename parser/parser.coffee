@@ -1,57 +1,58 @@
-scanner = require '../scanner/scanner.coffee'
-error = require '../error/error.coffee'
-Program = require './entities/program.coffee'
-Block = require './entities/block.coffee'
-Type = require './entities/type.coffee'
+scanner = require "#{__dirname}/../scanner/scanner.coffee"
+error = require "#{__dirname}/../error/error.coffee"
+Program = require "#{__dirname}/../entities/program.coffee"
+Block = require "#{__dirname}/../entities/block.coffee"
+Type = require "#{__dirname}/../entities/type.coffee"
 
-ForStatement = require './entities/forstatement.coffee'
-StdFor = require './entities/stdfor.coffee'
-StdForIdExp = require './entities/stdforidexp.coffee'
-CountFor = require './entities/countfor.coffee'
-CountsFor = require './entities/countsfor.coffee'
-IfStatement = require './entities/ifstatement.coffee'
-ElseIfStatement = require './entities/elseifstatement.coffee'
-ElseStatement = require './entities/elsestatement.coffee'
+ForStatement = require "#{__dirname}/../entities/forstatement.coffee"
+StdFor = require "#{__dirname}/../entities/stdfor.coffee"
+StdForIdExp = require "#{__dirname}/../entities/stdforidexp.coffee"
+CountFor = require "#{__dirname}/../entities/countfor.coffee"
+CountsFor = require "#{__dirname}/../entities/countsfor.coffee"
+IfStatement = require "#{__dirname}/../entities/ifstatement.coffee"
+ElseIfStatement = require "#{__dirname}/../entities/elseifstatement.coffee"
+ElseStatement = require "#{__dirname}/../entities/elsestatement.coffee"
 
-# MatchStatement = require './entities/matchstatement.coffee' this file doesn't exist yet
-# PatBlock = require './entities/patblock.coffee'
-# PatLine = require './entities/patline.coffee'
-# Patterns = require './entities/patterns.coffee'
-# Pattern = require './entities/pattern.coffee'
+# MatchStatement = require "#{__dirname}/../entities/matchstatement.coffee"
+#     this file doesn't exist yet
+# PatBlock = require "#{__dirname}/../entities/patblock.coffee"
+# PatLine = require "#{__dirname}/../entities/patline.coffee"
+# Patterns = require "#{__dirname}/../entities/patterns.coffee"
+# Pattern = require "#{__dirname}/../entities/pattern.coffee"
 
-WhileStatement = require './entities/whilestatement.coffee'
-ReturnStatement = require './entities/returnstatement.coffee'
-ClassDefinition = require './entities/classdefinition.coffee'
+WhileStatement = require "#{__dirname}/../entities/whilestatement.coffee"
+ReturnStatement = require "#{__dirname}/../entities/returnstatement.coffee"
+ClassDefinition = require "#{__dirname}/../entities/classdefinition.coffee"
 
-VariableDeclaration = require './entities/variabledeclaration.coffee'
-VariableAssignment = require './entities/variableassignment.coffee'
-VariableExpression = require './entities/variableexpression.coffee'
-Args = require './entities/args.coffee'
-ExpList = require './entities/explist.coffee'
+VariableDeclaration = require "#{__dirname}/../entities/variabledeclaration.coffee"
+VariableAssignment = require "#{__dirname}/../entities/variableassignment.coffee"
+VariableExpression = require "#{__dirname}/../entities/variableexpression.coffee"
+Args = require "#{__dirname}/../entities/args.coffee"
+ExpList = require "#{__dirname}/../entities/explist.coffee"
 
-FunctionExp = require './entities/functionexp.coffee'
-Params = require './entities/params.coffee'
-ParamList = require './entities/paramlist.coffee'
+FunctionExp = require "#{__dirname}/../entities/functionexp.coffee"
+Params = require "#{__dirname}/../entities/params.coffee"
+ParamList = require "#{__dirname}/../entities/paramlist.coffee"
 
-TrailingIf = require './entities/trailingif.coffee'
-VariableReference = require './entities/variablereference.coffee'
-FieldAccess = require './entities/fieldaccess.coffee'
-IterableItem = require './entities/iterableitem.coffee'
-Range = require './entities/range.coffee'
-IntegerLiteral = require './entities/integerliteral.coffee'
-FloatLiteral = require './entities/floatliteral.coffee'
-BooleanLiteral = require './entities/booleanliteral.coffee'
-StringLiteral = require './entities/stringliteral.coffee'
+TrailingIf = require "#{__dirname}/../entities/trailingif.coffee"
+VariableReference = require "#{__dirname}/../entities/variablereference.coffee"
+FieldAccess = require "#{__dirname}/../entities/fieldaccess.coffee"
+IterableItem = require "#{__dirname}/../entities/iterableitem.coffee"
+Range = require "#{__dirname}/../entities/range.coffee"
+IntegerLiteral = require "#{__dirname}/../entities/integerliteral.coffee"
+FloatLiteral = require "#{__dirname}/../entities/floatliteral.coffee"
+BooleanLiteral = require "#{__dirname}/../entities/booleanliteral.coffee"
+StringLiteral = require "#{__dirname}/../entities/stringliteral.coffee"
 
-List = require './entities/list.coffee'
-Dict = require './entities/dict.coffee'
-BindingList = require './entities/bindinglist.coffee'
-Binding = require './entities/binding.coffee'
-# Function = require './entities/function.coffee'
+List = require "#{__dirname}/../entities/list.coffee"
+Dict = require "#{__dirname}/../entities/dict.coffee"
+BindingList = require "#{__dirname}/../entities/bindinglist.coffee"
+Binding = require "#{__dirname}/../entities/binding.coffee"
+# Function = require "#{__dirname}/../entities/function.coffee"
 # i have no idea how this differs from FunctionExp
 
-BinaryExpression = require './entities/binaryexpression.coffee'
-UnaryExpression = require './entities/unaryexpression.coffee'
+BinaryExpression = require "#{__dirname}/../entities/binaryexpression.coffee"
+UnaryExpression = require "#{__dirname}/../entities/unaryexpression.coffee"
 
 tokens = []
 

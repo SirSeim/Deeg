@@ -7,7 +7,7 @@
 fs = require 'fs'
 byline = require 'byline'
 XRegExp = require 'xregexp'
-error = require '../error/error.coffee'
+error = require "#{__dirname}/../error/error.coffee"
 
 LETTER = XRegExp '[\\p{L}]'
 DIGIT = XRegExp '[\\p{Nd}]'

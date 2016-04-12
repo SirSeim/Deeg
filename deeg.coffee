@@ -12,4 +12,11 @@ argv = require 'yargs'
     .demand(1)
     .argv
 
-scan = require './scanner/scanner.coffee'
+scan = require "#{__dirname}/scanner/scanner.coffee"
+parse = require "#{__dirname}/parser/parser.coffee"
+
+scan argv._[0], (errors, tokens) ->
+  return (console.log err for err in errors) if errors.length > 0
+  if argv.t
+    console.log t for t in tokens
+    return
