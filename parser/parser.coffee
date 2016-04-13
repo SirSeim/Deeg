@@ -13,12 +13,12 @@ IfStatement = require "#{__dirname}/../entities/ifstatement.coffee"
 ElseIfStatement = require "#{__dirname}/../entities/elseifstatement.coffee"
 ElseStatement = require "#{__dirname}/../entities/elsestatement.coffee"
 
-# MatchStatement = require "#{__dirname}/../entities/matchstatement.coffee"
-#     this file doesn't exist yet
-# PatBlock = require "#{__dirname}/../entities/patblock.coffee"
-# PatLine = require "#{__dirname}/../entities/patline.coffee"
-# Patterns = require "#{__dirname}/../entities/patterns.coffee"
-# Pattern = require "#{__dirname}/../entities/pattern.coffee"
+MatchStatement = require "#{__dirname}/../entities/matchstatement.coffee"
+
+PatBlock = require "#{__dirname}/../entities/patblock.coffee"
+PatLine = require "#{__dirname}/../entities/patline.coffee"
+Patterns = require "#{__dirname}/../entities/patterns.coffee"
+Pattern = require "#{__dirname}/../entities/pattern.coffee"
 
 WhileStatement = require "#{__dirname}/../entities/whilestatement.coffee"
 ReturnStatement = require "#{__dirname}/../entities/returnstatement.coffee"
@@ -48,8 +48,6 @@ List = require "#{__dirname}/../entities/list.coffee"
 Dict = require "#{__dirname}/../entities/dict.coffee"
 BindingList = require "#{__dirname}/../entities/bindinglist.coffee"
 Binding = require "#{__dirname}/../entities/binding.coffee"
-# Function = require "#{__dirname}/../entities/function.coffee"
-# i have no idea how this differs from FunctionExp
 
 BinaryExpression = require "#{__dirname}/../entities/binaryexpression.coffee"
 UnaryExpression = require "#{__dirname}/../entities/unaryexpression.coffee"

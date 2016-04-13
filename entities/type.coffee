@@ -1,4 +1,4 @@
-error = require '../error/error.coffee'
+error = require "#{__dirname}/../error/error.coffee"
 
 cache = {}
 
@@ -14,7 +14,7 @@ class Type
   @LIST = new Type 'List'
   @DICT = new Type 'Dict'
   @FUNCTION = new Type 'Function'
-  @ARBITRARY = new Type '<arbitrary_type>'
+  @UNKNOWN = new Type '¯\_(ツ)_/¯'
 
   toString: -> @name
 
@@ -41,11 +41,12 @@ class Type
 
   isCompatibleWith: (otherType) ->
     return this is otherType or
-          this is Type.ARBITRARY or
-          otherType is Type.ARBITRARY
+          this is Type.UNKNOWN or
+          otherType is Type.UNKNOWN
 
-module.exports =
-  BOOL: Type.BOOL
-  INT: Type.INT
-  ARBITRARY: Type.ARBITRARY
-  forName: (name) -> cache[name]
+module.exports = Type
+# module.exports =
+#   BOOL: Type.BOOL
+#   INT: Type.INT
+#   UNKNOWN: Type.UNKNOWN
+#   forName: (name) -> cache[name]
