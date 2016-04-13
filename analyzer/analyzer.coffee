@@ -2,7 +2,7 @@ error = require "#{__dirname}/../error/error.coffee"
 VariableDeclaration = require "#{__dirname}/../entities/variabledeclaration.coffee"
 Type = require "#{__dirname}/../entities/type.coffee"
 DeegEntities = require "#{__dirname}/../entities/deegentities"
-EntityUtils = require "#{__dirname}/../entities/entityutilities" 
+EntityUtils = require "#{__dirname}/../entities/entityutilities"
 # entity utilities doesn't seem to be needed here -josh
 
 class AnalysisContext
@@ -15,7 +15,7 @@ class AnalysisContext
   createChildContext: ->
     new AnalysisContext this
 
-   variableMustNotBeAlreadyDeclared: (token, errorMsg) ->
+  variableMustNotBeAlreadyDeclared: (token, errorMsg) ->
     errorMsg ?= "Variable #{token.lexeme} already declared"
     if @symbolTable[token.lexeme]
       error errorMsg, token.line
