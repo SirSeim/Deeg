@@ -54,11 +54,11 @@ UnaryExpression = require "#{__dirname}/../entities/unaryexpression.coffee"
 
 tokens = []
 
-module.exports = (scannerOutput) ->
+module.exports = (scannerOutput, callback) ->
   tokens = scannerOutput
   program = parseProgram()
   match 'EOF'
-  program
+  callback parsingErrors, program
 
 parseProgram = ->
   new Program(parseBlock())
