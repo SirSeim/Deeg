@@ -56,6 +56,7 @@ tokens = []
 
 module.exports = (scannerOutput, callback) ->
   tokens = scannerOutput
+  parsingErrors = []
   program = parseProgram()
   match 'EOF'
   callback parsingErrors, program
@@ -68,23 +69,23 @@ parseBlock = ->
   loop
     statements.push parseStatement() # What if there's `newline` before the Stmt
     match 'newline'
-    break if at ['EOF', 'end', 'else']
+    break if exists ['EOF', 'end', 'else']
   new Block(statements)
 
 parseStatement = ->
-  if at 'while'
+  if exists 'while'
     parseWhileStatement()
-  else if at 'for'
+  else if exists 'for'
     parseForStatement()
-  else if at 'match'
+  else if exists 'match'
     parseMatchStatement()
-  else if at 'if'
+  else if exists 'if'
     parseIfStatement()
-  else if at 'deeg'
+  else if exists 'deeg'
     parseReturnStatement()
-  else if at 'class'
+  else if exists 'class'
     parseClassDefinition()
-  else if at 'to' # disclaimer, this is not correct
+  else if exists 'to' # disclaimer, this is not correct
     parseBinding()
   else
     parseExpression()
@@ -151,7 +152,7 @@ parsePatBlock = ->
   loop
     patLines.push parsePatLine() # What if there's `newline` before the Stmt
     match 'newline'
-    break if at 'end'
+    break if exists 'end'
   new PatBlock(patLines)
 
 parsePatLine = ->
@@ -243,12 +244,12 @@ parseReturnStatement = ->
   new ReturnStatement(parseExpression())
 
 parseType = -> # TODO: needs work for class types, be more generalized
-  if at ['bool', 'int', 'float', 'string', 'Dict']
+  if exists ['bool', 'int', 'float', 'string', 'Dict']
     Type.forName match().lexeme
-  else if at 'List'
+  else if exists 'List'
     Type.forName match 'List'
     listType = optionalTypeMatch()
-  else if at 'Function'
+  else if exists 'Function'
     args = []
     Type.forName match 'Function('
     unless exists ')'
@@ -270,11 +271,11 @@ optionalTypeCheck = ->
   exists ':'
 
 parseExpression = ->
-  if at 'make'
+  if exists 'make'
     parseVariableDeclaration()
-  else if at 'id'
+  else if exists 'id'
     parseVariableAssignment()
-  else if ((at '(') and areParams())
+  else if ((exists '(') and areParams())
     parseFunctionExp()
   else
     parseExp0()
@@ -421,7 +422,7 @@ parseExp2 = -> # the and
 
 parseExp3 = -> # the relops
   left = parseExp4()
-  if at ['<', '<=', '==', '!=', '>=', '>']
+  if exists ['<', '<=', '==', '!=', '>=', '>']
     op = match()
     right = parseExp4()
     left = new BinaryExpression(op, left, right)
@@ -441,7 +442,7 @@ parseExp4 = -> # list comprehension i think i.e. thru till by
 
 parseExp5 = -> # addition subtraction
   left = parseExp6()
-  while at ['+', '-']
+  while exists ['+', '-']
     op = match()
     right = parseExp6()
     left = new BinaryExpression(op, left, right)
@@ -449,14 +450,14 @@ parseExp5 = -> # addition subtraction
 
 parseExp6 = -> # multiplication division
   left = parseExp7()
-  while at ['*', '/', '%']
+  while exists ['*', '/', '%']
     op = match()
     right = parseExp7()
     left = new BinaryExpression op, left, right
   left
 
 parseExp7 = -> # the prefix ops
-  if at ['-', 'not', '!']
+  if exists ['-', 'not', '!']
     op = match()
     operand = parseExp8()
     new UnaryExpression op, operand
@@ -471,8 +472,8 @@ parseExp8 = -> # the power (**)
   left
 
 parseExp9 = -> # property, set, args
-  input = parseExp9()
-  while (at ['.', '[', '('])
+  # input = parseExp9()
+  while (exists ['.', '[', '('])
     while exists '.'
       match '.'
       input = new FieldAccess(input, parseExp10())
@@ -485,20 +486,20 @@ parseExp9 = -> # property, set, args
   input
 
 parseExp10 = -> # literals, id, expression in parens
-  if at ['true', 'false']
+  if exists ['true', 'false']
     new BooleanLiteral match()
-  else if at 'INTLIT'
+  else if exists 'intlit'
     new IntegerLiteral match()
-  else if at 'FLOATLIT'
+  else if exists 'floatlit'
     new FloatLiteral match()
-  else if at 'id'
+  else if exists 'id'
     new VariableReference match()
-  else if at '('
+  else if exists '('
     match()
     expression = parseExpression()
     match ')'
     expression
-  else if at 'STRINGLIT'
+  else if exists 'strlit'
     new StringLiteral match()
   else if exists '{'
     parseDict()
@@ -558,6 +559,8 @@ parseBinding = ->
 exists = (kind) ->
   if tokens.length is 0
     error 'Unexpected end of source program'
+  else if Array.isArray kind
+    return tokens[0].kind in kind
   kind is undefined or kind is tokens[0].kind
 
 match = (kind, optional=false) ->
