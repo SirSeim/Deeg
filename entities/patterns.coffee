@@ -12,4 +12,4 @@ class Patterns
   	
   # optimize: -> this
 
-module.exports = PatLine
+module.exports = Patterns
