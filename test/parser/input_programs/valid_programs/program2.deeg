@@ -1,0 +1,8 @@
+make fibonacci = (x) does
+    make a = 0, b = 1, c
+    if (x < 3) deeg 1
+    while (--x > 0) does
+        c = a + b, a = b, b = c
+    end
+    deeg c
+end

@@ -1,0 +1,9 @@
+if true then
+    print("hello")
+else if false then
+    print("goodbye")
+else then
+    print("peace")
+end
+
+if true then print("Suhh Dude!")
