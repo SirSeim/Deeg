@@ -426,6 +426,7 @@ parseExp3 = -> # the relops
     op = match()
     right = parseExp4()
     left = new BinaryExpression(op, left, right)
+  left
 
 parseExp4 = -> # list comprehension i think i.e. thru till by
   left = parseExp5()

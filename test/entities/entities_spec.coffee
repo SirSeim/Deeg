@@ -86,7 +86,7 @@ describe 'Entities', ->
           line: 3,
           col: 1
         }
-        expect((new VariableDeclaration token, 3, 'bool').toString())
+        expect((new VariableDeclaration token, 'bool', 3).toString())
           .to.eql('(VarDec \'foo\' of type:bool = 3)')
         done()
 
@@ -159,15 +159,15 @@ describe 'Entities', ->
   describe 'IntegerLiteral Entity', ->
     context 'when constructing an integer literal', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new IntegerLiteral 5).toString()).to.eql(5)
+        expect((new IntegerLiteral {lexeme:5}).toString()).to.eql(5)
         done()
     context 'when constructing an integer literal (0)', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new IntegerLiteral 0).toString()).to.eql(0)
+        expect((new IntegerLiteral {lexeme:0}).toString()).to.eql(0)
         done()
     context 'when constructing a negative integer literal', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new IntegerLiteral -10).toString()).to.eql(-10)
+        expect((new IntegerLiteral {lexeme:-10}).toString()).to.eql(-10)
         done()
 
   # describe 'FloatLiteral Entity', ->
