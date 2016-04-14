@@ -57,40 +57,43 @@ tokens = []
 module.exports = (scannerOutput, callback) ->
   tokens = scannerOutput
   parsingErrors = []
-  program = parseProgram()
+  state = {
+    errors: parsingErrors
+  }
+  program = parseProgram(state)
   match 'EOF'
   callback parsingErrors, program
 
-parseProgram = ->
-  new Program(parseBlock())
+parseProgram = (state) ->
+  new Program(parseBlock(state))
 
-parseBlock = ->
+parseBlock = (state) ->
   statements = []
   loop
-    statements.push parseStatement() # What if there's `newline` before the Stmt
+    statements.push parseStatement(state) # What if there's `newline` before the Stmt
     match 'newline'
     break if exists ['EOF', 'end', 'else']
   new Block(statements)
 
-parseStatement = ->
+parseStatement = (state) ->
   if exists 'while'
-    parseWhileStatement()
+    parseWhileStatement(state)
   else if exists 'for'
-    parseForStatement()
+    parseForStatement(state)
   else if exists 'match'
-    parseMatchStatement()
+    parseMatchStatement(state)
   else if exists 'if'
-    parseIfStatement()
+    parseIfStatement(state)
   else if exists 'deeg'
-    parseReturnStatement()
+    parseReturnStatement(state)
   else if exists 'class'
-    parseClassDefinition()
+    parseClassDefinition(state)
   else if exists 'to' # disclaimer, this is not correct
-    parseBinding()
+    parseBinding(state)
   else
-    parseExpression()
+    parseExpression(state)
 
-parseClassDefinition = ->
+parseClassDefinition = (state) ->
   match 'class'
   id = match 'id'
 
@@ -98,237 +101,241 @@ parseClassDefinition = ->
     match 'extends'
     parentId = match 'id'
 
-  body = parseBlock()
+  body = parseBlock(state)
 
   match 'end'
   new ClassDefinition(id, body, parentId)
 
-parseIfStatement = ->
+parseIfStatement = (state) ->
   match 'if'
-  condition = parseExpression()
+  condition = parseExpression(state)
   match 'then'
-  body = parseBlock()
+  body = parseBlock(state)
   if exists 'else if'
-    elseIfStatement = parseElseIfStatement()
+    elseIfStatement = parseElseIfStatement(state)
   if exists 'else'
-    elseStatement = parseElseStatement()
+    elseStatement = parseElseStatement(state)
   match 'end'
   new IfStatement(condition, body, elseIfStatement, elseStatement)
 
-parseElseIfStatement = ->
+parseElseIfStatement = (state) ->
   match 'else if'
-  condition = parseExpression()
+  condition = parseExpression(state)
   match 'then'
-  body = parseBlock()
+  body = parseBlock(state)
   if exists 'else if'
-    elseIfStatement = parseElseIfStatement()
+    elseIfStatement = parseElseIfStatement(state)
   new ElseIfStatement(condition, body, elseIfStatement)
 
-parseElseStatement = ->
+parseElseStatement = (state) ->
   match 'else'
-  body = parseBlock()
+  body = parseBlock(state)
   new ElseStatement(body)
 
 
-parseWhileStatement = ->
+parseWhileStatement = (state) ->
   match 'while'
-  condition = parseExpression()
+  condition = parseExpression(state)
   match 'then'
-  body = parseBlock()
+  body = parseBlock(state)
   match 'end'
   new WhileStatement(condition, body)
 
-parseMatchStatement = ->
+parseMatchStatement = (state) ->
   match 'match'
-  matchee = parseExpression()
+  matchee = parseExpression(state)
   match 'with'
   match 'newline' # maybe optional
-  patBlock = parsePatBlock()
+  patBlock = parsePatBlock(state)
   match 'end'
   new MatchStatement(matchee, patBlock)
 
-parsePatBlock = ->
+parsePatBlock = (state) ->
   patLines = []
   loop
-    patLines.push parsePatLine() # What if there's `newline` before the Stmt
+    patLines.push parsePatLine(state) # What if there's `newline` before the Stmt
     match 'newline'
     break if exists 'end'
   new PatBlock(patLines)
 
-parsePatLine = ->
+parsePatLine = (state) ->
   match '>>'
-  patterns = parsePatterns()
+  patterns = parsePatterns(state)
   if exists 'if'
     match 'if'
-    condition = parseExpression()
+    condition = parseExpression(state)
   match 'then'
-  instruction = parseStatement()
+  instruction = parseStatement(state)
   new PatLine(patterns, condition, instruction)
 
-parsePatterns = ->
+parsePatterns = (state) ->
   tails = []
-  head = parsePattern()
+  head = parsePattern(state)
   while exists '|'
     match '|'
-    tails.push parsePattern()
+    tails.push parsePattern(state)
   new Patterns(head, tails)
 
-parsePattern = ->
+parsePattern = (state) ->
   if exists '_'
     pattern = match '_'
   else
-    pattern = parseExpression()
-  type = optionalTypeMatch()
+    pattern = parseExpression(state)
+  type = optionalTypeMatch(state)
   new Pattern(pattern, type)
 
-parseForStatement = ->
+parseForStatement = (state) ->
   match 'for'
-  forIterate = determineForType()
+  forIterate = determineForType(state)
   match 'then'
 
   if exists 'newline'
     match 'newline'
-    body = parseBlock()
+    body = parseBlock(state)
     match 'end'
   else
-    body = parseStatement()
+    body = parseStatement(state)
     match 'end'
 
   new ForStatement(forIterate, body)
 
-determineForType = ->
-  if exists 'id' and optionalTypeCheck() # true if StdFor
-    parseStdFor()
+determineForType = (state) ->
+  if exists 'id' and optionalTypeCheck(state) # true if StdFor
+    # DOES NOT WORK because we can only check one token ahead right now
+    parseStdFor(state)
   else if exists 'id'
-    parseCountsFor()
+    parseCountsFor(state)
   else if exists 'count'
-    parseCountFor()
+    parseCountFor(state)
   else
     message = "Expected \"id\" or \"count\" but found \"#{tokens[0].kind}\""
     error message, tokens[0]
 
-parseStdFor = -> # use array of ids to range
+parseStdFor = (state) -> # use array of ids to range
   id = match 'id'
-  type = optionalTypeMatch()
+  type = optionalTypeMatch(state)
   match 'in'
-  range = parseExpression()
+  range = parseExpression(state)
   if exists 'and'
-    additionalList = parseStdForIdExp()
+    additionalList = parseStdForIdExp(state)
   new StdFor(id, type, range, additionalList)
 
-parseStdForIdExp = ->
+parseStdForIdExp = (state) ->
   idList = []
   expList = []
   typeList = []
   while exists 'and'
     match 'and'
     idList.push match 'id'
-    typeList.push optionalTypeMatch()
+    typeList.push optionalTypeMatch(state)
     match 'in'
-    expList.push parseExpression()
+    expList.push parseExpression(state)
   new StdForIdExp(idList, typeList, expList)
 
-parseCountsFor = ->
+parseCountsFor = (state) ->
   id = match 'id'
   match 'counts'
-  tally = parseExpression()
+  tally = parseExpression(state)
   new CountsFor(id, tally)
 
-parseCountFor = ->
+parseCountFor = (state) ->
   match 'count'
-  tally = parseExpression()
+  tally = parseExpression(state)
   new CountFor(tally)
 
-parseReturnStatement = ->
+parseReturnStatement = (state) ->
   match 'deeg'
-  new ReturnStatement(parseExpression())
+  new ReturnStatement(parseExpression(state))
 
-parseType = -> # TODO: needs work for class types, be more generalized
+parseType = (state) -> # TODO: needs work for class types, be more generalized
   if exists ['bool', 'int', 'float', 'string', 'Dict']
     Type.forName match().lexeme
   else if exists 'List'
     Type.forName match 'List'
-    listType = optionalTypeMatch()
+    listType = optionalTypeMatch(state)
   else if exists 'Function'
     args = []
     Type.forName match 'Function('
     unless exists ')'
-      args.push parseType()
+      args.push parseType(state)
       while exists ','
         match ','
-        args.push parseType()
+        args.push parseType(state)
     match ')'
-    functionType = optionalTypeMatch()
+    functionType = optionalTypeMatch(state)
   else
     error 'Type expected', tokens[0]
 
-optionalTypeMatch = ->
-  if optionalTypeCheck()
+optionalTypeMatch = (state) ->
+  if optionalTypeCheck(state)
     match ':'
-    parseType()
+    parseType(state)
 
-optionalTypeCheck = ->
+optionalTypeCheck = (state) ->
   exists ':'
 
-parseExpression = ->
+parseExpression = (state) ->
   if exists 'make'
-    parseVariableDeclaration()
-  else if exists 'id'
-    parseVariableAssignment()
-  else if ((exists '(') and areParams())
-    parseFunctionExp()
+    parseVariableDeclaration(state)
+  else if exists 'id' and exists '=', 1
+    parseVariableAssignment(state)
+  else if ((exists '(') and areParams(state))
+    console.log 'parse Function Dec'
+    parseFunctionExp(state)
   else
-    parseExp0()
+    parseExp0(state)
 
-areParams = -> # WTF
+areParams = (state) -> # WTF
+  # DOES NOT WORK because we can only look one token ahead
+  isDone = false
   parens = 0
   position = 0
-  for token in tokens
-    parens++ if exists '('
-    parens-- if exists ')'
+  while true
+    parens++ if tokens[position].kind is '('
+    parens-- if tokens[position].kind is ')'
     position++
     break if parens is 0
-  tokens[position].kind is 'then'
+  tokens[position].kind is 'does'
 
-parseVariableDeclaration = ->
+parseVariableDeclaration = (state) ->
   match 'make'
   id = match 'id'
-  type = optionalTypeMatch()
+  type = optionalTypeMatch(state)
   match '='
-  value = parseExpression()
+  value = parseExpression(state)
   new VariableDeclaration(id, type, value)
 
-parseVariableAssignment = ->
-  id = parseVariableExpression()
+parseVariableAssignment = (state) ->
+  id = parseVariableExpression(state)
   match '='
-  value = parseExpression()
+  value = parseExpression(state)
   new VariableAssignment(id, value)
 
-parseVariableExpression = ->
+parseVariableExpression = (state) ->
   id = match 'id'
   if exists '.'
     match '.'
-    exp8 = parseExp8()
+    exp8 = parseExp8(state)
   else if exists '['
     match '['
-    exp3 = parseExp3()
+    exp3 = parseExp3(state)
     match ']'
-  while exists parseArgs()
-    args = parseArgs()
+  while exists parseArgs(state)
+    args = parseArgs(state)
     if exists '.'
       match '.'
-      exp8 = parseExp8()
+      exp8 = parseExp8(state)
     else if exists '['
       match '['
-      exp3 = parseExp3()
+      exp3 = parseExp3(state)
       match ']'
   new VariableExpression(id, args, exp8, exp3)
 
-parseArgs = ->
+parseArgs = (state) ->
   match '('
 
   if not exists ')'
-    expList = parseExpList()
+    expList = parseExpList(state)
 
   if exists 'newline'
     match 'newline'
@@ -336,41 +343,41 @@ parseArgs = ->
 
   new Args(expList)
 
-parseExpList = ->
+parseExpList = (state) ->
   expArray = []
 
   if exists 'newline'
     match 'newline'
-  expArray.push parseExpression()
+  expArray.push parseExpression(state)
   while exists ','
     match ','
     if exists 'newline'
       match 'newline'
-    expArray.push parseExpression()
+    expArray.push parseExpression(state)
   if exists 'newline'
     match 'newline'
   new ExpList(expArray)
 
-parseFunctionExp = ->
-  params = parseParams()
-  type = optionalTypeMatch()
+parseFunctionExp = (state) ->
+  params = parseParams(state)
+  type = optionalTypeMatch(state)
   match 'does'
-  body = parseBlock()
+  body = parseBlock(state)
   match 'end'
   new FunctionExp(params, type, body)
 
-parseParams = ->
+parseParams = (state) ->
   match '('
 
   if not exists ')'
-    paramList = parseParamList()
+    paramList = parseParamList(state)
 
   if exists 'newline'
     match 'newline'
   match ')'
   new Params(paramList)
 
-parseParamList = ->
+parseParamList = (state) ->
   paramList = []
   # this list will have expressions and types may follow right after
   # null will follow if no type specified
@@ -378,115 +385,120 @@ parseParamList = ->
   # ==> [5, int, "two", null, "hello", string]
   if exists 'newline'
     match 'newline'
-  paramList.push parseExpression()
-  paramList.push optionalTypeMatch()
+  paramList.push parseExpression(state)
+  paramList.push optionalTypeMatch(state)
   while exists ','
     match ','
     if exists 'newline'
       match 'newline'
-    paramList.push parseExpression()
-    paramList.push optionalTypeMatch()
+    paramList.push parseExpression(state)
+    paramList.push optionalTypeMatch(state)
   if exists 'newline'
     match 'newline'
   new ParamList(paramList)
 
-parseExp0 = -> # the trailing if and possible else
-  direction = parseExp1()
+parseExp0 = (state) -> # the trailing if and possible else
+  direction = parseExp1(state)
   if exists 'if'
     match 'if'
-    condition = parseExp1()
-    instruction = null
+    condition = parseExp1(state)
+    match 'then'
+    if exists 'newline'
+      match 'newline'
+      instruction = parseBlock(state)
+    else
+      instruction = parseStatement(state)
     direction = new TrailingIf(direction, condition, instruction)
     if exists 'else'
       match 'else'
-      instruction = parseExp1()
+      instruction = parseExp1(state)
       direction = new TrailingIf(direction, condition, instruction)
-
+    match 'end'
   direction
 
-parseExp1 = -> # the or
-  left = parseExp2()
+parseExp1 = (state) -> # the or
+  left = parseExp2(state)
   while exists 'or'
     match 'or'
-    right = parseExp2()
+    right = parseExp2(state)
     left = new BinaryExpression('or', left, right)
   left
 
-parseExp2 = -> # the and
-  left = parseExp3()
+parseExp2 = (state) -> # the and
+  left = parseExp3(state)
   while exists 'and'
     match 'and'
-    right = parseExp3()
+    right = parseExp3(state)
     left = new BinaryExpression('and', left, right)
   left
 
-parseExp3 = -> # the relops
-  left = parseExp4()
+parseExp3 = (state) -> # the relops
+  left = parseExp4(state)
   if exists ['<', '<=', '==', '!=', '>=', '>']
     op = match()
-    right = parseExp4()
+    right = parseExp4(state)
     left = new BinaryExpression(op, left, right)
   left
 
-parseExp4 = -> # list comprehension i think i.e. thru till by
-  left = parseExp5()
+parseExp4 = (state) -> # list comprehension i think i.e. thru till by
+  left = parseExp5(state)
   if ((exists 'thru') or (exists 'till'))
     op = match()
-    right = parseExp5()
+    right = parseExp5(state)
     if exists 'by'
       # include skip factor in range
       match 'by'
-      left = new Range op, left, right, parseExp5()
+      left = new Range op, left, right, parseExp5(state)
     else
       left = new Range op, left, right
   left
 
-parseExp5 = -> # addition subtraction
-  left = parseExp6()
+parseExp5 = (state) -> # addition subtraction
+  left = parseExp6(state)
   while exists ['+', '-']
     op = match()
-    right = parseExp6()
+    right = parseExp6(state)
     left = new BinaryExpression(op, left, right)
   left
 
-parseExp6 = -> # multiplication division
-  left = parseExp7()
+parseExp6 = (state) -> # multiplication division
+  left = parseExp7(state)
   while exists ['*', '/', '%']
     op = match()
-    right = parseExp7()
+    right = parseExp7(state)
     left = new BinaryExpression op, left, right
   left
 
-parseExp7 = -> # the prefix ops
+parseExp7 = (state) -> # the prefix ops
   if exists ['-', 'not', '!']
     op = match()
-    operand = parseExp8()
+    operand = parseExp8(state)
     new UnaryExpression op, operand
   else
-    parseExp8()
+    parseExp8(state)
 
-parseExp8 = -> # the power (**)
-  left = parseExp9()
+parseExp8 = (state) -> # the power (**)
+  left = parseExp9(state)
   if exists '**'
     match '**'
-    left = new BinaryExpression('**', left, parseExp5())
+    left = new BinaryExpression('**', left, parseExp5(state))
   left
 
-parseExp9 = -> # property, set, args
-  input = parseExp10()
+parseExp9 = (state) -> # property, set, args
+  input = parseExp10(state)
   while (exists ['.', '[', '('])
     while exists '.'
       match '.'
-      input = new FieldAccess(input, parseExp10())
+      input = new FieldAccess(input, parseExp10(state))
     while exists '['
       match '['
-      input = new IterableItem(input, parseExp4())
+      input = new IterableItem(input, parseExp4(state))
       match ']'
     while exists '('
-      input = new FunctionExp(input, parseArgs())
+      input = new FunctionExp(input, parseArgs(state))
   input
 
-parseExp10 = -> # literals, id, expression in parens
+parseExp10 = (state) -> # literals, id, expression in parens
   if exists ['true', 'false']
     new BooleanLiteral match()
   else if exists 'intlit'
@@ -497,77 +509,82 @@ parseExp10 = -> # literals, id, expression in parens
     new VariableReference match()
   else if exists '('
     match()
-    expression = parseExpression()
+    expression = parseExpression(state)
     match ')'
     expression
   else if exists 'strlit'
     new StringLiteral match()
   else if exists '{'
-    parseDict()
+    parseDict(state)
   else if exists '['
-    parseList()
+    parseList(state)
   else
-    CustomError 'Unlawful start of expression', tokens[0]
+    # console.log 'broken'
+    # print()
+    reportError state, 'Unlawful start of expression', match()
 
-parseList = ->
+parseList = (state) ->
   listicles = []
   match '['
 
   if not exists ']'
-    listicles = parseExpList()
+    listicles = parseExpList(state)
 
   if exists 'newline'
     match 'newline'
   match ']'
   new List(listicles)
 
-parseDict = ->
+parseDict = (state) ->
   bindingArray = []
   match '{'
 
   if not exists '}'
-    bindingArray = parseBindingList()
+    bindingArray = parseBindingList(state)
 
   if exists 'newline'
     match 'newline'
   match '}'
   new Dict(bindingArray)
 
-parseBindingList = ->
+parseBindingList = (state) ->
   bindingList = []
 
-  bindingList.push parseBinding()
+  bindingList.push parseBinding(state)
 
   while exists ','
     match ','
-    bindingList.push parseBinding()
+    bindingList.push parseBinding(state)
   new BindingList(bindingList)
 
-parseBinding = ->
+parseBinding = (state) ->
   if exists 'newline'
     match 'newline'
 
   key = match 'id'
-  type = optionalTypeMatch()
+  type = optionalTypeMatch(state)
 
   match 'to'
-  value = parseExpression()
+  value = parseExpression(state)
 
   if exists 'newline'
     match 'newline'
   new Binding(key, type, value)
 
-exists = (kind) ->
+exists = (kind, index=0) ->
   if tokens.length is 0
     error 'Unexpected end of source program'
   else if Array.isArray kind
-    return tokens[0].kind in kind
-  kind is undefined or kind is tokens[0].kind
+    return tokens[index].kind in kind
+  kind is undefined or (tokens[index] and kind is tokens[index].kind)
+
+reportError = (state, message, token) ->
+  state.errors.push error (message + "with #{token.kind}:#{token.lexeme}"), token
 
 match = (kind, optional=false) ->
   if tokens.length is 0
     error 'Unexpected end of source program'
-  else if kind is undefined or kind is tokens[0].kind
+  else if kind is undefined or (tokens[0] and kind is tokens[0].kind)
     tokens.shift()
   else if optional
     return
