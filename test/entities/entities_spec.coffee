@@ -72,10 +72,40 @@ describe 'Entities', ->
         done()
 
   describe 'Type Entity', ->
-    context 'when constructing a type', ->
+    context 'when constructing a bool type', ->
       it 'constructs and toStrings correctly', (done) ->
         expect((Type.BOOL).toString()).to.eql('bool')
         done()
+    context 'when constructing a string type', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((Type.INT).toString()).to.eql('int')
+        done()
+    # does NOT construct and toString correctly:
+    # context 'when constructing a float type', ->
+    #   it 'constructs and toStrings correctly', (done) ->
+    #     expect((Type.FLOAT).toString()).to.eql('float')
+    #     done()
+    # context 'when constructing a list type', ->
+    #   it 'constructs and toStrings correctly', (done) ->
+    #     expect((Type.LIST).toString()).to.eql('List')
+    #     done()
+    # context 'when constructing a dict type', ->
+    #   it 'constructs and toStrings correctly', (done) ->
+    #     expect((Type.DICT).toString()).to.eql('Dict')
+    #     done()
+    # context 'when constructing a function type', ->
+    #   it 'constructs and toStrings correctly', (done) ->
+    #     expect((Type.FUNCTION).toString()).to.eql('Function')
+    #     done()
+    # context 'when constructing an arbitrary type', ->
+    #   it 'constructs and toStrings correctly', (done) ->
+    #     expect((Type.ARBITRARY).toString()).to.eql('<arbitrary_type>')
+    #     done()
+
+  # describe 'ForStatement Entity', ->
+  #   context 'when constructing a type', ->
+  #     it 'constructs and toStrings correctly', (done) ->
+  #       expect(())
 
   describe 'VariableDeclaration Entity', ->
     context 'when constructing a variable declaration', ->
@@ -103,7 +133,7 @@ describe 'Entities', ->
           .to.eql('(StdFor foo:int in dict, bar)')
         done()
 
-  # Maybe we don't need StdForIdExp
+  # Maybe we don't need StdForIdExp.
   # describe 'StdForIdExp', -> #this is not correct. entity declaration is not finished
   #   context 'when constructing a standard for id expression', ->
   #     it 'constructs and toStrings correctly', (done) ->
@@ -145,12 +175,10 @@ describe 'Entities', ->
       it 'constructs and toStrings correctly', (done) ->
         expect((new ReturnStatement 'hello').toString()).to.eql('(Return hello)')
         done()
-    
     context 'when constructing a return statement of an int', ->
       it 'constructs and toStrings correctly', (done) ->
         expect((new ReturnStatement 5).toString()).to.eql('(Return 5)')
         done()
-
     context 'when constructing a return statement of a boolean', ->
       it 'constructs and toStrings correctly', (done) ->
         expect((new ReturnStatement true).toString()).to.eql('(Return true)')
