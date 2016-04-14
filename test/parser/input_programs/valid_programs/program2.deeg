@@ -1,5 +1,7 @@
 make fibonacci = (x) does
-    make a = 0, b = 1, c
+    make a = 0
+    make b = 1
+    make c
     if (x < 3) deeg 1
     while (x > 0) then
         c = a + b

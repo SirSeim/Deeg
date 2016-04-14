@@ -2,7 +2,7 @@ if true then
     print("hello")
 else if false then
     print("goodbye")
-else then
+else
     print("peace")
 end
 
