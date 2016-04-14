@@ -292,7 +292,8 @@ optionalTypeCheck = (state) ->
 parseExpression = (state) ->
   if exists 'make'
     parseVariableDeclaration(state)
-  else if exists('id') and exists '=', 1
+  else if exists('id') and exists ['=','+=','-=','*=','/=','%=','++','--'], 1
+    # Does not support full Deeg grammer for complex VarExp
     parseVariableAssignment(state)
   else if exists('(') and areParams(state)
     parseFunctionExp(state)
@@ -300,13 +301,11 @@ parseExpression = (state) ->
     parseExp0(state)
 
 areParams = (state) -> # WTF
-  # DOES NOT WORK because we can only look one token ahead
-  isDone = false
   parens = 0
   position = 0
   while true
-    parens++ if tokens[position].kind is '('
-    parens-- if tokens[position].kind is ')'
+    parens++ if exists '(', position
+    parens-- if exists ')', position
     position++
     break if parens is 0
   tokens[position].kind is 'does'
@@ -324,31 +323,62 @@ parseVariableDeclaration = (state) ->
 
 parseVariableAssignment = (state) ->
   id = parseVariableExpression(state)
-  match '='
-  value = parseExpression(state)
-  new VariableAssignment(id, value)
+  if exists '='
+    match '='
+    value = parseExpression(state)
+  else if exists '+='
+    match '+='
+    value = parseExpression(state)
+    modifier = '+='
+  else if exists '-='
+    match '-='
+    value = parseExpression(state)
+    modifier = '-='
+  else if exists '/='
+    match '/='
+    value = parseExpression(state)
+    modifier = '/='
+  else if exists '*='
+    match '*='
+    value = parseExpression(state)
+    modifier = '*='
+  else if exists '%='
+    match '%='
+    value = parseExpression(state)
+    modifier = '%='
+  else if exists '++'
+    match '++'
+    value = null
+    modifier = '++'
+  else if exists '--'
+    match '--'
+    value = null
+    modifier = '--'
+  new VariableAssignment(id, value, modifier)
 
 parseVariableExpression = (state) ->
   id = match 'id'
-  if exists '.'
-    match '.'
-    exp8 = parseExp8(state)
-  else if exists '['
-    match '['
-    exp3 = parseExp3(state)
-    match ']'
-  while exists parseArgs(state)
-    # NOT DONE CORRECTLY ; parseArgs consumes tokens
-    # when exists is to be used only for detection
-    args = parseArgs(state)
+  depth = []
+  while exists ['.', '[', '(']
     if exists '.'
       match '.'
-      exp8 = parseExp8(state)
+      depth.push parseExp8(state)
     else if exists '['
       match '['
       exp3 = parseExp3(state)
       match ']'
-  new VariableExpression(id, args, exp8, exp3)
+    else if exists '('
+      depth.push parseArgs(state)
+      if exists '.'
+        match '.'
+        depth.push parseExp8(state)
+      else if exists '['
+        match '['
+        depth.push parseExp3(state)
+        match ']'
+      else
+        reportError state, 'Invalid property/array following function call', tokens[0]
+  new VariableExpression(id, depth)
 
 parseArgs = (state) ->
   match '('
