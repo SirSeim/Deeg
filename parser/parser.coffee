@@ -110,7 +110,11 @@ parseIfStatement = (state) ->
   match 'if'
   condition = parseExpression(state)
   match 'then'
-  body = parseBlock(state)
+  if exists 'newline'
+    match 'newline'
+    body = parseBlock(state)
+  else
+    body = parseStatement(state)
   if exists 'else if'
     elseIfStatement = parseElseIfStatement(state)
   if exists 'else'
@@ -122,14 +126,22 @@ parseElseIfStatement = (state) ->
   match 'else if'
   condition = parseExpression(state)
   match 'then'
-  body = parseBlock(state)
+  if exists 'newline'
+    match 'newline'
+    body = parseBlock(state)
+  else
+    body = parseStatement(state)
   if exists 'else if'
     elseIfStatement = parseElseIfStatement(state)
   new ElseIfStatement(condition, body, elseIfStatement)
 
 parseElseStatement = (state) ->
   match 'else'
-  body = parseBlock(state)
+  if exists 'newline'
+    match 'newline'
+    body = parseBlock(state)
+  else
+    body = parseStatement(state)
   new ElseStatement(body)
 
 
@@ -137,7 +149,11 @@ parseWhileStatement = (state) ->
   match 'while'
   condition = parseExpression(state)
   match 'then'
-  body = parseBlock(state)
+  if exists 'newline'
+    match 'newline'
+    body = parseBlock(state)
+  else
+    body = parseStatement(state)
   match 'end'
   new WhileStatement(condition, body)
 
@@ -192,10 +208,9 @@ parseForStatement = (state) ->
   if exists 'newline'
     match 'newline'
     body = parseBlock(state)
-    match 'end'
   else
     body = parseStatement(state)
-    match 'end'
+  match 'end'
 
   new ForStatement(forIterate, body)
 
@@ -277,10 +292,9 @@ optionalTypeCheck = (state) ->
 parseExpression = (state) ->
   if exists 'make'
     parseVariableDeclaration(state)
-  else if exists 'id' and exists '=', 1
+  else if exists('id') and exists '=', 1
     parseVariableAssignment(state)
-  else if ((exists '(') and areParams(state))
-    console.log 'parse Function Dec'
+  else if exists('(') and areParams(state)
     parseFunctionExp(state)
   else
     parseExp0(state)
@@ -301,8 +315,11 @@ parseVariableDeclaration = (state) ->
   match 'make'
   id = match 'id'
   type = optionalTypeMatch(state)
-  match '='
-  value = parseExpression(state)
+  if exists '='
+    match '='
+    value = parseExpression(state)
+  else
+    value = null
   new VariableDeclaration(id, type, value)
 
 parseVariableAssignment = (state) ->
@@ -321,6 +338,8 @@ parseVariableExpression = (state) ->
     exp3 = parseExp3(state)
     match ']'
   while exists parseArgs(state)
+    # NOT DONE CORRECTLY ; parseArgs consumes tokens
+    # when exists is to be used only for detection
     args = parseArgs(state)
     if exists '.'
       match '.'
@@ -362,7 +381,11 @@ parseFunctionExp = (state) ->
   params = parseParams(state)
   type = optionalTypeMatch(state)
   match 'does'
-  body = parseBlock(state)
+  if exists 'newline'
+    match 'newline'
+    body = parseBlock(state)
+  else
+    body = parseStatement(state)
   match 'end'
   new FunctionExp(params, type, body)
 
@@ -395,6 +418,7 @@ parseParamList = (state) ->
     paramList.push optionalTypeMatch(state)
   if exists 'newline'
     match 'newline'
+  console.log paramList
   new ParamList(paramList)
 
 parseExp0 = (state) -> # the trailing if and possible else
@@ -579,7 +603,11 @@ exists = (kind, index=0) ->
   kind is undefined or (tokens[index] and kind is tokens[index].kind)
 
 reportError = (state, message, token) ->
-  state.errors.push error (message + "with #{token.kind}:#{token.lexeme}"), token
+  if token.kind is token.lexeme
+    addend = " with '#{token.kind}'"
+  else
+    addend = " with '#{token.kind}':#{token.lexeme}"
+  state.errors.push error (message + addend), token
 
 match = (kind, optional=false) ->
   if tokens.length is 0
