@@ -1,6 +1,6 @@
-Type = require './type.coffee'
-IntegerLiteral = require './integerliteral.coffee'
-BooleanLiteral = require './booleanliteral.coffee'
+Type = require "#{__dirname}/type.coffee"
+IntegerLiteral = require "#{__dirname}/./integerliteral.coffee"
+BooleanLiteral = require "#{__dirname}/./booleanliteral.coffee"
 
 class UnaryExpression
 
