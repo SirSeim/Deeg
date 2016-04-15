@@ -1,4 +1,13 @@
-BooleanLiteral = require './booleanliteral.coffee'
+ #  ___________________        ____....-----....____
+ # (________________LL_)   ==============================
+ #     ______\   \_______.--'.  `---..._____...---'
+ #     `-------..__            ` ,/
+ #     ___         `-._ -  -  - |
+ #    ( /        /     `-------'
+ #     / __ (   /_
+ #   _/_(_)/_)_/ /_
+ #  //
+ # (/
 
 class ElseStatement
 
@@ -6,20 +15,11 @@ class ElseStatement
 
   toString: () ->
     "(else #{@body})"
-  # disclaimer: toString will be more complicated because of possible else
-  # and else if stuff
 
-  # analyze: (context) ->
-  #   @condition.analyze context
-  #   booleanCondition = 'Condition in "if" statement must be boolean'
-  #   @condition.type.mustBeBoolean booleanCondition
-  #   @body.analyze context
+  analyze: (context) ->
+    @body.analyze context
 
-  # optimize: () ->
-  #   @condition = @condition.optimize()
-  #   @body = @body.optimize()
-  #   if @condition instanceof BooleanLiteral and @condition.value() is false
-  #     return null
-  #   return this
+  optimize: () ->
+    @body = @body.optimize()
 
 module.exports = ElseStatement

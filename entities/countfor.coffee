@@ -1,15 +1,24 @@
-Type = require './type.coffee'
+ #  ___________________        ____....-----....____
+ # (________________LL_)   ==============================
+ #     ______\   \_______.--'.  `---..._____...---'
+ #     `-------..__            ` ,/
+ #     ___         `-._ -  -  - |
+ #    ( /        /     `-------'
+ #     / __ (   /_
+ #   _/_(_)/_)_/ /_
+ #  //
+ # (/
 
 class CountFor
 
   constructor: (@tally)->
 
-  toString: -> "(CountFor count #{@tally})"
+  toString: -> "(For count #{@tally})"
 
 
-  # analyze: (context) ->
-  #   @type = Type.BOOL
+  analyze: (context) ->
+    @tally.analyze context
 
-  # optimize: -> this
+  optimize: -> this
 
 module.exports = CountFor
