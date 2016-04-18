@@ -97,9 +97,9 @@ describe 'Entities', ->
       it 'constructs and toStrings correctly', (done) ->
         expect((Type.FUNCTION).toString()).to.eql('Function')
         done()
-    context 'when constructing an arbitrary type', ->
+    context 'when constructing an unknown type', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((Type.ARBITRARY).toString()).to.eql('<arbitrary_type>')
+        expect((Type.UNKNOWN).toString()).to.eql('¯\_(ツ)_/¯')
         done()
 
   # describe 'ForStatement Entity', ->
@@ -144,15 +144,15 @@ describe 'Entities', ->
   describe 'CountFor Entity', ->
     context 'when constructing a count for', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new CountFor 2).toString()).to.eql('(CountFor count 2)')
+        expect((new CountFor 2).toString()).to.eql('(For count 2)')
         done()
 
-  # describe 'CountsFor Entity', ->
-  #   context 'when constructing a counts for', ->
-  #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new CountsFor foo 2).toString()).to.eql('(CountsFor foo count 2)')
-  #       #need to define foo
-  #       done()
+  describe 'CountsFor Entity', ->
+    context 'when constructing a counts for', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new CountsFor 'foo', 2).toString()).to.eql('(For foo counts 2)')
+        #need to define foo
+        done()
 
   describe 'IfStatement Entity', ->
     context 'when constructing an if statement', ->

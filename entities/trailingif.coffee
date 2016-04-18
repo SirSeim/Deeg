@@ -1,5 +1,5 @@
 Type = require "#{__dirname}/type.coffee"
-error = require "#{__dirname}../error/error.coffee"
+error = require "#{__dirname}/../error/error.coffee"
 
 class TrailingIf
 
