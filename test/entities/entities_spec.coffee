@@ -229,9 +229,9 @@ describe 'Entities', ->
     context 'when constructing a string literal longer than one word', ->
       it 'constructs and toStrings correctly', (done) ->
         string = {
-          lexeme: 'hello my name is sally, hi 5'
+          lexeme: 'my name is sally, hi 5'
         }
-        expect((new StringLiteral string).toString()).to.eql('hello my name is sally, hi 5')
+        expect((new StringLiteral string).toString()).to.eql('my name is sally, hi 5')
         done()
 
   describe 'List Entity', ->
