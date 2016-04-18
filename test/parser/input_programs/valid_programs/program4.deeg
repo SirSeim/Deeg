@@ -1,4 +1,4 @@
 make gcd = (a,b) does
-    if (!b) exists deeg a end
-    deeg gcd(b, a % b)
+    if b==0 then deeg a end
+    deeg gcd(b, a%b)
 end

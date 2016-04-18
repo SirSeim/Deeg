@@ -1,4 +1,4 @@
-Type = require './type'
+Type = require "#{__dirname}/./type.coffee"
 
 class IterableItem
 

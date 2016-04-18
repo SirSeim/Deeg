@@ -1,24 +1,31 @@
-# _ = require 'underscore' from teascript
-Type = require './type.coffee'
+ #  ___________________        ____....-----....____
+ # (________________LL_)   ==============================
+ #     ______\   \_______.--'.  `---..._____...---'
+ #     `-------..__            ` ,/
+ #     ___         `-._ -  -  - |
+ #    ( /        /     `-------'
+ #     / __ (   /_
+ #   _/_(_)/_)_/ /_
+ #  //
+ # (/
+
+Type = require "#{__dirname}/./type.coffee"
+error = require "#{__dirname}/../error/error.coffee"
 
 class Dict
 
   constructor: (@bindingList) ->
 
-  # toString: ->
-  #   '{' + _.zip(@keys, @values).map((val) ->
-  #     "#{val[0].lexeme}: #{val[1]}"
-  #   ).join(', ') + '}'
+  toString: ->
+    "Dict #{@bindingList}"
 
-  # analyze: (context) ->
-  #   value.analyze(context) for value in @values
-  #   @type = Type.MAP
+  analyze: (context) ->
+    @bindingList.analyze context
 
-  # length: ->
-  #   console.log @keys.length
-  #   @keys.length
+  size: ->
+    console.log @keys.length
+    @bindingList.length
 
-  optimize: ->
-    #DEEG
+  optimize: -> this
 
 module.exports = Dict

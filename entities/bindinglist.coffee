@@ -23,7 +23,9 @@ class BindingList
     for binding in @bindingArray
       @bindingArray[binding].analyze context
 
-  optimize: -> this
+  optimize: ->
+    for binding in @bindingArray
+      @bindingArray[binding].optimize()
   
 
 module.exports = BindingList

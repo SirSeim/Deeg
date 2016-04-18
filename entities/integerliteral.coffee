@@ -1,4 +1,4 @@
-Type = require './type.coffee'
+Type = require "#{__dirname}/./type.coffee"
 
 class IntegerLiteral
 

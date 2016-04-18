@@ -1,5 +1,5 @@
-Type = require './type.coffee'
-error = require '../error/error.coffee'
+Type = require "#{__dirname}/type.coffee"
+error = require "#{__dirname}/../error/error.coffee"
 
 class VariableAssignment
 
