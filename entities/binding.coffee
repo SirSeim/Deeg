@@ -17,7 +17,7 @@ class Binding
   constructor: (@key, @type, @value) ->
 
   toString: ->
-    "Binding #{@key}[#{@type}] to #{@value}"
+    "Binding #{@key} [#{@type}] to #{@value}"
 
   analyze: (context) ->
     @key.analyze context
