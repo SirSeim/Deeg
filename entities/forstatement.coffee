@@ -5,10 +5,11 @@ class ForStatement
   constructor: (@forIterate, @body) ->
 
   toString: () ->
-    "(For #{@forIterate} then #{@body})" # disclaimer: probably not correct
+    "(#{@forIterate} then #{@body})"
 
-  # analyze: (context) ->
-
+  analyze: (context) ->
+    @forIterate.analyze context
+    @body.analyze context
 
   # optimize: () ->
 
