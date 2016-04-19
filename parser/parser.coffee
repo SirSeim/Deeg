@@ -448,7 +448,6 @@ parseParamList = (state) ->
     paramList.push optionalTypeMatch(state)
   if exists 'newline'
     match 'newline'
-  console.log paramList
   new ParamList(paramList)
 
 parseExp0 = (state) -> # the trailing if and possible else

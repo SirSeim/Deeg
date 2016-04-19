@@ -76,31 +76,34 @@ describe 'Entities', ->
       it 'constructs and toStrings correctly', (done) ->
         expect((Type.BOOL).toString()).to.eql('bool')
         done()
-    context 'when constructing a string type', ->
+    context 'when constructing a int type', ->
       it 'constructs and toStrings correctly', (done) ->
         expect((Type.INT).toString()).to.eql('int')
         done()
-    # does NOT construct and toString correctly:
-    # context 'when constructing a float type', ->
-    #   it 'constructs and toStrings correctly', (done) ->
-    #     expect((Type.FLOAT).toString()).to.eql('float')
-    #     done()
-    # context 'when constructing a list type', ->
-    #   it 'constructs and toStrings correctly', (done) ->
-    #     expect((Type.LIST).toString()).to.eql('List')
-    #     done()
-    # context 'when constructing a dict type', ->
-    #   it 'constructs and toStrings correctly', (done) ->
-    #     expect((Type.DICT).toString()).to.eql('Dict')
-    #     done()
-    # context 'when constructing a function type', ->
-    #   it 'constructs and toStrings correctly', (done) ->
-    #     expect((Type.FUNCTION).toString()).to.eql('Function')
-    #     done()
-    # context 'when constructing an arbitrary type', ->
-    #   it 'constructs and toStrings correctly', (done) ->
-    #     expect((Type.ARBITRARY).toString()).to.eql('<arbitrary_type>')
-    #     done()
+    context 'when constructing a string type', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((Type.STRING).toString()).to.eql('string')
+        done()
+    context 'when constructing a float type', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((Type.FLOAT).toString()).to.eql('float')
+        done()
+    context 'when constructing a list type', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((Type.LIST).toString()).to.eql('List')
+        done()
+    context 'when constructing a dict type', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((Type.DICT).toString()).to.eql('Dict')
+        done()
+    context 'when constructing a function type', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((Type.FUNCTION).toString()).to.eql('Function')
+        done()
+    context 'when constructing an unknown type', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((Type.UNKNOWN).toString()).to.eql('¯\_(ツ)_/¯')
+        done()
 
   # describe 'ForStatement Entity', ->
   #   context 'when constructing a type', ->
@@ -144,15 +147,14 @@ describe 'Entities', ->
   describe 'CountFor Entity', ->
     context 'when constructing a count for', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new CountFor 2).toString()).to.eql('(CountFor count 2)')
+        expect((new CountFor 2).toString()).to.eql('(For count 2)')
         done()
 
-  # describe 'CountsFor Entity', ->
-  #   context 'when constructing a counts for', ->
-  #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new CountsFor foo 2).toString()).to.eql('(CountsFor foo count 2)')
-  #       #need to define foo
-  #       done()
+  describe 'CountsFor Entity', ->
+    context 'when constructing a counts for', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new CountsFor 'foo', 2).toString()).to.eql('(For foo counts 2)')
+        done()
 
   describe 'IfStatement Entity', ->
     context 'when constructing an if statement', ->
@@ -198,13 +200,26 @@ describe 'Entities', ->
         expect((new IntegerLiteral {lexeme:-10}).toString()).to.eql(-10)
         done()
 
-  # describe 'FloatLiteral Entity', ->
-  #   context 'when constructing a float literal', ->
-  #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new FloatLiteral 2.5).toString()).to.eql(2.5)
-  #       #not done...value.lexeme is the result of the toString.....
-  #         #(not sure where to put that)
-  #       done()
+  describe 'FloatLiteral Entity', ->
+    context 'when constructing a float literal', ->
+      it 'constructs and toStrings correctly', (done) ->
+        token = {
+          value: 2.5
+          lexeme: 2.5
+        }
+        expect((new FloatLiteral token).toString()).to.eql(2.5)
+        done()
+    context 'when constructing a negative float literal', ->
+      it 'constructs and toStrings correctly', (done) ->
+        token = {
+          value: -2.5
+          lexeme: -2.5
+        }
+        expect((new FloatLiteral token).toString()).to.eql(-2.5)
+        done()
+
+
+
   
   describe 'BooleanLiteral Entity', ->
     context 'when constructing a boolean literal', ->
@@ -229,16 +244,24 @@ describe 'Entities', ->
     context 'when constructing a string literal longer than one word', ->
       it 'constructs and toStrings correctly', (done) ->
         string = {
-          lexeme: 'hello my name is sally'
+          lexeme: 'my name is sally, hi 5'
         }
-        expect((new StringLiteral string).toString()).to.eql('hello my name is sally')
+        expect((new StringLiteral string).toString()).to.eql('my name is sally, hi 5')
         done()
 
-  # describe 'List Entity', ->
-  #   context 'when constructing a list', ->
-  #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new List ).toString()).to.eql('[]')
-  #       done()
+  describe 'List Entity', ->
+    context 'when constructing a list', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new List [5,6,7,8]).toString()).to.eql('[5, 6, 7, 8]')
+        done()
+    context 'when constructing a single element list', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new List [5]).toString()).to.eql('[5]')
+        done()
+    context 'when constructing a single element string list', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new List ['hi']).toString()).to.eql('[hi]')
+        done()
 
   # describe 'Dict Entity', ->
   #   context 'when constructing a dictionary', ->
@@ -253,19 +276,28 @@ describe 'Entities', ->
         expect((new BindingList token).toString()).to.eql('face, nose, mouth')
         done()
 
-  # needs: proper type... tried @INT, int, IntegerLiteral, intlit....
-  # describe 'Binding Entity', ->
-  #   context 'when constructing a binding', ->
-  #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new Binding 'hi', intlit, 5).toString())
-  #           .to.eql('Binding hi intlit to 5')
-  #       done()
+  describe 'Binding Entity', ->
+    context 'when constructing an int binding', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new Binding 'hi', Type.INT, 5).toString())
+            .to.eql('Binding hi [int] to 5')
+        done()
+    context 'when constructing a string binding', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new Binding 'hi', Type.STRING, 'hello there, Sally!').toString())
+            .to.eql('Binding hi [string] to hello there, Sally!')
+        done()
+    context 'when constructing a bool binding', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new Binding 'hi', Type.BOOL, false).toString())
+            .to.eql('Binding hi [bool] to false')
+        done()
 
   # needs: operator to have a .lexeme, so token?
   # describe 'BinaryExpression Entity', ->
   #   context 'when constructing a binary expression', ->
   #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new BinaryExpression == 5 5).toString()).to.eql('(BinaryOp == 5 6)')
+  #       expect((new BinaryExpression '==' 5 5).toString()).to.eql('(BinaryOp == 5 6)')
 
   #same as above: needs proper definition of the operator
   # describe 'UnaryExpression Entity', ->
