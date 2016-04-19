@@ -1,0 +1,6 @@
+make varMatch = (x) does
+    match x with
+        >> 3 then deeg true
+        >> _ then deeg false
+    end
+end
