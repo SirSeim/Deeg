@@ -22,7 +22,7 @@ module.exports = {
                 (FunctionCall print
                   params:((StringLiteral 53, 75, 68, 68, 20, 44, 75, 64, 65, 21))))))',
   program4: '(Program (Block
-              (VarDec 'gcd' of type:undefined =
+              (VarDec \'gcd\' of type:undefined =
                 (FunctionDef params:(Params (a,b)) type:undefined (Block
                   (If (BinaryOp == b 0) then (Return a))
                   (Return (FunctionCall gcd params:(b, (BinaryOp % a b)))))))))',
