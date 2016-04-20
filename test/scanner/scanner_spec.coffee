@@ -34,7 +34,7 @@ describe 'Scanner', ->
     context 'when non_existent_file.deeg is passed through the scanner', ->
       it 'error properly catches', (done) ->
         scan "#{__dirname}/input_programs/non_existent_file.deeg", (err, tokens) ->
-          errMessage = err[0].message.code
+          errMessage = err[0].code
           expect(errMessage).to.eql 'ENOENT'
           done()
 

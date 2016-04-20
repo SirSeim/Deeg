@@ -4,7 +4,7 @@ class Pattern
 
   constructor: (@pattern, @type)->
 
-  toString: -> "(#{@pattern} #{@type})"
+  toString: -> "(Pattern #{@pattern}#{if @type then ' type:'+@type else ''})"
 
 
   # analyze: (context) ->

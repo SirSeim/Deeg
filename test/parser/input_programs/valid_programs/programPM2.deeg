@@ -1,0 +1,7 @@
+make listMatch = (l) does
+    match l with
+        >> head|tail if head > 5 then deeg head
+        >> _:int|tail then deeg true
+        >> _|tail then deeg false
+    end
+end

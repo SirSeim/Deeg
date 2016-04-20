@@ -3,10 +3,9 @@ error = require "#{__dirname}/../error/error.coffee"
 
 class VariableExpression
 
-  constructor: (@id, @args, @exp8, @exp3) ->
+  constructor: (@id, @depth) ->
 
-  toString: ->
-    "@id and stuff" # disclaimer: this is wrong
+  toString: -> "#{@id.lexeme}" # disclaimer: THIS NEEDS WORK
 
   optimize: -> this
 

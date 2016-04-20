@@ -4,8 +4,8 @@ class PatLine
 
   constructor: (@patterns, @condition, @instruction)->
 
-  conditional = if @condition == null then "" else "#{@condition}"
-  toString: -> "(#{@patterns} #{conditional} then #{@instruction})"
+  conditional = if @condition then " #{@condition} " else ' '
+  toString: -> "(PatLine #{@patterns}#{conditional}then #{@instruction})"
 
 
   # analyze: (context) ->
