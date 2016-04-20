@@ -28,12 +28,12 @@ module.exports = {
                       (BinaryOp ** 2 (BinaryOp ** 1 (BinaryOp + (UnaryOp - 3) 1)))
                       (BinaryOp ** 2 (UnaryOp - (BinaryOp ** 3 (UnaryOp - 4))))))',
   programPM1: '(Program (Block
-                (VarDec \'varMatch\' of type:undefined = 
-                  (FunctionDef params:(Params (x)) type:undefined (Block 
-                    (Match x with (PatBlock 
-                      (PatLine (Patterns (Pattern 3))   
+                (VarDec \'varMatch\' of type:undefined =
+                  (FunctionDef params:(Params (x)) type:undefined (Block
+                    (Match x with (PatBlock
+                      (PatLine (Patterns (Pattern 3))
                         then (Return true))
-                      (PatLine (Patterns (Pattern (WildCard)))  
+                      (PatLine (Patterns (Pattern (WildCard)))
                         then (Return false)))))))))',
   programPM2: '(Program (Block
                 (VarDec \'listMatch\' of type:undefined =
