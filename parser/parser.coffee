@@ -446,13 +446,17 @@ parseParamList = ->
   if exists 'newline'
     match 'newline'
   paramList.push parseExpression()
-  paramList.push optionalTypeMatch()
+  # PARAMS NEED WORK on types
+  # if exists 'type'
+  #   paramList.push optionalTypeMatch()
   while exists ','
+    console.log 'looping'
     match ','
     if exists 'newline'
       match 'newline'
     paramList.push parseExpression()
-    paramList.push optionalTypeMatch()
+    # ^^ PARAMS NEED WORK
+    # paramList.push optionalTypeMatch()
   if exists 'newline'
     match 'newline'
   new ParamList(paramList)
