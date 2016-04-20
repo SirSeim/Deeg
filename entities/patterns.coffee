@@ -4,7 +4,8 @@ class Patterns
 
   constructor: (@head, @tails)->
 
-  toString: -> "(Patterns #{@head}#{if @tails then ' | '+tail for tail in @tails else ''})"
+  toString: -> "(Patterns
+    #{@head}#{if @tails then' | '+tail for tail in @tails else ''})"
 
 
   # analyze: (context) ->
