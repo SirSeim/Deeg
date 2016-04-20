@@ -6,7 +6,7 @@ class FunctionExp
   constructor: (@params, @type, @body) ->
 
   toString: ->
-    "go function go" # disclaimer: this is wrong
+    "(Function params:#{@params.toString()} type:#{@type} #{@body})"
 
   # analyze: (context) ->
   #   location = EntityUtils.findLocation @func
