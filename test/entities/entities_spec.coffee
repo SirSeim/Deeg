@@ -240,19 +240,25 @@ describe 'Entities', ->
         done()
 
   describe 'StringLiteral Entity', ->
-    context 'when constructing a string literal', ->
+    context 'when constructing a string literal of one character', ->
       it 'constructs and toStrings correctly', (done) ->
         token = {
-          lexeme: 'hello'
+          lexeme: [
+            '20'
+          ]
         }
-        expect((new StringLiteral token).toString()).to.eql('hello')
+        expect((new StringLiteral token).toString()).to.eql('(StringLiteral 20)')
         done()
-    context 'when constructing a string literal longer than one word', ->
+    context 'when constructing a string literal of multiple characters', ->
       it 'constructs and toStrings correctly', (done) ->
         string = {
-          lexeme: 'my name is sally, hi 5'
+          lexeme: [
+            '20',
+            '25',
+            '2a'
+          ]
         }
-        expect((new StringLiteral string).toString()).to.eql('my name is sally, hi 5')
+        expect((new StringLiteral string).toString()).to.eql('(StringLiteral 20, 25, 2a)')
         done()
 
   describe 'List Entity', ->
