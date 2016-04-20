@@ -224,12 +224,18 @@ describe 'Entities', ->
   describe 'BooleanLiteral Entity', ->
     context 'when constructing a boolean literal', ->
       it 'constructs and toStrings correctly (true)', (done) ->
-        hiho = true
+        hiho = {
+          kind: 'true'
+          lexeme: 'true'
+        }
         expect((new BooleanLiteral hiho).toString()).to.eql('true')
         done()
     context 'when constructing a boolean literal (false)', ->
       it 'constructs and toStrings correctly', (done) ->
-        biho = false
+        biho = {
+          kind: 'false'
+          lexeme: 'false'
+        }
         expect((new BooleanLiteral biho).toString()).to.eql('false')
         done()
 
