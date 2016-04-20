@@ -4,7 +4,7 @@ class PatBlock
 
   constructor: (@patLines)->
 
-  toString: -> "(#{@patLines})"
+  toString: -> "(PatBlock #{@patLines.join(' ')})"
 
 
   # analyze: (context) ->

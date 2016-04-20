@@ -5,7 +5,7 @@ class WildCard
   constructor: (@type) ->
 
   toString: ->
-    "(WildCard#{' type:' + @type})"
+    "(WildCard#{if @type then ' type:'+@type.lexeme else ''})"
 
   # analyze: (context) ->
   #   context.variableMustNotBeAlreadyDeclared @id

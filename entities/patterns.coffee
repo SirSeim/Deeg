@@ -4,8 +4,7 @@ class Patterns
 
   constructor: (@head, @tails)->
 
-  listElements = "|" #how do we want to deal with these?
-  toString: -> "(#{@head} #{listElements} #{@tails})"
+  toString: -> "(Patterns #{@head}#{if @tails then ' | '+tail for tail in @tails else ''})"
 
 
   # analyze: (context) ->
