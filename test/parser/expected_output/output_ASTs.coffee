@@ -12,16 +12,20 @@ module.exports = {
                   (VarAssign b value:c)
                   (VarAssign x modifier:-- value:null)))
                 (Return c))))))',
-  program3: '(Program (Block (if true
-                      (Block (Invoke print("hello"))) else if false
-                      (Block (Invoke print("goodbye") else
-                      (Block (Invoke print ("peace")))))))
-                      (Block (if true
-                      (Block (Invoke print ("Suhh Dude!"))))',
-  program4: '(Program (Block (VarDec (gcd (Function (a,b)))))
-                      (Block (if (!b)))
-                      (Block  (Invoke (Return (deeg a))))
-                              (Invoke gcd (b, a % b)))',
+  program3: '(Program (Block
+              (If true then (Block
+                (FunctionCall print params:((StringLiteral 68, 65, 6c, 6c, 6f)))))
+              (else if false then (Block
+                (FunctionCall print
+                  params:((StringLiteral 67, 6f, 6f, 64, 62, 79, 65)))))
+              (If true then
+                (FunctionCall print
+                  params:((StringLiteral 53, 75, 68, 68, 20, 44, 75, 64, 65, 21))))))',
+  program4: '(Program (Block
+              (VarDec 'gcd' of type:undefined =
+                (FunctionDef params:(Params (a,b)) type:undefined (Block
+                  (If (BinaryOp == b 0) then (Return a))
+                  (Return (FunctionCall gcd params:(b, (BinaryOp % a b)))))))))',
   program5: '(Program (Block (BinaryOp ** 3 (BinaryOp + 4 5))
                       (UnaryOp - (BinaryOp ** 2 (BinaryOp + 4 5)))
                       (BinaryOp ** 3 (BinaryOp ** 4 5))
