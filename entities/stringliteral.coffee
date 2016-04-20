@@ -4,8 +4,7 @@ class StringLiteral
 
   constructor: (@value) ->
 
-  toString: ->
-    @value.lexeme
+  toString: -> "(StringLiteral #{@value.lexeme.join(', ')})"
 
   analyze: (context) ->
     @type = Type.STRING

@@ -2,11 +2,10 @@ Type = require "#{__dirname}/./type.coffee"
 
 class Function
 
-  constructor: (@params, @body) ->
+  constructor: (@params, @type, @body) ->
 
   toString: ->
-    "(Function (#{(param.lexeme for param in @params).join(', ')})
-      does #{@body})"
+    "(FunctionDef params:#{@params.toString()} type:#{@type} #{@body})"
 
   # analyze: (context) ->
   #   @type = Type.FUNCTION

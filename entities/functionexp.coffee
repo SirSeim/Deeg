@@ -3,10 +3,10 @@ error = require "#{__dirname}/../error/error.coffee"
 
 class FunctionExp
 
-  constructor: (@params, @type, @body) ->
+  constructor: (@name, @params) ->
 
   toString: ->
-    "(Function params:#{@params.toString()} type:#{@type} #{@body})"
+    "(FunctionCall #{@name} params:#{@params})"
 
   # analyze: (context) ->
   #   location = EntityUtils.findLocation @func
