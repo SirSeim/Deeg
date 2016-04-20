@@ -93,9 +93,9 @@ Exp            ::= VarDeclaration
 
 VarDeclaration ::= 'make' id Type? '=' Exp
 VarAssignment  ::= VarExp '=' Exp
-VarExp         ::= id ( '.' Exp8 
-                        | '[' Exp3 ']' 
-                        | (Args ('.' Exp9 | '[' Exp3 ']')) )*
+VarExp         ::= id ( '.' Exp9 
+                        | '[' Exp4 ']' 
+                        | (Args ('.' Exp9 | '[' Exp4 ']')) )*
 Args           ::= '(' ExpList? ')'
 ExpList        ::= newline? Exp (',' newline? Exp)* newline?
 
@@ -111,7 +111,7 @@ Exp4           ::=  Exp5 (('thru'|'till') Exp5 ('by' Exp5)?)?
 Exp5           ::=  Exp6 (addop Exp6)*
 Exp6           ::=  Exp7 (mulop Exp7)*
 Exp7           ::=  prefixop? Exp8
-Exp8           ::=  Exp9 ('**' Exp5)?
+Exp8           ::=  Exp9 ('**' Exp9)?
 Exp9           ::=  Exp10 ('.' Exp10 | '[' Exp4 ']' | Args)*
 Exp10          ::=  boollit | intlit | floatlit | id | '(' Exp ')' | stringlit
                  | DictLit | ListLit
