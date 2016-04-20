@@ -33,6 +33,7 @@ Args = require "#{__dirname}/../entities/args.coffee"
 ExpList = require "#{__dirname}/../entities/explist.coffee"
 
 FunctionExp = require "#{__dirname}/../entities/functionexp.coffee"
+Function = require "#{__dirname}/../entities/function.coffee"
 Params = require "#{__dirname}/../entities/params.coffee"
 ParamList = require "#{__dirname}/../entities/paramlist.coffee"
 
@@ -424,7 +425,7 @@ parseFunctionExp = ->
   else
     body = parseStatement()
   match 'end'
-  new FunctionExp(params, type, body)
+  new Function(params, type, body)
 
 parseParams = ->
   match '('
@@ -450,7 +451,6 @@ parseParamList = ->
   # if exists 'type'
   #   paramList.push optionalTypeMatch()
   while exists ','
-    console.log 'looping'
     match ','
     if exists 'newline'
       match 'newline'
@@ -544,8 +544,9 @@ parseExp7 = -> # the prefix ops
 parseExp8 = -> # the power (**)
   left = parseExp9()
   if exists '**'
-    match '**'
-    left = new BinaryExpression('**', left, parseExp5())
+    op = match '**'
+    right = parseExp5()
+    left = new BinaryExpression op, left, right
   left
 
 parseExp9 = -> # property, set, args
