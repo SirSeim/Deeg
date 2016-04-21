@@ -63,7 +63,7 @@ Block          ::= (Stmt newline)*
 
 Stmt           ::= WhileStmt | ForStmt | MatchStmt | IfStmt
                  | ReturnStmt | ClassDef | Binding
-                 | Exp
+                 | Exp | VarDeclaration
 
 ClassDef       ::= 'class' id ('extends' id)? (newline Block | Stmt) 'end'
 IfStmt         ::= 'if' Exp 'then' (newline Block | Stmt) ('else if' Exp 'then' (newline Block | Stmt))* ('else' (newline Block | Stmt ))? 'end'
@@ -86,8 +86,7 @@ ReturnStmt     ::= 'deeg' Exp
 
 Type           ::= ':' (type | 'Dict' | ('List' (':' Type)?) | ('Function(' (Type (',' Type)*)? ')' (':' Type)?))
 
-Exp            ::= VarDeclaration
-                 | VarAssignment
+Exp            ::= VarAssignment
                  | FunctionExp
                  | Exp0
 
@@ -172,7 +171,7 @@ make mapping:Dict = {
 
 Hierarchy of types:
 
-int -> float -> string ~> List
+int -> float -> string
 
 This hierarchy is what determines auto conversions. A type can be upconverted automatically if needed. If you want to convert down the tree, then you need to specify it with a type converter function like `int()` or `float()`. Some conversions may return optionals if conversion cannot be guaranteed
 

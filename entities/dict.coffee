@@ -17,7 +17,7 @@ class Dict
   constructor: (@bindingList) ->
 
   toString: ->
-    "Dict #{@bindingList}"
+    "Dict {#{@bindingList}}"
 
   analyze: (context) ->
     @bindingList.analyze context
