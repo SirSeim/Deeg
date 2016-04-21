@@ -137,7 +137,8 @@ describe 'Entities', ->
         done()
 
   # Maybe we don't need StdForIdExp.
-  # describe 'StdForIdExp Entity', -> #this is not correct. entity declaration is not finished
+  # describe 'StdForIdExp Entity', -> #this is not correct. entity declaration
+  # is not finished
   #   context 'when constructing a standard for id expression', ->
   #     it 'constructs and toStrings correctly', (done) ->
   #       expect((new StdForIdExp ['(foo in bar)'], 'Body').toString())
@@ -342,15 +343,18 @@ describe 'Entities', ->
   describe 'BinaryExpression Entity', ->
     context 'when constructing a binary expression ==', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new BinaryExpression {lexeme:'=='}, 5, 5).toString()).to.eql('(BinaryOp == 5 5)')
+        expect((new BinaryExpression {lexeme:'=='}, 5, 5).toString())
+        .to.eql('(BinaryOp == 5 5)')
         done()
     context 'when constructing a binary expression <=', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new BinaryExpression {lexeme:'<='}, 5, 5).toString()).to.eql('(BinaryOp <= 5 5)')
+        expect((new BinaryExpression {lexeme:'<='}, 5, 5).toString())
+        .to.eql('(BinaryOp <= 5 5)')
         done()
     context 'when constructing a binary expression and', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new BinaryExpression {lexeme:'and'}, true, true).toString()).to.eql('(BinaryOp and true true)')
+        expect((new BinaryExpression {lexeme:'and'}, true, true).toString())
+        .to.eql('(BinaryOp and true true)')
         done()
 
   # same as above: needs proper definition of the operator
@@ -361,9 +365,11 @@ describe 'Entities', ->
         done()
     context 'when constructing a unary expression !', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new UnaryExpression {lexeme: '!'}, true).toString()).to.eql('(UnaryOp ! true)')
+        expect((new UnaryExpression {lexeme: '!'}, true).toString())
+        .to.eql('(UnaryOp ! true)')
         done()
     context 'when constructing a unary expression not', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new UnaryExpression {lexeme: 'not'}, false).toString()).to.eql('(UnaryOp not false)')
+        expect((new UnaryExpression {lexeme: 'not'}, false).toString())
+        .to.eql('(UnaryOp not false)')
         done()
