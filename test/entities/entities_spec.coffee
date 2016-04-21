@@ -348,9 +348,22 @@ describe 'Entities', ->
       it 'constructs and toStrings correctly', (done) ->
         expect((new BinaryExpression {lexeme:'<='}, 5, 5).toString()).to.eql('(BinaryOp <= 5 5)')
         done()
-  #same as above: needs proper definition of the operator
-  # describe 'UnaryExpression Entity', ->
-  #   context 'when constructing a unary expression', ->
-  #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new UnaryExpression '-', 5).toString()).to.eql('(UnaryOp - 5)')
-  #       done()
+    context 'when constructing a binary expression and', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new BinaryExpression {lexeme:'and'}, true, true).toString()).to.eql('(BinaryOp and true true)')
+        done()
+
+  # same as above: needs proper definition of the operator
+  describe 'UnaryExpression Entity', ->
+    context 'when constructing a unary expression -', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new UnaryExpression {lexeme: '-'}, 5).toString()).to.eql('(UnaryOp - 5)')
+        done()
+    context 'when constructing a unary expression !', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new UnaryExpression {lexeme: '!'}, true).toString()).to.eql('(UnaryOp ! true)')
+        done()
+    context 'when constructing a unary expression not', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new UnaryExpression {lexeme: 'not'}, false).toString()).to.eql('(UnaryOp not false)')
+        done()
