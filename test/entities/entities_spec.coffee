@@ -137,10 +137,10 @@ describe 'Entities', ->
         done()
 
   # Maybe we don't need StdForIdExp.
-  # describe 'StdForIdExp', -> #this is not correct. entity declaration is not finished
+  # describe 'StdForIdExp Entity', -> #this is not correct. entity declaration is not finished
   #   context 'when constructing a standard for id expression', ->
   #     it 'constructs and toStrings correctly', (done) ->
-  #       expect(new StdForIdExp ['(foo in bar)'], 'Body').toString()
+  #       expect((new StdForIdExp ['(foo in bar)'], 'Body').toString())
   #       .to.eql('(StdForIdExp idexplist:(foo in bar) body:Body)')
   #       done()
 
@@ -167,10 +167,12 @@ describe 'Entities', ->
   # describe 'WhileStatement Entity', ->
   #   context 'when constructing a while statement', ->
   #     it 'constructs and toStrings correctly', (done) ->
+  #       foo = 1
+  #       bar = 1
   #       expect((new WhileStatement foo in bar , 'Body' ).toString())
-  #          .to.eql('(While foo in bar then Body)')
-  #     needs some work
-  #     done()
+  #          .to.eql('(While true then Body)')
+  #     # needs some work
+  #       done()
 
   describe 'ReturnStatement Entity', ->
     context 'when constructing a return statement of a string', ->
@@ -218,9 +220,6 @@ describe 'Entities', ->
         expect((new FloatLiteral token).toString()).to.eql(-2.5)
         done()
 
-
-
-  
   describe 'BooleanLiteral Entity', ->
     context 'when constructing a boolean literal', ->
       it 'constructs and toStrings correctly (true)', (done) ->
@@ -340,12 +339,15 @@ describe 'Entities', ->
             .to.eql('Binding hi [bool] to false')
         done()
 
-  # needs: operator to have a .lexeme, so token?
-  # describe 'BinaryExpression Entity', ->
-  #   context 'when constructing a binary expression', ->
-  #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new BinaryExpression '==' 5 5).toString()).to.eql('(BinaryOp == 5 6)')
-
+  describe 'BinaryExpression Entity', ->
+    context 'when constructing a binary expression ==', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new BinaryExpression {lexeme:'=='}, 5, 5).toString()).to.eql('(BinaryOp == 5 5)')
+        done()
+    context 'when constructing a binary expression <=', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new BinaryExpression {lexeme:'<='}, 5, 5).toString()).to.eql('(BinaryOp <= 5 5)')
+        done()
   #same as above: needs proper definition of the operator
   # describe 'UnaryExpression Entity', ->
   #   context 'when constructing a unary expression', ->
