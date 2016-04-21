@@ -17,7 +17,7 @@ class CountFor
 
   constructor: (@tally)->
 
-  toString: -> 
+  toString: ->
     "(For count #{@tally})"
 
   analyze: (context) ->
