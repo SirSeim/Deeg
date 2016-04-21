@@ -263,11 +263,18 @@ describe 'Entities', ->
         expect((new List ['hi']).toString()).to.eql('[hi]')
         done()
 
-  # describe 'Dict Entity', ->
-  #   context 'when constructing a dictionary', ->
-  #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new Dict).toString()).to.eql(#what goes here??)
-  #       done()
+  describe 'Dict Entity', ->
+    context 'when constructing a dictionary', ->
+      it 'constructs and toStrings correctly', (done) ->
+        token1 = [
+          (new Binding 'hey', Type.INT, 1),
+          (new Binding 'wassup', Type.INT, 2),
+          (new Binding 'hello', Type.INT, 3)
+        ]
+        token2 = new BindingList token1
+        expect((new Dict token2).toString()).to.eql('Dict Binding hey [int] to 1,
+           Binding wassup [int] to 2, Binding hello [int] to 3')
+        done()
 
   describe 'BindingList Entity', ->
     context 'when constructing a binding list of type INT', ->
