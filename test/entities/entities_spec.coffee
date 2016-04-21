@@ -275,17 +275,52 @@ describe 'Entities', ->
         expect((new List ['hi']).toString()).to.eql('[hi]')
         done()
 
-  # describe 'Dict Entity', ->
-  #   context 'when constructing a dictionary', ->
-  #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new Dict).toString()).to.eql(#what goes here??)
-  #       done()
+  describe 'Dict Entity', ->
+    context 'when constructing a dictionary', ->
+      it 'constructs and toStrings correctly', (done) ->
+        token1 = [
+          (new Binding 'hey', Type.INT, 1),
+          (new Binding 'wassup', Type.INT, 2),
+          (new Binding 'hello', Type.INT, 3)
+        ]
+        token2 = new BindingList token1
+        expect((new Dict token2).toString()).to.eql('Dict Binding hey [int] to 1,
+           Binding wassup [int] to 2, Binding hello [int] to 3')
+        done()
 
   describe 'BindingList Entity', ->
-    context 'when constructing a binding list', ->
+    context 'when constructing a binding list of type INT', ->
       it 'constructs and toStrings correctly', (done) ->
-        token = ['face'; 'nose'; 'mouth']
-        expect((new BindingList token).toString()).to.eql('face, nose, mouth')
+        token = [
+          (new Binding 'hey', Type.INT, 1),
+          (new Binding 'wassup', Type.INT, 2),
+          (new Binding 'hello', Type.INT, 3)
+        ]
+        expect((new BindingList token).toString())
+            .to.eql('Binding hey [int] to 1, Binding wassup [int] to 2,
+            Binding hello [int] to 3')
+        done()
+    context 'when constructing a binding list of type STRING', ->
+      it 'constructs and toStrings correctly', (done) ->
+        token = [
+          (new Binding 'hey', Type.STRING, 'one'),
+          (new Binding 'wassup', Type.STRING, 'two'),
+          (new Binding 'hello', Type.STRING, 'three')
+        ]
+        expect((new BindingList token).toString())
+            .to.eql('Binding hey [string] to one, Binding wassup [string] to two,
+            Binding hello [string] to three')
+        done()
+    context 'when constructing a binding list of mixed types', ->
+      it 'constructs and toStrings correctly', (done) ->
+        token = [
+          (new Binding 'hey', Type.INT, 1),
+          (new Binding 'wassup', Type.STRING, 'two'),
+          (new Binding 'hello', Type.BOOL, false)
+        ]
+        expect((new BindingList token).toString())
+            .to.eql('Binding hey [int] to 1, Binding wassup [string] to two,
+            Binding hello [bool] to false')
         done()
 
   describe 'Binding Entity', ->
