@@ -186,11 +186,11 @@ describe 'Entities', ->
         expect((new ReturnStatement true).toString()).to.eql('(Return true)')
         done()
 
-  describe 'ClassDefinition Entity', ->
-    context 'when constructing a class definition', ->
-      it 'constructs and toStrings correctly', (done) ->
-        expect((new ClassDefinition 'hello').toString()).to.eql('(ClassDefinition)')
-        done()
+  # describe 'ClassDefinition Entity', ->
+  #   context 'when constructing a class definition', ->
+  #     it 'constructs and toStrings correctly', (done) ->
+  #       expect((new ClassDefinition 'hello').toString()).to.eql('(ClassDefinition)')
+  #       done()
 
   describe 'VariableDeclaration Entity', ->
     context 'when constructing a variable declaration', ->
