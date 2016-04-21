@@ -423,5 +423,6 @@ describe 'Entities', ->
   # describe 'Function Entity', ->
   #   context 'when constructing a function entity', ->
   #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new Function [1, 2, 3], Type.INT, 'body').toString()).to.eql('(FunctionDef params: [1, 2, 3] type: int body)')
+  #       expect((new Function [1, 2, 3], Type.INT, 'body').toString())
+  #        .to.eql('(FunctionDef params: [1, 2, 3] type: int body)')
   #       done()
