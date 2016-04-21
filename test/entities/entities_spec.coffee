@@ -284,8 +284,8 @@ describe 'Entities', ->
           (new Binding 'hello', Type.INT, 3)
         ]
         token2 = new BindingList token1
-        expect((new Dict token2).toString()).to.eql('Dict Binding hey [int] to 1,
-           Binding wassup [int] to 2, Binding hello [int] to 3')
+        expect((new Dict token2).toString()).to.eql('Dict {Binding hey [int] to 1,
+           Binding wassup [int] to 2, Binding hello [int] to 3}')
         done()
 
   describe 'BindingList Entity', ->
