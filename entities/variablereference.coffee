@@ -3,7 +3,7 @@ class VariableReference
   constructor: (@token) ->
 
   toString: ->
-    @token.lexeme
+    "#{@token.lexeme}"
 
   analyze: (context) ->
     @referent = context.lookupVariable @token

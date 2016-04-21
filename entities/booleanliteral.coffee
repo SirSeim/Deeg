@@ -13,16 +13,15 @@ Type = require "#{__dirname}/type.coffee"
 
 class BooleanLiteral
 
-  constructor: (name) ->
-    @name = "#{name}"
+  constructor: (@token) ->
 
   value: ->
-    @name is 'true'
+    @token.lexeme is 'true'
 
-  toString: -> @name
+  toString: -> @token.lexeme
 
   analyze: (context) ->
-    @type = Type.BOOL
+    @token.lexeme = Type.BOOL
 
   optimize: -> this
 

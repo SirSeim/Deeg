@@ -3,10 +3,11 @@ error = require "#{__dirname}/../error/error.coffee"
 
 class VariableAssignment
 
-  constructor: (@id, @value) ->
+  constructor: (@id, @value, @modifier) ->
 
   toString: ->
-    "(VarDec :#{@id.lexeme} of type: #{@type} = #{@value})"
+    "(VarAssign #{@id}
+        #{if @modifier then 'modifier:'+@modifier+' ' else ''}value:#{@value})"
 
   optimize: -> this
 

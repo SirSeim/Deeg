@@ -6,7 +6,7 @@ class ParamList
   constructor: (@paramList) ->
 
   toString: ->
-    "paramList goes here" #disclaimer: this is wrong
+    "(#{paramitem for paramitem in @paramList})"
 
   optimize: -> this
 

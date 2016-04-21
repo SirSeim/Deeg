@@ -14,6 +14,6 @@ error = (message, location) ->
     message += " at line #{location.line}"
     if location.col
       message += ", column #{location.col}"
-  { message: message }
+  message
 
 module.exports = error

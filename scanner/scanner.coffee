@@ -17,8 +17,8 @@ KEYWORDS = ///
   (make|to|deeg|end|thru|till|by|exists|and|or|unless|if|else|then|not|
   true|false|for|while|does|count|counts|match|with)
 ///
-TWOCHAROPS = XRegExp '<=|==|>=|!=|\\*\\*|\\+\\+|--|\\+=|-=|\\/=|\\*=|%='
-ONECHAROPS = XRegExp '[\\+\\-\\*\\/\\(\\)\\,\\=\\<\\>\\%]'
+TWOCHAROPS = XRegExp '<=|==|>=|!=|\\*\\*|\\+\\+|--|\\+=|-=|\\/=|\\*=|%=|>>'
+ONECHAROPS = XRegExp '[\\+\\-\\*\\/\\(\\)\\,\\=\\<\\>\\%_|]'
 SPACE = XRegExp '\\s'
 DOT = XRegExp '[.]'
 TYPE = XRegExp ':'

@@ -17,7 +17,7 @@ class ExpList
   constructor: (@expArray) ->
 
   toString: ->
-    "#{(@bindingArray).join(', ')}"
+    "#{@expArray.join(', ')}"
 
   analyze: (context) ->
     for exp in @expArray
