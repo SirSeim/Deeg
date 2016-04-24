@@ -27,7 +27,7 @@ Deeg is a static, object-oriented, strongly-typed language that has powerful and
 The rules here are ordered. Matches are attempted from top to bottom.
 
 ```
-newline        ::= \s* (\r*\n)+
+newline        ::= (\s* \r* \n*)+
 letter         ::= [a-zA-Z]
 digit          ::= [0-9]
 keyword        ::= 'make' | 'to' 
@@ -63,37 +63,44 @@ Block          ::= (Stmt newline)*
 
 Stmt           ::= WhileStmt | ForStmt | MatchStmt | IfStmt
                  | ReturnStmt | ClassDef | Binding
-                 | Exp
-
-StdFor         ::= id Type? 'in' Exp ('and' id 'in' Exp)*
-CountFor       ::= 'count' Exp
-CountsFor      ::= id 'counts' Exp
+                 | Exp | VarDeclaration
 
 ClassDef       ::= 'class' id ('extends' id)? (newline Block | Stmt) 'end'
-ReturnStmt     ::= 'deeg' Exp
 IfStmt         ::= 'if' Exp 'then' (newline Block | Stmt) ('else if' Exp 'then' (newline Block | Stmt))* ('else' (newline Block | Stmt ))? 'end'
 WhileStmt      ::= 'while' Exp 'then' (newline Block 'end' | Stmt 'end')
+
+MatchStmt      ::= 'match' Exp 'with' newline PatBlock 'end'
+
+PatBlock       ::= (Patline newline)*
+Patline        ::= '>>' Patterns ('if' Exp)? 'then' Stmt
+Patterns       ::= Pattern ('|' Pattern)*
+Pattern        ::= (Exp | WildCard) Type?
+
 ForStmt        ::= 'for' (StdFor | CountFor | CountsFor) 'then' (newline Block 'end' | Stmt 'end')
-MatchStmt      ::= 'match' Exp 'with' newline PatBlock
+
+StdFor         ::= id Type? 'in' Exp ('and' id Type? 'in' Exp)*
+CountsFor      ::= id 'counts' Exp
+CountFor       ::= 'count' Exp
+ReturnStmt     ::= 'deeg' Exp
+
 
 Type           ::= ':' (type | 'Dict' | ('List' (':' Type)?) | ('Function(' (Type (',' Type)*)? ')' (':' Type)?))
 
-Exp            ::= VarDeclaration
-                 | VarAssignment
+Exp            ::= VarAssignment
                  | FunctionExp
                  | Exp0
 
-PatBlock       ::= (Patline newline)*
-
-Patline        ::= '>>' Patterns ('if' Exp)? 'then' Stmt
-Patterns       ::= Pattern ('|' Pattern)*
-Pattern        ::= (id | WildCard) Type?
-
 VarDeclaration ::= 'make' id Type? '=' Exp
 VarAssignment  ::= VarExp '=' Exp
-VarExp         ::= id ( '.' Exp8 
-                        | '[' Exp3 ']' 
-                        | (Args ('.' Exp8 | '[' Exp3 ']')) )*
+VarExp         ::= id ( '.' Exp9 
+                        | '[' Exp4 ']' 
+                        | (Args ('.' Exp9 | '[' Exp4 ']')) )*
+Args           ::= '(' ExpList? ')'
+ExpList        ::= newline? Exp (',' newline? Exp)* newline?
+
+FunctionExp    ::= Params Type? 'does' (newline Block | Stmt) 'end'
+Params         ::= '(' ParamList? ')'
+ParamList      ::= newline? Exp Type? (',' newline? Exp Type?)* newline?
 
 Exp0           ::=  Exp1 ('if' Exp1 ('else' Exp1)?)?
 Exp1           ::=  Exp2 ('or' Exp2)*
@@ -103,23 +110,16 @@ Exp4           ::=  Exp5 (('thru'|'till') Exp5 ('by' Exp5)?)?
 Exp5           ::=  Exp6 (addop Exp6)*
 Exp6           ::=  Exp7 (mulop Exp7)*
 Exp7           ::=  prefixop? Exp8
-Exp8           ::=  Exp9 ('**' Exp5)?
+Exp8           ::=  Exp9 ('**' Exp9)?
 Exp9           ::=  Exp10 ('.' Exp10 | '[' Exp4 ']' | Args)*
 Exp10          ::=  boollit | intlit | floatlit | id | '(' Exp ')' | stringlit
                  | DictLit | ListLit
 
-ExpList        ::= newline? Exp (',' newline? Exp)* newline?
-ParamList      ::= newline? Exp Type? (',' newline? Exp Type?)* newline?
-
-Args           ::= '(' ExpList ')'
-Params         ::= '(' ParamList ')'
-
 ListLit        ::= '[' ExpList? ']'
 DictLit        ::= '{' BindingList? '}'
-Binding        ::= newline? id Type? 'to' Exp newline?
-BindingList    ::= Binding (',' Binding)*
 
-FunctionExp    ::= Params Type? 'does' (newline Block | Stmt) 'end'
+BindingList    ::= Binding (',' Binding)*
+Binding        ::= newline? id Type? 'to' Exp newline?
 ```
 
 ## Features
@@ -171,7 +171,7 @@ make mapping:Dict = {
 
 Hierarchy of types:
 
-int -> float -> string ~> List
+int -> float -> string
 
 This hierarchy is what determines auto conversions. A type can be upconverted automatically if needed. If you want to convert down the tree, then you need to specify it with a type converter function like `int()` or `float()`. Some conversions may return optionals if conversion cannot be guaranteed
 

@@ -10,10 +10,10 @@
 #   console.log error.count
 
 error = (message, location) ->
-    if location and location.line
-        message += " at line #{location.line}"
-        if location.col
-            message += ", column #{location.col}"
-    { message: message }
+  if location and location.line
+    message += " at line #{location.line}"
+    if location.col
+      message += ", column #{location.col}"
+  message
 
 module.exports = error
