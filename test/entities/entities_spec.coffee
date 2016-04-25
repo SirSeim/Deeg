@@ -150,12 +150,14 @@ describe 'Entities', ->
   describe 'ElseIfStatement Entity', ->
     context 'when constructing an else if statement true else if statement', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new ElseIfStatement ['foo in bar'], 'Body', (new ElseIfStatement 5 == 5, 'Body')).toString())
+        expect((new ElseIfStatement ['foo in bar'], 'Body',
+          (new ElseIfStatement 5 == 5, 'Body')).toString())
           .to.eql('(else if foo in bar then Body) (else if true then Body)')
         done()
     context 'when constructing an else if statement false else if statement', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new ElseIfStatement ['foo in bar'], 'Body', (new ElseIfStatement 5 == 7, 'Body')).toString())
+        expect((new ElseIfStatement ['foo in bar'], 'Body',
+          (new ElseIfStatement 5 == 7, 'Body')).toString())
           .to.eql('(else if foo in bar then Body) (else if false then Body)')
         done()
     context 'when constructing an else if statement no else if statement', ->
@@ -177,8 +179,7 @@ describe 'Entities', ->
         foo = 1
         bar = 1
         expect((new WhileStatement ['foo in bar'] , 'Body' ).toString())
-           .to.eql('(While foo in bar then Body)')
-      # needs some work
+          .to.eql('(While foo in bar then Body)')
         done()
 
   describe 'ReturnStatement Entity', ->
