@@ -145,32 +145,41 @@ describe 'Entities', ->
       it 'constructs and toStrings correctly', (done) ->
         expect((new IfStatement ['foo in bar'], 'Body').toString())
           .to.eql('(If foo in bar then Body)')
-        #incomplete, needs to account for if, elseif, else statements
         done()
 
-  # describe describe 'ElseIfStatement Entity', ->
-  #   context 'when constructing an else if statement', ->
-  #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new ElseIfStatement ['foo in bar'], 'Body').toString())
-  #         .to.eql('(If foo in bar then Body)')
-  #       done()
+  describe 'ElseIfStatement Entity', ->
+    context 'when constructing an else if statement true else if statement', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new ElseIfStatement ['foo in bar'], 'Body', (new ElseIfStatement 5 == 5, 'Body')).toString())
+          .to.eql('(else if foo in bar then Body) (else if true then Body)')
+        done()
+    context 'when constructing an else if statement false else if statement', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new ElseIfStatement ['foo in bar'], 'Body', (new ElseIfStatement 5 == 7, 'Body')).toString())
+          .to.eql('(else if foo in bar then Body) (else if false then Body)')
+        done()
+    context 'when constructing an else if statement no else if statement', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new ElseIfStatement ['foo in bar'], 'Body').toString())
+          .to.eql('(else if foo in bar then Body)')
+        done()
 
-  # describe describe 'ElseStatement Entity', ->
-  #   context 'when constructing an else statement', ->
-  #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new ElseStatement ['foo in bar'], 'Body').toString())
-  #         .to.eql('(If foo in bar then Body)')
-  #       done()
+  describe 'ElseStatement Entity', ->
+    context 'when constructing an else statement', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new ElseStatement 'Body').toString())
+          .to.eql('(else Body)')
+        done()
 
-  # describe 'WhileStatement Entity', ->
-  #   context 'when constructing a while statement', ->
-  #     it 'constructs and toStrings correctly', (done) ->
-  #       foo = 1
-  #       bar = 1
-  #       expect((new WhileStatement foo in bar , 'Body' ).toString())
-  #          .to.eql('(While true then Body)')
-  #     # needs some work
-  #       done()
+  describe 'WhileStatement Entity', ->
+    context 'when constructing a while statement', ->
+      it 'constructs and toStrings correctly', (done) ->
+        foo = 1
+        bar = 1
+        expect((new WhileStatement ['foo in bar'] , 'Body' ).toString())
+           .to.eql('(While foo in bar then Body)')
+      # needs some work
+        done()
 
   describe 'ReturnStatement Entity', ->
     context 'when constructing a return statement of a string', ->
