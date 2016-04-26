@@ -21,7 +21,9 @@ class CountFor
     "(For count #{@tally})"
 
   analyze: (context) ->
+    # make sure expression is valid
     @tally.analyze context
+    # said expression must boil down to an integer
     @mustBeCountable()
 
   mustBeCountable: ->

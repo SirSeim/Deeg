@@ -23,11 +23,16 @@ class ElseIfStatement
     res
 
   analyze: (context) ->
+    # analyze the conditional statement
     @condition.analyze context
     booleanCondition = 'Condition in "else if" statement must be boolean'
+    # said statement must be type boolean
     @condition.type.mustBeBoolean booleanCondition
+    # analyze the body
     @body.analyze context
-    @elseIfStatement.analyze context
+    # check for else if, then analyze
+    if @elseIfStatement
+      @elseIfStatement.analyze context
 
   optimize: () ->
     @condition = @condition.optimize()

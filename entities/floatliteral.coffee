@@ -18,10 +18,11 @@ class FloatLiteral
   toString: -> @value.lexeme
 
   analyze: (context) ->
+    # duh
     @type = Type.FLOAT
 
   optimize: -> this
 
-  expression: -> true
+  # expression: -> true
 
 module.exports = FloatLiteral

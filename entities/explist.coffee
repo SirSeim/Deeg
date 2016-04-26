@@ -23,6 +23,9 @@ class ExpList
     for exp in @expArray
       @expArray[exp].analyze context
 
+  length: ->
+    @expArray.length
+
   optimize: ->
     for exp in @expArray
       @expArray[exp].optimize()

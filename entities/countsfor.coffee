@@ -20,8 +20,11 @@ class CountsFor
   toString: -> "(For #{@id} counts #{@tally})"
 
   analyze: (context) ->
+    # id analysis
     @id.analyze context
+    # valid expression?
     @tally.analyze context
+    # said expression must boil down to an integer
     @mustBeCountable()
 
   mustBeCountable: ->
