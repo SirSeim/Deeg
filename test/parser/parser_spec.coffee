@@ -33,4 +33,3 @@ describe 'Parser', ->
             parse tokens, (err, program) ->
               expect(err).to.eql outputErrors[name.split('.')[0]]
               done()
-              

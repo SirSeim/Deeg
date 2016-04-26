@@ -14,10 +14,10 @@ module.exports = {
                 (Return c))))))',
   program3: '(Program (Block
               (If true then (Block
-                (FunctionCall print params:((StringLiteral 68, 65, 6c, 6c, 6f)))))
+                (FunctionCall print params:((StringLiteral 68, 65, 6c, 6c, 6f))))
               (else if false then (Block
                 (FunctionCall print
-                  params:((StringLiteral 67, 6f, 6f, 64, 62, 79, 65)))))
+                  params:((StringLiteral 67, 6f, 6f, 64, 62, 79, 65))))))
               (If true then
                 (FunctionCall print
                   params:((StringLiteral 53, 75, 68, 68, 20, 44, 75, 64, 65, 21))))))',
@@ -73,5 +73,37 @@ module.exports = {
                       (PatLine (Patterns (Pattern (WildCard type:int)) | (Pattern tail))
                         then (Return true))
                       (PatLine (Patterns (Pattern (WildCard)) | (Pattern tail))
-                        then (Return false)))))))))'
+                        then (Return false)))))))))',
+  programEko1: '(Program (Block
+                  (VarDec \'x\' of type:undefined = 100)
+                  (VarAssign x modifier:+= value:2)
+                  (VarAssign x modifier:-= value:3)
+                  (VarAssign x modifier:%= value:12)
+                  (VarDec \'y\' of type:undefined = 1000)
+                  (VarAssign y modifier:*= value:12)
+                  (VarAssign y modifier:/= value:23)
+                  (VarAssign y modifier:++ value:null)))',
+
+  programEko2: '(Program (Block (Class circle extends shapes: (Block ))))',
+
+  programEko3: '(Program (Block
+                  (VarDec \'x\' of type:undefined = 32)
+                  (If (BinaryOp and (BinaryOp < x 10) (BinaryOp > x 45)) then
+                    (FunctionCall print params:((StringLiteral 65, 72, 72, 6f, 72)))
+                  (else
+                    (FunctionCall print
+                      params:((StringLiteral 57, 6f, 6f, 68, 6f, 6f)))))))',
+
+  programEko4: '(Program (Block
+                  (VarDec \'friends_list\' of type:undefined =
+                    [(StringLiteral 42, 6f, 62),
+                    (StringLiteral 44, 6f, 6e, 6e, 61),
+                    (StringLiteral 53, 68, 61, 67, 67, 79)])
+                  (VarDec \'grades_list\' of type:[object Object] =
+                    [99, 95, 90, 96])))',
+
+  programEko5: '(Program (Block (FunctionCall print params:((StringLiteral 73, 64)))
+                (FunctionCall print params:((StringLiteral 61, 62)))
+                (FunctionCall print params:((StringLiteral 61, 62, 73)))
+                (FunctionCall print params:((StringLiteral 65, 66)))))'
 }
