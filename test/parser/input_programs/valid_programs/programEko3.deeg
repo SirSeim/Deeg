@@ -1,3 +1,3 @@
 make x = 32
 
-if x < 10 and x > 45 then print("error") else print("Woohoo")
+if x < 10 and x > 45 then print("error") else print("Woohoo") end
