@@ -31,6 +31,22 @@ module.exports = {
                       (BinaryOp ** 3 (BinaryOp ** 4 5))
                       (BinaryOp ** 2 (BinaryOp ** 1 (BinaryOp + (UnaryOp - 3) 1)))
                       (BinaryOp ** 2 (UnaryOp - (BinaryOp ** 3 (UnaryOp - 4))))))',
+  program6: '(Program (Block
+              ((StdFor cat:undefined in cat_array, undefined) then (Block
+                (FunctionCall print params:((BinaryOp +
+                  (StringLiteral 6d, 72, 2e, 20) cat)))))
+              ((StdFor duck:undefined in duck_array, ids and exps yay) then (Block
+                (FunctionCall print params:((BinaryOp +
+                  (BinaryOp + duck (StringLiteral 20, 61, 6e, 64, 20)) dog)))))
+              ((For count int_expression) then (Block
+                (FunctionCall print params:((StringLiteral 68, 65, 6c, 6c, 6f)))))
+              ((For count 5) then (Block
+                (FunctionCall print params:((StringLiteral 73, 75, 70)))))
+              ((For [object Object] counts int_expression) then (Block
+                (FunctionCall print params:((BinaryOp + i
+                  (StringLiteral 20, 68, 65, 6c, 6c, 6f, 28, 73, 29))))))
+              (While is_running then (Block
+                (FunctionCall runFaster params:(undefined))))))'
   programPM1: '(Program (Block
                 (VarDec \'varMatch\' of type:undefined =
                   (FunctionDef params:(Params (x)) type:undefined (Block

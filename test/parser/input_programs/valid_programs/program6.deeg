@@ -1,0 +1,27 @@
+for cat in cat_array then
+    print("mr. " + cat)
+end
+
+for duck in duck_array, dog in dog_array then
+    print(duck + " and " + dog)
+end
+
+for count int_expression then
+    print("hello")
+end
+
+for count 5 then
+    print("sup")
+end
+
+
+
+for i counts int_expression then
+    print(i + " hello(s)")
+end
+
+
+
+while is_running then
+    runFaster()
+end
