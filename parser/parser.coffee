@@ -221,13 +221,13 @@ parseForStatement = ->
   new ForStatement(forIterate, body)
 
 determineForType = ->
-  if exists 'id' and optionalTypeCheck() # true if StdFor
+  if exists('id') and (exists('type', 1) or exists('in', 1)) # true if StdFor
     # DOES NOT WORK because we can only check one token ahead right now
-    parseStdFor()
+    return parseStdFor()
   else if exists 'id'
-    parseCountsFor()
+    return parseCountsFor()
   else if exists 'count'
-    parseCountFor()
+    return parseCountFor()
   else
     message = "Expected \"id\" or \"count\" but found \"#{tokens[0].kind}\""
     error message, tokens[0]
@@ -237,7 +237,7 @@ parseStdFor = -> # use array of ids to range
   type = optionalTypeMatch()
   match 'in'
   range = parseExpression()
-  if exists 'and'
+  if exists ','
     additionalList = parseStdForIdExp()
   new StdFor(id, type, range, additionalList)
 
@@ -245,8 +245,8 @@ parseStdForIdExp = ->
   idList = []
   expList = []
   typeList = []
-  while exists 'and'
-    match 'and'
+  while exists ','
+    match ','
     idList.push match 'id'
     typeList.push optionalTypeMatch()
     match 'in'
