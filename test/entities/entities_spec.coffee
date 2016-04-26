@@ -108,7 +108,7 @@ describe 'Entities', ->
   # describe 'ForStatement Entity', ->
   #   context 'when constructing a for statement', ->
   #     it 'constructs and toStrings correctly', (done) ->
-  #       it = new forIterate
+  #       it = new IterableItem 
   #       expect((new ForStatement it, 'body').toString()).to.eql('it then body')
   #       done()
 
@@ -195,12 +195,12 @@ describe 'Entities', ->
       it 'constructs and toStrings correctly', (done) ->
         expect((new ReturnStatement true).toString()).to.eql('(Return true)')
         done()
-
-  # describe 'ClassDefinition Entity', ->
-  #   context 'when constructing a class definition', ->
-  #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new ClassDefinition 'hello').toString()).to.eql('(ClassDefinition)')
-  #       done()
+# #HALP
+#   describe 'ClassDefinition Entity', ->
+#     context 'when constructing a class definition', ->
+#       it 'constructs and toStrings correctly', (done) ->
+#         expect((new ClassDefinition 'Hqello', 'Body', 'Greeting').toString()).to.eql('Class Hello extends Greeting: Body')
+#         done()
 
   describe 'VariableDeclaration Entity', ->
     context 'when constructing a variable declaration', ->
