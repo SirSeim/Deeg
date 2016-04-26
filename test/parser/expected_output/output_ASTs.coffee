@@ -48,5 +48,22 @@ module.exports = {
                       (PatLine (Patterns (Pattern (WildCard type:int)) | (Pattern tail))
                         then (Return true))
                       (PatLine (Patterns (Pattern (WildCard)) | (Pattern tail))
-                        then (Return false)))))))))'
+                        then (Return false)))))))))',
+  programEko1: '(Program (Block
+                  (VarDec \'x\' of type:undefined = 100)
+                  (VarAssign x modifier:+= value:2)
+                  (VarAssign x modifier:-= value:3)
+                  (VarAssign x modifier:%= value:12)
+                  (VarDec \'y\' of type:undefined = 1000)
+                  (VarAssign y modifier:*= value:12)
+                  (VarAssign y modifier:/= value:23)
+                  (VarAssign y modifier:++ value:null)))',
+  programEko2: '(Program (Block class circle 3 shapes))',
+
+  programEko3: '(Program (Block
+                  (VarDec \'x\' of type:undefined = 32)
+                  blank if blank else blank
+                  (FunctionCall print params:((StringLiteral 57, 6f, 6f, 68, 6f, 6f)))))',
+
+
 }
