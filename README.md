@@ -78,7 +78,7 @@ Pattern        ::= (Exp | WildCard) Type?
 
 ForStmt        ::= 'for' (StdFor | CountFor | CountsFor) 'then' (newline Block 'end' | Stmt 'end')
 
-StdFor         ::= id Type? 'in' Exp ('and' id Type? 'in' Exp)*
+StdFor         ::= id Type? 'in' Exp (',' id Type? 'in' Exp)*
 CountsFor      ::= id 'counts' Exp
 CountFor       ::= 'count' Exp
 ReturnStmt     ::= 'deeg' Exp
