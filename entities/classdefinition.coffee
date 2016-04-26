@@ -17,10 +17,10 @@ class ClassDefinition
   constructor: (@id, @body, @parentId) ->
 
   toString: ->
-    res = "Class #{@id}"
+    res = "(Class #{@id.lexeme}"
     if @parentId
-      res += " extends #{@parentId}"
-    res + ": #{@body}"
+      res += " extends #{@parentId.lexeme}"
+    res + ": #{@body})"
 
   analyze: (context) ->
     @id.analyze context
