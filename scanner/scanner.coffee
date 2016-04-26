@@ -15,7 +15,7 @@ QUOTES = XRegExp '\"|\''
 WORD_CHAR = XRegExp '[\\p{L}\\p{Nd}_]'
 KEYWORDS = ['make','to','deeg','end','thru','till','by','exists','and',
   'or','unless','if','else','then','not','true','false','for','while',
-  'does','count','counts','match','with','in']
+  'does','count','counts','match','with','in','class','extends']
 TWOCHAROPS = XRegExp '<=|==|>=|!=|\\*\\*|\\+\\+|--|\\+=|-=|\\/=|\\*=|%=|>>'
 ONECHAROPS = XRegExp '[\\+\\-\\*\\/\\(\\)\\,\\=\\<\\>\\%_|]'
 SPACE = XRegExp '\\s'
