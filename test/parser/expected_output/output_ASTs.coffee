@@ -60,10 +60,9 @@ module.exports = {
                   (VarAssign y modifier:++ value:null)))',
   programEko2: '(Program (Block class circle 3 shapes))',
 
-  programEko3: '(Program (Block
-                  (VarDec \'x\' of type:undefined = 32)
-                  blank if blank else blank
-                  (FunctionCall print params:((StringLiteral 57, 6f, 6f, 68, 6f, 6f)))))',
-
+  programEko3: '(Program (Block (VarDec \'x\' of type:undefined = 32)
+                (If (BinaryOp and (BinaryOp < x 10) (BinaryOp > x 45)) then
+                (FunctionCall print params:((StringLiteral 65, 72, 72, 6f, 72))))
+                (else (FunctionCall print params:((StringLiteral 57, 6f, 6f, 68, 6f, 6f)))))))'
 
 }
