@@ -73,6 +73,7 @@ parseProgram = ->
 parseBlock = ->
   statements = []
   loop
+    break if exists ['EOF', 'end', 'else']
     statements.push parseStatement() # What if there's `newline` before the Stmt
     match 'newline'
     break if exists ['EOF', 'end', 'else']
@@ -104,7 +105,11 @@ parseClassDefinition = ->
     match 'extends'
     parentId = match 'id'
 
-  body = parseBlock()
+  if exists 'newline'
+    match 'newline'
+    body = parseBlock()
+  else
+    body = parseStatement()
 
   match 'end'
   new ClassDefinition(id, body, parentId)
@@ -386,7 +391,7 @@ parseVariableExpression = ->
   #       match ']'
   #     else
   #       reportError 'Invalid property/array following function call', tokens[0]
-  # new VariableExpression(id, depth)
+  new VariableExpression(id, depth)
 
 parseArgs = ->
   match '('
@@ -483,17 +488,17 @@ parseExp0 = -> # the trailing if and possible else
 parseExp1 = -> # the or
   left = parseExp2()
   while exists 'or'
-    match 'or'
+    op = match 'or'
     right = parseExp2()
-    left = new BinaryExpression('or', left, right)
+    left = new BinaryExpression(op, left, right)
   left
 
 parseExp2 = -> # the and
   left = parseExp3()
   while exists 'and'
-    match 'and'
+    op = match 'and'
     right = parseExp3()
-    left = new BinaryExpression('and', left, right)
+    left = new BinaryExpression(op, left, right)
   left
 
 parseExp3 = -> # the relops
