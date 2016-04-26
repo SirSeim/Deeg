@@ -115,7 +115,11 @@ describe 'Entities', ->
   describe 'StdFor Entity', ->
     context 'when constructing a standard for', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new StdFor 'foo', 'int', 'dict', 'bar').toString())
+        token = {
+          kind: 'id',
+          lexeme: 'foo'
+        }
+        expect((new StdFor token, 'int', 'dict', 'bar').toString())
           .to.eql('(StdFor foo:int in dict, bar)')
         done()
   
