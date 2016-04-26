@@ -17,7 +17,7 @@ KEYWORDS = ['make','to','deeg','end','thru','till','by','exists','and',
   'or','unless','if','else','then','not','true','false','for','while',
   'does','count','counts','match','with','in','class','extends']
 TWOCHAROPS = XRegExp '<=|==|>=|!=|\\*\\*|\\+\\+|--|\\+=|-=|\\/=|\\*=|%=|>>'
-ONECHAROPS = XRegExp '[\\+\\-\\*\\/\\(\\)\\,\\=\\<\\>\\%_|]'
+ONECHAROPS = XRegExp '[\\-\\/\\[\\]+*(),=<>%_|{}!]'
 SPACE = XRegExp '\\s'
 DOT = XRegExp '[.]'
 TYPE = XRegExp ':'
