@@ -367,26 +367,26 @@ parseVariableAssignment = ->
 parseVariableExpression = ->
   id = match 'id'
   depth = []
-  while exists ['.', '[', '(']
-    if exists '.'
-      match '.'
-      depth.push parseExp8()
-    else if exists '['
-      match '['
-      exp3 = parseExp3()
-      match ']'
-    else if exists '('
-      depth.push parseArgs()
-      if exists '.'
-        match '.'
-        depth.push parseExp8()
-      else if exists '['
-        match '['
-        depth.push parseExp3()
-        match ']'
-      else
-        reportError 'Invalid property/array following function call', tokens[0]
-  new VariableExpression(id, depth)
+  # while exists ['.', '[', '(']
+  #   if exists '.'
+  #     match '.'
+  #     depth.push parseExp8()
+  #   else if exists '['
+  #     match '['
+  #     exp3 = parseExp3()
+  #     match ']'
+  #   else if exists '('
+  #     depth.push parseArgs()
+  #     if exists '.'
+  #       match '.'
+  #       depth.push parseExp8()
+  #     else if exists '['
+  #       match '['
+  #       depth.push parseExp3()
+  #       match ']'
+  #     else
+  #       reportError 'Invalid property/array following function call', tokens[0]
+  # new VariableExpression(id, depth)
 
 parseArgs = ->
   match '('
