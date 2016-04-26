@@ -17,12 +17,12 @@ class IfStatement
   constructor: (@condition, @body, @elseIfStatement, @elseStatement) ->
 
   toString: () ->
-    res = "(If #{@condition} then #{@body})"
+    res = "(If #{@condition} then #{@body}"
     if @elseIfStatement
       res += " #{@elseIfStatement}"
     else if @elseStatement
       res += " #{@elseStatement}"
-    res
+    res += ")"
 
   analyze: (context) ->
     @condition.analyze context
