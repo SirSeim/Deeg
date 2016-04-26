@@ -1,0 +1,1 @@
+print("error") if x < 10 and x > 45 else print("Woohoo")

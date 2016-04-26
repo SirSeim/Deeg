@@ -1,4 +1,2 @@
 class circle extends shapes
-    make circle = () does
-    end
 end
