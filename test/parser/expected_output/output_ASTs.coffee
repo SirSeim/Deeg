@@ -46,7 +46,16 @@ module.exports = {
                 (FunctionCall print params:((BinaryOp + i
                   (StringLiteral 20, 68, 65, 6c, 6c, 6f, 28, 73, 29))))))
               (While is_running then (Block
-                (FunctionCall runFaster params:(undefined))))))'
+                (FunctionCall runFaster params:(undefined))))))',
+  program7: '(Program (Block
+              (VarDec \'x\' of type:undefined = 5)
+              (VarAssign x modifier:+= value:5)
+              (VarAssign x modifier:-= value:5)
+              (VarAssign x modifier:/= value:5)
+              (VarAssign x modifier:*= value:5)
+              (VarAssign x modifier:%= value:5)
+              (VarAssign x modifier:++ value:null)
+              (VarAssign x modifier:-- value:null)))',
   programPM1: '(Program (Block
                 (VarDec \'varMatch\' of type:undefined =
                   (FunctionDef params:(Params (x)) type:undefined (Block
