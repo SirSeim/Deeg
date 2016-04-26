@@ -14,10 +14,10 @@ module.exports = {
                 (Return c))))))',
   program3: '(Program (Block
               (If true then (Block
-                (FunctionCall print params:((StringLiteral 68, 65, 6c, 6c, 6f)))))
+                (FunctionCall print params:((StringLiteral 68, 65, 6c, 6c, 6f))))
               (else if false then (Block
                 (FunctionCall print
-                  params:((StringLiteral 67, 6f, 6f, 64, 62, 79, 65)))))
+                  params:((StringLiteral 67, 6f, 6f, 64, 62, 79, 65))))))
               (If true then
                 (FunctionCall print
                   params:((StringLiteral 53, 75, 68, 68, 20, 44, 75, 64, 65, 21))))))',
@@ -59,17 +59,23 @@ module.exports = {
                   (VarAssign y modifier:/= value:23)
                   (VarAssign y modifier:++ value:null)))',
 
-  programEko2: '(Program (Block class circle 3 shapes))',
+  programEko2: '(Program (Block (Class circle extends shapes: (Block ))))',
 
-  programEko3: '(Program (Block (VarDec \'x\' of type:undefined = 32)
-                (If (BinaryOp and (BinaryOp < x 10) (BinaryOp > x 45)) then
-                (FunctionCall print params:((StringLiteral 65, 72, 72, 6f, 72))))
-                (else (FunctionCall print params:((StringLiteral 57, 6f, 6f, 68, 6f, 6f)))))))',
+  programEko3: '(Program (Block
+                  (VarDec \'x\' of type:undefined = 32)
+                  (If (BinaryOp and (BinaryOp < x 10) (BinaryOp > x 45)) then
+                    (FunctionCall print params:((StringLiteral 65, 72, 72, 6f, 72)))
+                  (else
+                    (FunctionCall print
+                      params:((StringLiteral 57, 6f, 6f, 68, 6f, 6f)))))))',
 
-  programEko4: '(Program (Block (VarDec \'undefined\' of type:undefined = null) 3 5
-                (StringLiteral 42, 6f, 62) 8 (StringLiteral 44, 6f, 6e, 6e, 61) 11
-                (StringLiteral 53, 68, 61, 67, 67, 79)
-                (VarDec \'grades_list\' of type:[object Object] = null) 14 16 99 19 95 22 90 25 96))',
+  programEko4: '(Program (Block
+                  (VarDec \'friends_list\' of type:undefined =
+                    [(StringLiteral 42, 6f, 62),
+                    (StringLiteral 44, 6f, 6e, 6e, 61),
+                    (StringLiteral 53, 68, 61, 67, 67, 79)])
+                  (VarDec \'grades_list\' of type:[object Object] =
+                    [99, 95, 90, 96])))',
 
   programEko5: '(Program (Block (FunctionCall print params:((StringLiteral 73, 64)))
                 (FunctionCall print params:((StringLiteral 61, 62)))
