@@ -69,6 +69,10 @@ module.exports = {
   programEko4: '(Program (Block (VarDec \'undefined\' of type:undefined = null) 3 5
                 (StringLiteral 42, 6f, 62) 8 (StringLiteral 44, 6f, 6e, 6e, 61) 11
                 (StringLiteral 53, 68, 61, 67, 67, 79)
-                (VarDec \'grades_list\' of type:[object Object] = null) 14 16 99 19 95 22 90 25 96))'
+                (VarDec \'grades_list\' of type:[object Object] = null) 14 16 99 19 95 22 90 25 96))',
 
+  programEko5: '(Program (Block (FunctionCall print params:((StringLiteral 73, 64)))
+                (FunctionCall print params:((StringLiteral 61, 62)))
+                (FunctionCall print params:((StringLiteral 61, 62, 73)))
+                (FunctionCall print params:((StringLiteral 65, 66)))))'
 }
