@@ -106,28 +106,11 @@ describe 'Entities', ->
         done()
 
   # describe 'ForStatement Entity', ->
-  #   context 'when constructing a type', ->
+  #   context 'when constructing a for statement', ->
   #     it 'constructs and toStrings correctly', (done) ->
-  #       expect(())
-
-  describe 'VariableDeclaration Entity', ->
-    context 'when constructing a variable declaration', ->
-      it 'constructs and toStrings correctly', (done) ->
-        token = {
-          kind: 'id',
-          lexeme: 'foo',
-          line: 3,
-          col: 1
-        }
-        expect((new VariableDeclaration token, 'bool', 3).toString())
-          .to.eql('(VarDec \'foo\' of type:bool = 3)')
-        done()
-
-  describe "Args Entity" , ->
-    context 'when constructing an args', ->
-      it 'constructs and Args correctly', (done) ->
-        expect((new Args 'expList').toString()).to.eql('(expList)')
-        done()
+  #       it = new forIterate
+  #       expect((new ForStatement it, 'body').toString()).to.eql('it then body')
+  #       done()
 
   describe 'StdFor Entity', ->
     context 'when constructing a standard for', ->
@@ -135,12 +118,13 @@ describe 'Entities', ->
         expect((new StdFor 'foo', 'int', 'dict', 'bar').toString())
           .to.eql('(StdFor foo:int in dict, bar)')
         done()
-
+  
   # Maybe we don't need StdForIdExp.
-  # describe 'StdForIdExp', -> #this is not correct. entity declaration is not finished
+  # describe 'StdForIdExp Entity', -> #this is not correct. entity declaration
+  # is not finished
   #   context 'when constructing a standard for id expression', ->
   #     it 'constructs and toStrings correctly', (done) ->
-  #       expect(new StdForIdExp ['(foo in bar)'], 'Body').toString()
+  #       expect((new StdForIdExp ['(foo in bar)'], 'Body').toString())
   #       .to.eql('(StdForIdExp idexplist:(foo in bar) body:Body)')
   #       done()
 
@@ -161,16 +145,42 @@ describe 'Entities', ->
       it 'constructs and toStrings correctly', (done) ->
         expect((new IfStatement ['foo in bar'], 'Body').toString())
           .to.eql('(If foo in bar then Body)')
-        #incomplete, needs to account for if, elseif, else statements
         done()
 
-  # describe 'WhileStatement Entity', ->
-  #   context 'when constructing a while statement', ->
-  #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new WhileStatement foo in bar , 'Body' ).toString())
-  #          .to.eql('(While foo in bar then Body)')
-  #     needs some work
-  #     done()
+  describe 'ElseIfStatement Entity', ->
+    context 'when constructing an else if statement true else if statement', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new ElseIfStatement ['foo in bar'], 'Body',
+          (new ElseIfStatement 5 == 5, 'Body')).toString())
+          .to.eql('(else if foo in bar then Body) (else if true then Body)')
+        done()
+    context 'when constructing an else if statement false else if statement', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new ElseIfStatement ['foo in bar'], 'Body',
+          (new ElseIfStatement 5 == 7, 'Body')).toString())
+          .to.eql('(else if foo in bar then Body) (else if false then Body)')
+        done()
+    context 'when constructing an else if statement no else if statement', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new ElseIfStatement ['foo in bar'], 'Body').toString())
+          .to.eql('(else if foo in bar then Body)')
+        done()
+
+  describe 'ElseStatement Entity', ->
+    context 'when constructing an else statement', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new ElseStatement 'Body').toString())
+          .to.eql('(else Body)')
+        done()
+
+  describe 'WhileStatement Entity', ->
+    context 'when constructing a while statement', ->
+      it 'constructs and toStrings correctly', (done) ->
+        foo = 1
+        bar = 1
+        expect((new WhileStatement ['foo in bar'] , 'Body' ).toString())
+          .to.eql('(While foo in bar then Body)')
+        done()
 
   describe 'ReturnStatement Entity', ->
     context 'when constructing a return statement of a string', ->
@@ -184,6 +194,56 @@ describe 'Entities', ->
     context 'when constructing a return statement of a boolean', ->
       it 'constructs and toStrings correctly', (done) ->
         expect((new ReturnStatement true).toString()).to.eql('(Return true)')
+        done()
+
+  # describe 'ClassDefinition Entity', ->
+  #   context 'when constructing a class definition', ->
+  #     it 'constructs and toStrings correctly', (done) ->
+  #       expect((new ClassDefinition 'hello').toString()).to.eql('(ClassDefinition)')
+  #       done()
+
+  describe 'VariableDeclaration Entity', ->
+    context 'when constructing a variable declaration', ->
+      it 'constructs and toStrings correctly', (done) ->
+        token = {
+          kind: 'id',
+          lexeme: 'foo',
+          line: 3,
+          col: 1
+        }
+        expect((new VariableDeclaration token, 'bool', 3).toString())
+          .to.eql('(VarDec \'foo\' of type:bool = 3)')
+        done()
+  # describe 'VariableAssignment Entity', ->
+  #   context 'when constructing a variable assignment', ->
+  #     it 'constructs and toStrings correctly', (done) ->
+  #       token = {
+  #         kind: 'id',
+  #         lexeme: 'foo',
+  #         line: 3,
+  #         col: 1
+  #       }
+  #       expect((new VariableAssignment token, 'bool', 3).toString())
+  #         .to.eql('(VarDec \'foo\' of type:bool = 3)')
+  #       done()
+
+  # describe 'VariableExpression Entity', ->
+  # context 'when constructing a variable expression', ->
+  #   it 'constructs and toStrings correctly', (done) ->
+  #     token = {
+  #       kind: 'id',
+  #       lexeme: 'foo',
+  #       line: 3,
+  #       col: 1
+  #     }
+  #     expect((new VariableExpression token, 'bool', 3).toString())
+  #       .to.eql('(VarDec \'foo\' of type:bool = 3)')
+  #     done()
+
+  describe 'Args Entity' , ->
+    context 'when constructing an args', ->
+      it 'constructs and Args correctly', (done) ->
+        expect((new Args 'expList').toString()).to.eql('(expList)')
         done()
 
   describe 'IntegerLiteral Entity', ->
@@ -218,9 +278,6 @@ describe 'Entities', ->
         expect((new FloatLiteral token).toString()).to.eql(-2.5)
         done()
 
-
-
-  
   describe 'BooleanLiteral Entity', ->
     context 'when constructing a boolean literal', ->
       it 'constructs and toStrings correctly (true)', (done) ->
@@ -340,15 +397,42 @@ describe 'Entities', ->
             .to.eql('Binding hi [bool] to false')
         done()
 
-  # needs: operator to have a .lexeme, so token?
-  # describe 'BinaryExpression Entity', ->
-  #   context 'when constructing a binary expression', ->
-  #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new BinaryExpression '==' 5 5).toString()).to.eql('(BinaryOp == 5 6)')
+  describe 'BinaryExpression Entity', ->
+    context 'when constructing a binary expression ==', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new BinaryExpression {lexeme:'=='}, 5, 5).toString())
+        .to.eql('(BinaryOp == 5 5)')
+        done()
+    context 'when constructing a binary expression <=', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new BinaryExpression {lexeme:'<='}, 5, 5).toString())
+        .to.eql('(BinaryOp <= 5 5)')
+        done()
+    context 'when constructing a binary expression and', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new BinaryExpression {lexeme:'and'}, true, true).toString())
+        .to.eql('(BinaryOp and true true)')
+        done()
 
-  #same as above: needs proper definition of the operator
-  # describe 'UnaryExpression Entity', ->
-  #   context 'when constructing a unary expression', ->
+  describe 'UnaryExpression Entity', ->
+    context 'when constructing a unary expression -', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new UnaryExpression {lexeme: '-'}, 5).toString()).to.eql('(UnaryOp - 5)')
+        done()
+    context 'when constructing a unary expression !', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new UnaryExpression {lexeme: '!'}, true).toString())
+        .to.eql('(UnaryOp ! true)')
+        done()
+    context 'when constructing a unary expression not', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new UnaryExpression {lexeme: 'not'}, false).toString())
+        .to.eql('(UnaryOp not false)')
+        done()
+
+  # describe 'Function Entity', ->
+  #   context 'when constructing a function entity', ->
   #     it 'constructs and toStrings correctly', (done) ->
-  #       expect((new UnaryExpression '-', 5).toString()).to.eql('(UnaryOp - 5)')
+  #       expect((new Function [1, 2, 3], Type.INT, 'body').toString())
+  #        .to.eql('(FunctionDef params: [1, 2, 3] type: int body)')
   #       done()
