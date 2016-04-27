@@ -21,11 +21,11 @@ class FunctionCall
 
   analyze: (context) ->
     location = EntityUtils.findLocation @name
-    # analyze id 
+    # analyze id
     @name.analyze context
     # analyze each argument
     for arg in @params
-      arg.analyze context 
+      arg.analyze context
 
     # variable should refer to a function
     @mustBeFunction location

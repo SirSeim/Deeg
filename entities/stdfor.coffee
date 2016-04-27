@@ -4,7 +4,7 @@ class StdFor
 
   constructor: (@id, @type, @range, @additionalList)->
 
-  toString: -> 
+  toString: ->
     res = "(StdFor "
     for id in [0...@id.length]
       res += ', ' if id > 0
