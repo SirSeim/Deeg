@@ -7,8 +7,14 @@ class StdFor
   toString: -> "(StdFor #{@id.lexeme}:#{@type} in #{@range}, #{@additionalList})"
 
 
-  # analyze: (context) ->
-  #   @type = Type.BOOL
+  analyze: (context) ->
+    # analyze id
+    @id.analyze context
+    # analyze expression
+    @range.analyze context
+    # if there are more, analyze 'em
+    if @additionalList
+      @additionalList.analyze context
 
   # optimize: -> this
 

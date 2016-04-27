@@ -23,8 +23,11 @@ class ClassDefinition
     res + ": #{@body})"
 
   analyze: (context) ->
+    # id analysis
     @id.analyze context
+    # body analysis
     @body.analyze context
+    # make sure parent class is chill
     if @parentId
       @parentId.analyze context
 

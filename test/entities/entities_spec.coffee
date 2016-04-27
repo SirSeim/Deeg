@@ -32,7 +32,8 @@ VariableExpression = require '#{__dirname}/../../entities/variableexpression.cof
 Args = require '#{__dirname}/../../entities/args.coffee'
 ExpList = require '#{__dirname}/../../entities/explist.coffee'
 
-FunctionExp = require '#{__dirname}/../../entities/functionexp.coffee'
+FunctionCall = require '#{__dirname}/../../entities/functioncall.coffee'
+FunctionDef = require '#{__dirname}/../../entities/functiondef.coffee'
 Params = require '#{__dirname}/../../entities/params.coffee'
 ParamList = require '#{__dirname}/../../entities/paramlist.coffee'
 
@@ -50,8 +51,6 @@ List = require '#{__dirname}/../../entities/list.coffee'
 Dict = require '#{__dirname}/../../entities/dict.coffee'
 BindingList = require '#{__dirname}/../../entities/bindinglist.coffee'
 Binding = require '#{__dirname}/../../entities/binding.coffee'
-# Function = require '#{__dirname}/../../entities/function.coffee'
-# i have no idea how this differs from FunctionExp
 
 BinaryExpression = require '#{__dirname}/../../entities/binaryexpression.coffee'
 UnaryExpression = require '#{__dirname}/../../entities/unaryexpression.coffee'

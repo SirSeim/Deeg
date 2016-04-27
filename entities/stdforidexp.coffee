@@ -1,17 +1,23 @@
-Type = require "#{__dirname}/type.coffee"
+Type = require "#{__dirname}/./type.coffee"
 
 class StdForIdExp
 
-  constructor: (@idList, @typeList, @expList) ->
+  constructor: (@idList, @typeList, @rangeList) ->
 
-  # value: ->
-  #   @name is 'true'
+  toString: ->
+    res = ""
+    for id in @idList
+      res += ", "
+      res += "(StdFor #{@idList[id]}:#{@typeList[id]} in #{@rangeList[id]})"
+    res
 
-  toString: -> "ids and exps yay" # disclaimer: not correct
-
-
-  # analyze: (context) ->
-  #   @type = Type.BOOL
+  analyze: (context) ->
+    # analyze each id in list
+    for id in @idList
+      @idList[id].analyze context
+    # analyze each expression
+    for range in @rangeList
+      @rangeList[range].analyze context
 
   # optimize: -> this
 
