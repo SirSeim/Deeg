@@ -20,7 +20,7 @@ class IfStatement
     res = "(If #{@condition} then #{@body}"
     if @elseIfStatement
       res += " #{@elseIfStatement}"
-    else if @elseStatement
+    if @elseStatement
       res += " #{@elseStatement}"
     res += ")"
 
