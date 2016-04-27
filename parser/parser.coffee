@@ -123,6 +123,8 @@ parseIfStatement = ->
     body = parseBlock()
   else
     body = parseStatement()
+    if exists 'newline'
+      match 'newline'
   if exists('else') and exists 'if', 1
     elseIfStatement = parseElseIfStatement()
   if exists 'else'
@@ -140,7 +142,9 @@ parseElseIfStatement = ->
     body = parseBlock()
   else
     body = parseStatement()
-  if exists 'else if'
+    if exists 'newline'
+      match 'newline'
+  if exists('else') and exists 'if', 1
     elseIfStatement = parseElseIfStatement()
   new ElseIfStatement(condition, body, elseIfStatement)
 
@@ -151,6 +155,8 @@ parseElseStatement = ->
     body = parseBlock()
   else
     body = parseStatement()
+    if exists 'newline'
+      match 'newline'
   new ElseStatement(body)
 
 
