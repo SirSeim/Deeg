@@ -253,17 +253,18 @@ parseStdFor = -> # use array of ids to range
     range.push parseExpression()
   new StdFor(id, type, range)
 
-parseStdForIdExp = ->
-  idList = []
-  expList = []
-  typeList = []
-  while exists ','
-    match ','
-    idList.push match 'id'
-    typeList.push optionalTypeMatch()
-    match 'in'
-    expList.push parseExpression()
-  new StdForIdExp(idList, typeList, expList)
+# NOT USED ANYMORE
+# parseStdForIdExp = ->
+#   idList = []
+#   expList = []
+#   typeList = []
+#   while exists ','
+#     match ','
+#     idList.push match 'id'
+#     typeList.push optionalTypeMatch()
+#     match 'in'
+#     expList.push parseExpression()
+#   new StdForIdExp(idList, typeList, expList)
 
 parseCountsFor = ->
   id = match 'id'
