@@ -5,7 +5,7 @@ class List
   constructor: (@listicles) ->
 
   toString: ->
-    "[#{@listicles.join(', ')}]"
+    "[#{@listicles}]"
 
   analyze: (context) ->
     element.analyze(context) for element in @listicles

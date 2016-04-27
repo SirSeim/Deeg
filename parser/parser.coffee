@@ -73,6 +73,7 @@ parseProgram = ->
 parseBlock = ->
   statements = []
   loop
+    break if exists ['EOF', 'end', 'else']
     statements.push parseStatement() # What if there's `newline` before the Stmt
     match 'newline'
     break if exists ['EOF', 'end', 'else']
@@ -104,7 +105,11 @@ parseClassDefinition = ->
     match 'extends'
     parentId = match 'id'
 
-  body = parseBlock()
+  if exists 'newline'
+    match 'newline'
+    body = parseBlock()
+  else
+    body = parseStatement()
 
   match 'end'
   new ClassDefinition(id, body, parentId)
@@ -221,13 +226,13 @@ parseForStatement = ->
   new ForStatement(forIterate, body)
 
 determineForType = ->
-  if exists 'id' and optionalTypeCheck() # true if StdFor
+  if exists('id') and (exists('type', 1) or exists('in', 1)) # true if StdFor
     # DOES NOT WORK because we can only check one token ahead right now
-    parseStdFor()
+    return parseStdFor()
   else if exists 'id'
-    parseCountsFor()
+    return parseCountsFor()
   else if exists 'count'
-    parseCountFor()
+    return parseCountFor()
   else
     message = "Expected \"id\" or \"count\" but found \"#{tokens[0].kind}\""
     error message, tokens[0]
@@ -237,7 +242,7 @@ parseStdFor = -> # use array of ids to range
   type = optionalTypeMatch()
   match 'in'
   range = parseExpression()
-  if exists 'and'
+  if exists ','
     additionalList = parseStdForIdExp()
   new StdFor(id, type, range, additionalList)
 
@@ -245,8 +250,8 @@ parseStdForIdExp = ->
   idList = []
   expList = []
   typeList = []
-  while exists 'and'
-    match 'and'
+  while exists ','
+    match ','
     idList.push match 'id'
     typeList.push optionalTypeMatch()
     match 'in'
@@ -367,25 +372,25 @@ parseVariableAssignment = ->
 parseVariableExpression = ->
   id = match 'id'
   depth = []
-  while exists ['.', '[', '(']
-    if exists '.'
-      match '.'
-      depth.push parseExp8()
-    else if exists '['
-      match '['
-      exp3 = parseExp3()
-      match ']'
-    else if exists '('
-      depth.push parseArgs()
-      if exists '.'
-        match '.'
-        depth.push parseExp8()
-      else if exists '['
-        match '['
-        depth.push parseExp3()
-        match ']'
-      else
-        reportError 'Invalid property/array following function call', tokens[0]
+  # while exists ['.', '[', '(']
+  #   if exists '.'
+  #     match '.'
+  #     depth.push parseExp8()
+  #   else if exists '['
+  #     match '['
+  #     exp3 = parseExp3()
+  #     match ']'
+  #   else if exists '('
+  #     depth.push parseArgs()
+  #     if exists '.'
+  #       match '.'
+  #       depth.push parseExp8()
+  #     else if exists '['
+  #       match '['
+  #       depth.push parseExp3()
+  #       match ']'
+  #     else
+  #       reportError 'Invalid property/array following function call', tokens[0]
   new VariableExpression(id, depth)
 
 parseArgs = ->
@@ -483,17 +488,17 @@ parseExp0 = -> # the trailing if and possible else
 parseExp1 = -> # the or
   left = parseExp2()
   while exists 'or'
-    match 'or'
+    op = match 'or'
     right = parseExp2()
-    left = new BinaryExpression('or', left, right)
+    left = new BinaryExpression(op, left, right)
   left
 
 parseExp2 = -> # the and
   left = parseExp3()
   while exists 'and'
-    match 'and'
+    op = match 'and'
     right = parseExp3()
-    left = new BinaryExpression('and', left, right)
+    left = new BinaryExpression(op, left, right)
   left
 
 parseExp3 = -> # the relops
