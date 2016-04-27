@@ -377,6 +377,7 @@ prints
 ```
 
 ### Pattern Matching!
+ Matches on values, types, and lists. In the Deeg future, matches on dictionaries as well. 
 ```
 make func = (x) does
     match x with
