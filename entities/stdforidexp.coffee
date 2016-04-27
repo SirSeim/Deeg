@@ -4,7 +4,7 @@ class StdForIdExp
 
   constructor: (@idList, @typeList, @rangeList) ->
 
-  toString: -> 
+  toString: ->
     res = ""
     for id in @idList
       res += ", "

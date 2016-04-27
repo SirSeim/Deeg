@@ -11,7 +11,7 @@
 
 Type = require "#{__dirname}/./type.coffee"
 
-class Function
+class FunctionDef
 
   constructor: (@params, @type, @body) ->
 
@@ -23,16 +23,17 @@ class Function
     @type = Type.FUNCTION
     # scoping!
     localContext = context.createChildContext()
-
+    # analyze each parameter
     for param in @params
       localContext.variableMustNotBeAlreadyDeclared param,
         "Duplicate parameter #{param.lexeme} found in function definition"
       param.type = Type.UNKNOWN # shrug
       localContext.addVariable param.lexeme, param
 
+    # body analysis
     @body.analyze localContext
 
   # optimize: ->
     
 
-module.exports = Function
+module.exports = FunctionDef

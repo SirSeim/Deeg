@@ -32,8 +32,8 @@ VariableExpression = require "#{__dirname}/../entities/variableexpression.coffee
 Args = require "#{__dirname}/../entities/args.coffee"
 ExpList = require "#{__dirname}/../entities/explist.coffee"
 
-FunctionExp = require "#{__dirname}/../entities/functionexp.coffee"
-Function = require "#{__dirname}/../entities/function.coffee"
+FunctionCall = require "#{__dirname}/../entities/functioncall.coffee"
+FunctionDef = require "#{__dirname}/../entities/functiondef.coffee"
 Params = require "#{__dirname}/../entities/params.coffee"
 ParamList = require "#{__dirname}/../entities/paramlist.coffee"
 
@@ -415,7 +415,7 @@ parseExpList = ->
     match 'newline'
   new ExpList(expArray)
 
-parseFunctionExp = ->
+parseFunctionDef = ->
   params = parseParams()
   type = optionalTypeMatch()
   match 'does'
@@ -425,7 +425,7 @@ parseFunctionExp = ->
   else
     body = parseStatement()
   match 'end'
-  new Function(params, type, body)
+  new FunctionDef(params, type, body)
 
 parseParams = ->
   match '('
@@ -560,7 +560,7 @@ parseExp9 = -> # property, set, args
       input = new IterableItem(input, parseExp4())
       match ']'
     while exists '('
-      input = new FunctionExp(input, parseArgs())
+      input = new FunctionCall(input, parseArgs())
   input
 
 parseExp10 = -> # literals, id, expression in parens
