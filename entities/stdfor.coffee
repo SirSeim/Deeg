@@ -4,7 +4,12 @@ class StdFor
 
   constructor: (@id, @type, @range, @additionalList)->
 
-  toString: -> "(StdFor #{@id.lexeme}:#{@type} in #{@range}, #{@additionalList})"
+  toString: -> 
+    res = "(StdFor "
+    for id in [0...@id.length]
+      res += ', ' if id > 0
+      res += "#{@id[id].lexeme}:#{@type[id]} in #{@range[id]}"
+    res += ')'
 
 
   analyze: (context) ->

@@ -9,7 +9,7 @@
  #  //
  # (/
 
-initialContext = require('#{__dirname}/../analyzer/analyzer.coffee').initialContext
+initialContext = require("#{__dirname}/../analyzer/analyzer.coffee").initialContext
 # HashMap = require('hashmap.coffee').HashMap
 
 class Program

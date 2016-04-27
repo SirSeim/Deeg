@@ -6,14 +6,14 @@ class StdForIdExp
 
   toString: ->
     res = ""
-    for id in @idList
+    for id in [0...@idList.length]
       res += ", "
-      res += "(StdFor #{@idList[id]}:#{@typeList[id]} in #{@rangeList[id]})"
+      res += "(StdFor #{@idList[id].lexeme}:#{@typeList[id]} in #{@rangeList[id]})"
     res
 
   analyze: (context) ->
     # analyze each id in list
-    for id in @idList
+    for id in [0...@idList.length]
       @idList[id].analyze context
     # analyze each expression
     for range in @rangeList

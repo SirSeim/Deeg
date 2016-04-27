@@ -17,7 +17,7 @@ class CountsFor
 
   constructor: (@id, @tally)->
 
-  toString: -> "(For #{@id} counts #{@tally})"
+  toString: -> "(For #{@id.lexeme} counts #{@tally})"
 
   analyze: (context) ->
     # id analysis

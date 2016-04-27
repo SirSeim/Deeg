@@ -1,4 +1,4 @@
-Type = require '#{__dirname}/./type'
+Type = require "#{__dirname}/type.coffee"
 
 class DeegEntities
   @entities =
