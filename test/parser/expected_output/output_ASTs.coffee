@@ -16,11 +16,24 @@ module.exports = {
               (If true then (Block
                 (FunctionCall print params:((StringLiteral 68, 65, 6c, 6c, 6f))))
               (else if false then (Block
-                (FunctionCall print
-                  params:((StringLiteral 67, 6f, 6f, 64, 62, 79, 65))))))
-              (If true then
-                (FunctionCall print
-                  params:((StringLiteral 53, 75, 68, 68, 20, 44, 75, 64, 65, 21))))))',
+                (FunctionCall print params:((StringLiteral
+                  67, 6f, 6f, 64, 62, 79, 65)))))
+              (else if (BinaryOp > 3 0) then (Block
+                (FunctionCall print params:((StringLiteral 70, 65, 61, 63, 65)))))
+              (else (Block
+                (FunctionCall print params:((StringLiteral
+                  6e, 61, 6d, 61, 73, 74, 65))))))
+              (If (BinaryOp > 4 0) then
+                (FunctionCall calc params:(undefined))
+              (else if (BinaryOp < 5 3) then
+                (FunctionCall decalc params:(undefined)))
+              (else if (BinaryOp < 8 5) then
+                (FunctionCall decalc params:(undefined)))
+              (else (FunctionCall print params:((StringLiteral 66, 61, 69, 6c)))))
+              (If true then (FunctionCall calc params:(undefined))
+              (else (FunctionCall decalc params:(undefined))))
+              (If true then (FunctionCall print params:((StringLiteral
+                53, 75, 68, 68, 20, 44, 75, 64, 65, 21))))))',
   program4: '(Program (Block
               (VarDec \'gcd\' of type:undefined =
                 (FunctionDef params:(Params (a,b)) type:undefined (Block

@@ -2,8 +2,19 @@ if true then
     print("hello")
 else if false then
     print("goodbye")
-else
+else if 3 > 0 then
     print("peace")
+else
+    print("namaste")
+end
+
+if 4 > 0 then calc()
+else if 5 < 3 then decalc()
+else if 8 < 5 then decalc()
+else print("fail") end
+
+if true then calc()
+else decalc()
 end
 
 if true then print("Suhh Dude!") end
