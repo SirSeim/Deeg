@@ -35,10 +35,10 @@ module.exports = {
               ((StdFor cat:undefined in cat_array) then (Block
                 (FunctionCall print params:((BinaryOp +
                   (StringLiteral 6d, 72, 2e, 20) cat)))))
-              ((StdFor duck:undefined in duck_array, dog:undefined in dog_array)
-                then (Block
-                  (FunctionCall print params:((BinaryOp + (BinaryOp +
-                    duck (StringLiteral 20, 61, 6e, 64, 20)) dog)))))
+              ((StdFor duck:undefined in duck_array,
+                dog:undefined in dog_array) then (Block
+                  (FunctionCall print params:((BinaryOp +
+                    (BinaryOp + duck (StringLiteral 20, 61, 6e, 64, 20)) dog)))))
               ((For count int_expression) then (Block
                 (FunctionCall print params:((StringLiteral 68, 65, 6c, 6c, 6f)))))
               ((For count 5) then (Block
@@ -46,8 +46,11 @@ module.exports = {
               ((For i counts int_expression) then (Block
                 (FunctionCall print params:((BinaryOp +
                   i (StringLiteral 20, 68, 65, 6c, 6c, 6f, 28, 73, 29))))))
+              ((For count 5) then (FunctionCall print
+                params:((StringLiteral 77, 69, 6e))))
               (While is_running then (Block
-                (FunctionCall runFaster params:(undefined))))))',
+                (FunctionCall runFaster params:(undefined))))
+              (While true then (FunctionCall dive params:(undefined)))))',
   program7: '(Program (Block
               (VarDec \'x\' of type:undefined = 5)
               (VarAssign x modifier:+= value:5)
