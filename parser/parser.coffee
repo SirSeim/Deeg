@@ -40,7 +40,7 @@ ParamList = require "#{__dirname}/../entities/paramlist.coffee"
 TrailingIf = require "#{__dirname}/../entities/trailingif.coffee"
 VariableReference = require "#{__dirname}/../entities/variablereference.coffee"
 FieldAccess = require "#{__dirname}/../entities/fieldaccess.coffee"
-IterableItem = require "#{__dirname}/../entities/iterableitem.coffee"
+# IterableItem = require "#{__dirname}/../entities/iterableitem.coffee" # DOESN'T EXIST
 Range = require "#{__dirname}/../entities/range.coffee"
 IntegerLiteral = require "#{__dirname}/../entities/integerliteral.coffee"
 FloatLiteral = require "#{__dirname}/../entities/floatliteral.coffee"
@@ -238,13 +238,20 @@ determineForType = ->
     error message, tokens[0]
 
 parseStdFor = -> # use array of ids to range
-  id = match 'id'
-  type = optionalTypeMatch()
+  id = []
+  type = []
+  range = []
+  id.push match 'id'
+  type.push optionalTypeMatch()
   match 'in'
-  range = parseExpression()
-  if exists ','
-    additionalList = parseStdForIdExp()
-  new StdFor(id, type, range, additionalList)
+  range.push parseExpression()
+  while exists ','
+    match ','
+    id.push match 'id'
+    type.push optionalTypeMatch()
+    match 'in'
+    range.push parseExpression()
+  new StdFor(id, type, range)
 
 parseStdForIdExp = ->
   idList = []
@@ -256,7 +263,7 @@ parseStdForIdExp = ->
     typeList.push optionalTypeMatch()
     match 'in'
     expList.push parseExpression()
-  new StdForIdExp(idList, typeList, rangeList)
+  new StdForIdExp(idList, typeList, expList)
 
 parseCountsFor = ->
   id = match 'id'
@@ -309,7 +316,7 @@ parseExpression = ->
     # Does not support full Deeg grammer for complex VarExp
     parseVariableAssignment()
   else if exists('(') and areParams()
-    parseFunctionExp()
+    parseFunctionDef()
   else
     parseExp0()
 
@@ -562,7 +569,8 @@ parseExp9 = -> # property, set, args
       input = new FieldAccess(input, parseExp10())
     while exists '['
       match '['
-      input = new IterableItem(input, parseExp4())
+      reportError 'IterableItem not implemented', match()
+      # input = new IterableItem(input, parseExp4())
       match ']'
     while exists '('
       input = new FunctionCall(input, parseArgs())
