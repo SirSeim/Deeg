@@ -5,10 +5,10 @@ StdFor = require "#{__dirname}/../entities/stdfor.coffee"
 StdForIdExp = require "#{__dirname}/../entities/stdforidexp.coffee"
 CountFor = require "#{__dirname}/../entities/countfor.coffee"
 CountsFor = require "#{__dirname}/../entities/countsfor.coffee"
+
 IfStatement = require "#{__dirname}/../entities/ifstatement.coffee"
 ElseIfStatement = require "#{__dirname}/../entities/elseifstatement.coffee"
 ElseStatement = require "#{__dirname}/../entities/elsestatement.coffee"
-
 MatchStatement = require "#{__dirname}/../entities/matchstatement.coffee"
 
 PatBlock = require "#{__dirname}/../entities/patblock.coffee"
@@ -50,7 +50,7 @@ UnaryExpression = require "#{__dirname}/../entities/unaryexpression.coffee"
 
 Set = require 'es5-set'
 
-module.exports = new Set[
+module.exports = new Set [
   Block,
   ForStatement,
   StdFor,
