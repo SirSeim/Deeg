@@ -9,8 +9,8 @@ class PatLine
 
 
   analyze: (context) ->
-  	@condition.analyze context
-  #for...
+    @condition.analyze context
+  	#for...
   	
   # optimize: -> this
 

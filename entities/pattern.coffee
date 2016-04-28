@@ -8,7 +8,7 @@ class Pattern
 
 
   analyze: (context) ->
-  	@pattern.analyze context
+    @pattern.analyze context
   	
   # optimize: -> this
 
