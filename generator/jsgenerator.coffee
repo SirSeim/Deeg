@@ -160,3 +160,4 @@ generator =
 
 
   BinaryExpression: (e) ->
+    emit "( #{gen e.left} #{makeOp e.op.lexeme} #{gen e.right} )"
