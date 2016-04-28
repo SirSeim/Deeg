@@ -97,11 +97,11 @@ generator =
 
 
   ReturnStatement: (s) ->
-    emit "deeg #{gen s.value};"
+    emit "return #{gen s.value};"
 
 
   VariableDeclaration: (v) ->
-    emit "make #{makeVariable v} = #{gen v.value};"
+    emit "var #{makeVariable v} = #{gen v.value};"
 
 
   VariableAssignment: (v) ->
