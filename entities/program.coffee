@@ -1,4 +1,15 @@
-# initialContext = require('../analyzer/analyzer.coffee').initialContext
+ #  ___________________        ____....-----....____
+ # (________________LL_)   ==============================
+ #     ______\   \_______.--'.  `---..._____...---'
+ #     `-------..__            ` ,/
+ #     ___         `-._ -  -  - |
+ #    ( /        /     `-------'
+ #     / __ (   /_
+ #   _/_(_)/_)_/ /_
+ #  //
+ # (/
+
+initialContext = require("#{__dirname}/../analyzer/analyzer.coffee").initialContext
 # HashMap = require('hashmap.coffee').HashMap
 
 class Program
@@ -8,11 +19,12 @@ class Program
     "(Program #{@block})"
 
   analyze: ->
+    # get the train moving, blocks have child blocks
     @block.analyze initialContext()
 
   optimize: ->
     @block = @block.optimize()
-    return this
+    this
 
   # showSemanticGraph: ->
   #   tag = 0

@@ -17,14 +17,17 @@ class ClassDefinition
   constructor: (@id, @body, @parentId) ->
 
   toString: ->
-    res = "Class #{@id}"
+    res = "(Class #{@id.lexeme}"
     if @parentId
-      res += " extends #{@parentId}"
-    res + ": #{@body}"
+      res += " extends #{@parentId.lexeme}"
+    res + ": #{@body})"
 
   analyze: (context) ->
+    # id analysis
     @id.analyze context
+    # body analysis
     @body.analyze context
+    # make sure parent class is chill
     if @parentId
       @parentId.analyze context
 

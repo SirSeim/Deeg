@@ -1,14 +1,27 @@
+ #  ___________________        ____....-----....____
+ # (________________LL_)   ==============================
+ #     ______\   \_______.--'.  `---..._____...---'
+ #     `-------..__            ` ,/
+ #     ___         `-._ -  -  - |
+ #    ( /        /     `-------'
+ #     / __ (   /_
+ #   _/_(_)/_)_/ /_
+ #  //
+ # (/
+
 Type = require "#{__dirname}/./type.coffee"
 
 class List
 
-  constructor: (@listicles) ->
+  constructor: (@listicles) -> # listicles is an expList
 
   toString: ->
-    "[#{@listicles.join(', ')}]"
+    "[#{@listicles}]"
 
   analyze: (context) ->
-    element.analyze(context) for element in @listicles
+    # analyze the expList
+    @listicles.analyze(context)
+    # assign appropriate type
     @type = Type.LIST
 
   length: ->

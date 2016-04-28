@@ -21,9 +21,11 @@ class BinaryExpression
     "(BinaryOp #{@op.lexeme} #{@left} #{@right})"
 
   analyze: (context) ->
+    # left and right analyze yoself
     @left.analyze context
     @right.analyze context
     op = @op.lexeme
+    # check to make sure the operands are valid
     switch op
       when '<', '<=', '>=', '>'
         @mustHaveNumOperands()
@@ -35,7 +37,7 @@ class BinaryExpression
         @mustHaveBooleanOperands()
         @type = Type.BOOL
       else
-        # All other binary operators are arithmetic
+        # all other binary operators are arithmetic
         @mustHaveNumOperands()
         @type = @getNumType
 

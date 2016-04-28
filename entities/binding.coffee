@@ -20,7 +20,9 @@ class Binding
     "Binding #{@key} [#{@type}] to #{@value}"
 
   analyze: (context) ->
+    # id analysis
     @key.analyze context
+    # expression analysis
     @value.analyze context
 
   optimize: -> this

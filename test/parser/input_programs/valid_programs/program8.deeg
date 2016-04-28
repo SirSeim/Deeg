@@ -1,0 +1,18 @@
+make addComplex = (a,b) does deeg a+b end
+
+make pointless = (
+    a,
+    b
+) does
+    print(a)
+    print(b)
+end
+
+print(addComplex(
+    "add",
+    "reduce"
+))
+
+print()
+
+
