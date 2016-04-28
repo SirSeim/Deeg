@@ -97,9 +97,11 @@ generator =
 
 
   ReturnStatement: (s) ->
+    emit "deeg #{gen s.value};"
 
 
   VariableDeclaration: (v) ->
+    emit "make #{makeVariable v} = #{gen v.value};"
 
 
   VariableAssignment: (v) ->
@@ -128,10 +130,11 @@ generator =
 
 
   IntegerLiteral: (literal) ->
+    emit literal.toString()
 
 
   BooleanLiteral: (literal) ->
-
+    emit literal.toString()
 
   VariableReference: (v) ->
 
