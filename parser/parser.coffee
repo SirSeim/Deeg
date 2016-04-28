@@ -487,10 +487,8 @@ parseExp0 = -> # the trailing if and possible else
     condition = parseExp1()
     if exists 'else'
       match 'else'
-      instruction = parseStatement()
-      direction = new TrailingIf(direction, condition, instruction)
-    else
-      direction = new TrailingIf(direction, condition)
+      instruction = parseExp1()
+    direction = new TrailingIf(direction, condition, instruction)
     match 'end'
   direction
 
