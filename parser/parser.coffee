@@ -240,8 +240,8 @@ determineForType = ->
   else if exists 'count'
     return parseCountFor()
   else
-    message = "Expected \"id\" or \"count\" but found \"#{tokens[0].kind}\""
-    error message, tokens[0]
+    message = "Expected 'id' or 'count' but found '#{tokens[0].kind}'"
+    reportError message, tokens[0]
 
 parseStdFor = -> # use array of ids to range
   id = []
