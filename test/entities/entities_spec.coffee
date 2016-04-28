@@ -115,11 +115,16 @@ describe 'Entities', ->
   describe 'StdFor Entity', ->
     context 'when constructing a standard for', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new StdFor 'foo', 'int', 'dict', 'bar').toString())
-          .to.eql('(StdFor foo:int in dict, bar)')
+        hello = new BindingList [(new Binding 'hey', Type.STRING, 'one'),
+          (new Binding 'wassup', Type.STRING, 'two'),
+          (new Binding 'hello', Type.STRING, 'three')]
+        hi = new Dict hello
+        hola = new List ['yo', 'yo', 'ma']
+        expect((new StdFor 'foo', Type.STRING, hi, hola).toString())
+          .to.eql('(StdFor foo:string in Dict {Binding hey [string] to one,
+          Binding wassup [string] to two, Binding hello [string] to three}, [yo, yo, ma])')
         done()
-  
-  # Maybe we don't need StdForIdExp.
+        
   # describe 'StdForIdExp Entity', -> #this is not correct. entity declaration
   # is not finished
   #   context 'when constructing a standard for id expression', ->
@@ -146,6 +151,8 @@ describe 'Entities', ->
         expect((new IfStatement ['foo in bar'], 'Body').toString())
           .to.eql('(If foo in bar then Body)')
         done()
+
+  #IfExistsStatement??
 
   describe 'ElseIfStatement Entity', ->
     context 'when constructing an else if statement true else if statement', ->
@@ -176,8 +183,6 @@ describe 'Entities', ->
   describe 'WhileStatement Entity', ->
     context 'when constructing a while statement', ->
       it 'constructs and toStrings correctly', (done) ->
-        foo = 1
-        bar = 1
         expect((new WhileStatement ['foo in bar'] , 'Body' ).toString())
           .to.eql('(While foo in bar then Body)')
         done()
@@ -195,12 +200,13 @@ describe 'Entities', ->
       it 'constructs and toStrings correctly', (done) ->
         expect((new ReturnStatement true).toString()).to.eql('(Return true)')
         done()
-# #HALP
-#   describe 'ClassDefinition Entity', ->
-#     context 'when constructing a class definition', ->
-#       it 'constructs and toStrings correctly', (done) ->
-#         expect((new ClassDefinition 'Hqello', 'Body', 'Greeting').toString()).to.eql('Class Hello extends Greeting: Body')
-#         done()
+#HALP. works but should we actually define a class
+  describe 'ClassDefinition Entity', ->
+    context 'when constructing a class definition', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expect((new ClassDefinition 'Hello', 'Body', 'Greeting').toString())
+          .to.eql('Class Hello extends Greeting: Body')
+        done()
 
   describe 'VariableDeclaration Entity', ->
     context 'when constructing a variable declaration', ->
@@ -214,17 +220,13 @@ describe 'Entities', ->
         expect((new VariableDeclaration token, 'bool', 3).toString())
           .to.eql('(VarDec \'foo\' of type:bool = 3)')
         done()
+
   # describe 'VariableAssignment Entity', ->
   #   context 'when constructing a variable assignment', ->
   #     it 'constructs and toStrings correctly', (done) ->
-  #       token = {
-  #         kind: 'id',
-  #         lexeme: 'foo',
-  #         line: 3,
-  #         col: 1
-  #       }
-  #       expect((new VariableAssignment token, 'bool', 3).toString())
-  #         .to.eql('(VarDec \'foo\' of type:bool = 3)')
+  #       token = 
+  #       expect((new VariableAssignment token, 3 ).toString())
+  #         .to.eql('(VarAssign token value: 3)')
   #       done()
 
   # describe 'VariableExpression Entity', ->
@@ -240,10 +242,17 @@ describe 'Entities', ->
   #       .to.eql('(VarDec \'foo\' of type:bool = 3)')
   #     done()
 
-  describe 'Args Entity' , ->
+  describe 'Args Entity', ->
     context 'when constructing an args', ->
       it 'constructs and Args correctly', (done) ->
         expect((new Args 'expList').toString()).to.eql('(expList)')
+        done()
+
+  describe 'ExpList Entity', ->
+    context 'when contructing an expression list', ->
+      it 'constructs and toStrings correctly', (done) ->
+        expArray = [(5+25), 5, true, (5==5)]
+        expect((new ExpList expArray).toString()).to.eql('30, 5, true, true')
         done()
 
   describe 'IntegerLiteral Entity', ->
