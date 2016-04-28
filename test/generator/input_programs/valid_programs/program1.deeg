@@ -1,0 +1,9 @@
+make a = 5
+make b = 45
+if a >= 3 then
+    print("A is big")
+else if b <= 45 then
+    print("B is small")
+else
+    print("False!")
+end
