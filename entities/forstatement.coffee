@@ -9,7 +9,7 @@
  #  //
  # (/
 
-BooleanLiteral = require "#{__dirname}/./booleanliteral.coffee"
+BooleanLiteral = require "#{__dirname}/booleanliteral.coffee"
 
 class ForStatement
 

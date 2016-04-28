@@ -9,7 +9,7 @@
  #  //
  # (/
 
-Type = require "#{__dirname}/./type.coffee"
+Type = require "#{__dirname}/type.coffee"
 error = require "#{__dirname}/../error/error.coffee"
 
 class FunctionCall

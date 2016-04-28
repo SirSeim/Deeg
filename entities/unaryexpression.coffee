@@ -1,4 +1,4 @@
-Type = require "#{__dirname}/./type.coffee"
+Type = require "#{__dirname}/type.coffee"
 IntegerLiteral = require "#{__dirname}/./integerliteral.coffee"
 BooleanLiteral = require "#{__dirname}/./booleanliteral.coffee"
 
