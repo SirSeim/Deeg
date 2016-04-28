@@ -7,8 +7,9 @@ class PatBlock
   toString: -> "(PatBlock #{@patLines.join(' ')})"
 
 
-  # analyze: (context) ->
-  	
+  analyze: (context) ->
+    @patlines.analyze context
+    
   # optimize: -> this
 
 module.exports = PatBlock
