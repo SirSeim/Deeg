@@ -10,6 +10,6 @@ class PatBlock
   analyze: (context) ->
     @patlines.analyze context
     
-  # optimize: -> this
+  optimize: -> this
 
 module.exports = PatBlock

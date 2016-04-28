@@ -10,10 +10,10 @@ class Patterns
 
   analyze: (context) ->
     @head.analyze context
-  	# for tail in @tails
-  	# 	tail.analyze context
-  	
-  	
-  # optimize: -> this
+    for tail in @tails
+      tail.analyze context
+    
+    
+  optimize: -> this
 
 module.exports = Patterns

@@ -38,11 +38,11 @@ class Range
 
   length: ->
     lower_bound = +@left.lexeme.value
-    upper_bound = if @op.lexeme is 'thru' then +@right.lexeme.value 
+    upper_bound = if @op.lexeme is 'thru' then +@right.lexeme.value
     else +@right.lexeme.value - 1
 
     skip = if @skip then +@skip else 1
-    console.log 'lower_bound is ' + lower_bound + 
+    console.log 'lower_bound is ' + lower_bound +
     ' upper_bound is ' + upper_bound + ' skip is ' + skip
 
     console.log Math.floor (upper_bound - lower_bound + 1) / skip

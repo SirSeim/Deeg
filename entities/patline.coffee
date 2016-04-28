@@ -10,8 +10,7 @@ class PatLine
 
   analyze: (context) ->
     @condition.analyze context
-  	#for...
   	
-  # optimize: -> this
+  optimize: -> this
 
 module.exports = PatLine
