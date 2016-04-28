@@ -101,7 +101,14 @@ module.exports = {
                   (VarAssign y modifier:/= value:23)
                   (VarAssign y modifier:++ value:null)))',
 
-  programEko2: '(Program (Block (Class circle extends shapes: (Block ))))',
+  programEko2: '(Program (Block
+                  (Class circle extends shapes: (Block ))
+                  (Class square extends circle:
+                      (VarDec \'value\' of type:undefined =
+                        (StringLiteral 77, 74, 66)))
+                  (Class rectangle extends shapes: (Block
+                      (VarDec \'value\' of type:undefined =
+                        (StringLiteral 6e, 69, 63, 65))))))',
 
   programEko3: '(Program (Block
                   (VarDec \'x\' of type:undefined = 32)
