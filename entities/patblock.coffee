@@ -1,4 +1,4 @@
-Type = require "#{__dirname}/./type.coffee"
+Type = require "#{__dirname}/type.coffee"
 
 class PatBlock
 
