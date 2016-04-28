@@ -20,6 +20,7 @@ class Dict
     "Dict {#{@bindingList}}"
 
   analyze: (context) ->
+    # bindingList analysis
     @bindingList.analyze context
 
   size: ->

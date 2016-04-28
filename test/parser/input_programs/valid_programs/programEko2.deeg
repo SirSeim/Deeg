@@ -1,0 +1,8 @@
+class circle extends shapes
+end
+
+class square extends circle make value = "wtf" end
+
+class rectangle extends shapes
+    make value = "nice"
+end

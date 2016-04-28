@@ -17,6 +17,7 @@ class ElseStatement
     "(else #{@body})"
 
   analyze: (context) ->
+    # body analysis
     @body.analyze context
 
   optimize: () ->
