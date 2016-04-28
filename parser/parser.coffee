@@ -377,7 +377,7 @@ parseVariableAssignment = ->
     match '++'
     value = null
     modifier = '++'
-  else if exists '--'
+  else
     match '--'
     value = null
     modifier = '--'
