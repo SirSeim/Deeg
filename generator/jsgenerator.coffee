@@ -9,11 +9,13 @@ ExpressionSet = require './expressions.coffee'
 map = null
 lastId = 0
 fakeVarCounter = 0
+error = []
 
-module.exports = (program) ->
+module.exports = (program, callback) ->
   map = new HashMap()
   lastId = 0
-  gen program
+  programOutput = gen program
+  callback error, programOutput
 
 module.exports.makeFakeVariable = () ->
   fakeVar = new VariableReference { 'lexeme' : "#{++fakeVarCounter}", 'kind':'ID'}
