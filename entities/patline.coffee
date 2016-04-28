@@ -8,7 +8,9 @@ class PatLine
   toString: -> "(PatLine #{@patterns}#{conditional}then #{@instruction})"
 
 
-  # analyze: (context) ->
+  analyze: (context) ->
+  	@condition.analyze context
+  #for...
   	
   # optimize: -> this
 

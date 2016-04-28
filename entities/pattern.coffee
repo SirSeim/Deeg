@@ -7,7 +7,8 @@ class Pattern
   toString: -> "(Pattern #{@pattern}#{if @type then ' type:'+@type else ''})"
 
 
-  # analyze: (context) ->
+  analyze: (context) ->
+  	@pattern.analyze context
   	
   # optimize: -> this
 

@@ -8,7 +8,11 @@ class Patterns
     #{@head}#{if @tails then' | '+tail for tail in @tails else ''})"
 
 
-  # analyze: (context) ->
+  analyze: (context) ->
+  	@head.analyze context
+  	for tail in @tails 
+  		tail.analyze context
+  	
   	
   # optimize: -> this
 
