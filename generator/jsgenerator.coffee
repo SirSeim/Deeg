@@ -101,6 +101,7 @@ generator =
 
   ForStatement: (s) ->
 
+
   StdFor: (s) ->
 
 
@@ -122,7 +123,7 @@ generator =
 
 
   VariableAssignment: (v) ->
-
+    emit "#{gen v.id} = #{gen v.value}#{if !v.modifier? then gen v.modifier}"
 
   VariableExpression: (v) ->
 
@@ -133,12 +134,22 @@ generator =
   ExpList: (e) ->
 
 
-  Function: (f) ->
+  FunctionDef: (f) ->
+    emit "var #{makeVariable f} = function (#{gen f.params}) {"
+    indentLevel++
+    emit f.body
+    emitLevel--
+    emit '}'
+
+  FunctionCall: (f) ->
+    emit "#{f.name}(#{emit f.params})"
 
   Params: (p) ->
 
-  ParamsList: (p) ->
 
+  ParamList: (p) ->
+    gen '('
+    for param in p.paramList
 
   Binding: (b) ->
 
