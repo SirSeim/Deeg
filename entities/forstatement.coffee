@@ -19,7 +19,9 @@ class ForStatement
     "(#{@forIterate} then #{@body})"
 
   analyze: (context) ->
+    # count, counts or standard for analysis
     @forIterate.analyze context
+    # analyze that body
     @body.analyze context
 
   # optimize: () ->

@@ -20,15 +20,19 @@ class IfStatement
     res = "(If #{@condition} then #{@body}"
     if @elseIfStatement
       res += " #{@elseIfStatement}"
-    else if @elseStatement
+    if @elseStatement
       res += " #{@elseStatement}"
     res += ")"
 
   analyze: (context) ->
+    # analyze the conditional expression
     @condition.analyze context
     booleanCondition = 'Condition in "if" statement must be boolean'
+    # said expression must be type boolean
     @condition.type.mustBeBoolean booleanCondition
+    # analyze body
     @body.analyze context
+    # check for else if, else and analyze them
     if @elseIfStatement
       @elseIfStatement.analyze context
     else if @elseStatement

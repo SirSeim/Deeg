@@ -20,6 +20,7 @@ class Args
     "(#{@expList})"
 
   analyze: (context) ->
+    # expList analysis
     @expList.analyze context
 
   optimize: -> this

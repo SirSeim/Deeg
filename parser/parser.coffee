@@ -32,15 +32,15 @@ VariableExpression = require "#{__dirname}/../entities/variableexpression.coffee
 Args = require "#{__dirname}/../entities/args.coffee"
 ExpList = require "#{__dirname}/../entities/explist.coffee"
 
-FunctionExp = require "#{__dirname}/../entities/functionexp.coffee"
-Function = require "#{__dirname}/../entities/function.coffee"
+FunctionCall = require "#{__dirname}/../entities/functioncall.coffee"
+FunctionDef = require "#{__dirname}/../entities/functiondef.coffee"
 Params = require "#{__dirname}/../entities/params.coffee"
 ParamList = require "#{__dirname}/../entities/paramlist.coffee"
 
 TrailingIf = require "#{__dirname}/../entities/trailingif.coffee"
 VariableReference = require "#{__dirname}/../entities/variablereference.coffee"
 FieldAccess = require "#{__dirname}/../entities/fieldaccess.coffee"
-IterableItem = require "#{__dirname}/../entities/iterableitem.coffee"
+# IterableItem = require "#{__dirname}/../entities/iterableitem.coffee" # DOESN'T EXIST
 Range = require "#{__dirname}/../entities/range.coffee"
 IntegerLiteral = require "#{__dirname}/../entities/integerliteral.coffee"
 FloatLiteral = require "#{__dirname}/../entities/floatliteral.coffee"
@@ -123,6 +123,8 @@ parseIfStatement = ->
     body = parseBlock()
   else
     body = parseStatement()
+    if exists 'newline'
+      match 'newline'
   if exists('else') and exists 'if', 1
     elseIfStatement = parseElseIfStatement()
   if exists 'else'
@@ -140,7 +142,9 @@ parseElseIfStatement = ->
     body = parseBlock()
   else
     body = parseStatement()
-  if exists 'else if'
+    if exists 'newline'
+      match 'newline'
+  if exists('else') and exists 'if', 1
     elseIfStatement = parseElseIfStatement()
   new ElseIfStatement(condition, body, elseIfStatement)
 
@@ -151,6 +155,8 @@ parseElseStatement = ->
     body = parseBlock()
   else
     body = parseStatement()
+    if exists 'newline'
+      match 'newline'
   new ElseStatement(body)
 
 
@@ -238,25 +244,33 @@ determineForType = ->
     error message, tokens[0]
 
 parseStdFor = -> # use array of ids to range
-  id = match 'id'
-  type = optionalTypeMatch()
+  id = []
+  type = []
+  range = []
+  id.push match 'id'
+  type.push optionalTypeMatch()
   match 'in'
-  range = parseExpression()
-  if exists ','
-    additionalList = parseStdForIdExp()
-  new StdFor(id, type, range, additionalList)
-
-parseStdForIdExp = ->
-  idList = []
-  expList = []
-  typeList = []
+  range.push parseExpression()
   while exists ','
     match ','
-    idList.push match 'id'
-    typeList.push optionalTypeMatch()
+    id.push match 'id'
+    type.push optionalTypeMatch()
     match 'in'
-    expList.push parseExpression()
-  new StdForIdExp(idList, typeList, expList)
+    range.push parseExpression()
+  new StdFor(id, type, range)
+
+# NOT USED ANYMORE
+# parseStdForIdExp = ->
+#   idList = []
+#   expList = []
+#   typeList = []
+#   while exists ','
+#     match ','
+#     idList.push match 'id'
+#     typeList.push optionalTypeMatch()
+#     match 'in'
+#     expList.push parseExpression()
+#   new StdForIdExp(idList, typeList, expList)
 
 parseCountsFor = ->
   id = match 'id'
@@ -309,7 +323,7 @@ parseExpression = ->
     # Does not support full Deeg grammer for complex VarExp
     parseVariableAssignment()
   else if exists('(') and areParams()
-    parseFunctionExp()
+    parseFunctionDef()
   else
     parseExp0()
 
@@ -363,7 +377,7 @@ parseVariableAssignment = ->
     match '++'
     value = null
     modifier = '++'
-  else if exists '--'
+  else
     match '--'
     value = null
     modifier = '--'
@@ -420,7 +434,7 @@ parseExpList = ->
     match 'newline'
   new ExpList(expArray)
 
-parseFunctionExp = ->
+parseFunctionDef = ->
   params = parseParams()
   type = optionalTypeMatch()
   match 'does'
@@ -430,7 +444,7 @@ parseFunctionExp = ->
   else
     body = parseStatement()
   match 'end'
-  new Function(params, type, body)
+  new FunctionDef(params, type, body)
 
 parseParams = ->
   match '('
@@ -562,10 +576,11 @@ parseExp9 = -> # property, set, args
       input = new FieldAccess(input, parseExp10())
     while exists '['
       match '['
-      input = new IterableItem(input, parseExp4())
+      reportError 'IterableItem not implemented', match()
+      # input = new IterableItem(input, parseExp4())
       match ']'
     while exists '('
-      input = new FunctionExp(input, parseArgs())
+      input = new FunctionCall(input, parseArgs())
   input
 
 parseExp10 = -> # literals, id, expression in parens

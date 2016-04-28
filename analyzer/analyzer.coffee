@@ -18,7 +18,7 @@ class AnalysisContext
   variableMustNotBeAlreadyDeclared: (token, errorMsg) ->
     errorMsg ?= "Variable #{token.lexeme} already declared"
     if @symbolTable[token.lexeme]
-      error errorMsg, token.line
+      error errorMsg, token
 
   addVariable: (name, entity) ->
     entity.type = Type.UNKNOWN unless entity.type
