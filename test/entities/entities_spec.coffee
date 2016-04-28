@@ -192,15 +192,15 @@ describe 'Entities', ->
   describe 'ReturnStatement Entity', ->
     context 'when constructing a return statement of a string', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new ReturnStatement 'hello').toString()).to.eql('(Return hello)')
+        expect((new ReturnStatement 'hello').toString()).to.eql('(Deeg hello)')
         done()
     context 'when constructing a return statement of an int', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new ReturnStatement 5).toString()).to.eql('(Return 5)')
+        expect((new ReturnStatement 5).toString()).to.eql('(Deeg 5)')
         done()
     context 'when constructing a return statement of a boolean', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new ReturnStatement true).toString()).to.eql('(Return true)')
+        expect((new ReturnStatement true).toString()).to.eql('(Deeg true)')
         done()
 
   # describe 'ClassDefinition Entity', ->
