@@ -36,7 +36,7 @@ makeVariable = do (lastId = 0, map = new HashMap()) ->
 gen = (e) ->
   generator[e.constructor.name](e)
 
-generator = 
+generator =
 
   Program: (program) ->
     indentLevel = 0
@@ -75,7 +75,7 @@ generator =
   PatLine: (pl) ->
 
 
-  Patterns: (patterns) ->  
+  Patterns: (patterns) ->
 
 
   Pattern: (p) ->
@@ -85,7 +85,7 @@ generator =
 
 
   StdFor: (s) ->
-  
+
 
   StdForIdExp: (s) ->
 
@@ -109,7 +109,7 @@ generator =
 
 
   Args: (a) ->
-  
+
 
   ExpList: (e) ->
 
@@ -119,7 +119,7 @@ generator =
   Params: (p) ->
 
   ParamsList: (p) ->
-  
+
 
   Binding: (b) ->
 
