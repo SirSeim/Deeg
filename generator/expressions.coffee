@@ -46,9 +46,8 @@ Binding = require "#{__dirname}/../entities/binding.coffee"
 BinaryExpression = require "#{__dirname}/../entities/binaryexpression.coffee"
 UnaryExpression = require "#{__dirname}/../entities/unaryexpression.coffee"
 
-Set = require 'es5-set'
 
-module.exports = new Set [
+module.exports = [
   Block,
   ForStatement,
   StdFor,
