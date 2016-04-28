@@ -1,5 +1,5 @@
-# initialContext = require('../analyzer/analyzer.coffee').initialContext
-# HashMap = require('hashmap.coffee').HashMap
+initialContext = require('../analyzer/analyzer.coffee').initialContext
+HashMap = require('hashmap').HashMap
 
 class Program
   constructor: (@block) ->
