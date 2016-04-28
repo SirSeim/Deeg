@@ -481,23 +481,15 @@ parseParamList = ->
   new ParamList(paramList)
 
 parseExp0 = -> # the trailing if and possible else
-  direction = parseExp1()
+  action = parseExp1()
   if exists 'if'
     match 'if'
     condition = parseExp1()
-    match 'then'
-    if exists 'newline'
-      match 'newline'
-      instruction = parseBlock()
-    else
-      instruction = parseStatement()
-    direction = new TrailingIf(direction, condition, instruction)
     if exists 'else'
       match 'else'
-      instruction = parseExp1()
-      direction = new TrailingIf(direction, condition, instruction)
-    match 'end'
-  direction
+      other = parseExp1()
+    action = new TrailingIf(action, condition, other)
+  action
 
 parseExp1 = -> # the or
   left = parseExp2()
