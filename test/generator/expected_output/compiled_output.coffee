@@ -1,5 +1,5 @@
-@program09 =
-    '''(function () {
+module.exports = {
+    program1: '''(function () {
         (function () {
             var _v1 = 5;
             var _v2 = 45;
@@ -19,4 +19,5 @@
                 }
             }());
         }());
-    }());'''
+    }());''',
+}
