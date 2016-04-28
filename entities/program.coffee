@@ -10,7 +10,7 @@
  # (/
 
 initialContext = require("#{__dirname}/../analyzer/analyzer.coffee").initialContext
-# HashMap = require('hashmap.coffee').HashMap
+HashMap = require('hashmap').HashMap
 
 class Program
   constructor: (@block) ->
