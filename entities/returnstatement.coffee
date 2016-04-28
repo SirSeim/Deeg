@@ -14,7 +14,7 @@ class ReturnStatement
   constructor: (@value) ->
 
   toString: ->
-    "(deeg #{@value})"
+    "(Deeg #{@value})"
 
   analyze: (context) ->
     # analyze what is being returned

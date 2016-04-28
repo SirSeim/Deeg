@@ -485,17 +485,12 @@ parseExp0 = -> # the trailing if and possible else
   if exists 'if'
     match 'if'
     condition = parseExp1()
-    match 'then'
-    if exists 'newline'
-      match 'newline'
-      instruction = parseBlock()
-    else
-      instruction = parseStatement()
-    direction = new TrailingIf(direction, condition, instruction)
     if exists 'else'
       match 'else'
-      instruction = parseExp1()
+      instruction = parseStatement()
       direction = new TrailingIf(direction, condition, instruction)
+    else
+      direction = new TrailingIf(direction, condition)
     match 'end'
   direction
 

@@ -5,13 +5,13 @@ module.exports = {
                 (VarDec \'a\' of type:undefined = 0)
                 (VarDec \'b\' of type:undefined = 1)
                 (VarDec \'c\' of type:undefined = null)
-                (If (BinaryOp < x 3) then (Return 1))
+                (If (BinaryOp < x 3) then (Deeg 1))
                 (While (BinaryOp > x 0) then (Block
                   (VarAssign c value:(BinaryOp + a b))
                   (VarAssign a value:b)
                   (VarAssign b value:c)
                   (VarAssign x modifier:-- value:null)))
-                (Return c))))))',
+                (Deeg c))))))',
   program3: '(Program (Block
               (If true then (Block
                 (FunctionCall print params:((StringLiteral 68, 65, 6c, 6c, 6f))))
@@ -37,8 +37,8 @@ module.exports = {
   program4: '(Program (Block
               (VarDec \'gcd\' of type:undefined =
                 (FunctionDef params:(Params (a,b)) type:undefined (Block
-                  (If (BinaryOp == b 0) then (Return a))
-                  (Return (FunctionCall gcd params:(b, (BinaryOp % a b)))))))))',
+                  (If (BinaryOp == b 0) then (Deeg a))
+                  (Deeg (FunctionCall gcd params:(b, (BinaryOp % a b)))))))))',
   program5: '(Program (Block (BinaryOp ** 3 (BinaryOp + 4 5))
                       (UnaryOp - (BinaryOp ** 2 (BinaryOp + 4 5)))
                       (BinaryOp ** 3 (BinaryOp ** 4 5))
@@ -76,7 +76,7 @@ module.exports = {
   program8: '(Program (Block
               (VarDec \'addComplex\' of type:undefined =
                 (FunctionDef params:(Params (a,b)) type:undefined
-                  (Return (BinaryOp + a b))))
+                  (Deeg (BinaryOp + a b))))
               (VarDec \'pointless\' of type:undefined =
                 (FunctionDef params:(Params (a,b)) type:undefined (Block
                   (FunctionCall print params:(a))
@@ -90,19 +90,19 @@ module.exports = {
                   (FunctionDef params:(Params (x)) type:undefined (Block
                     (Match x with (PatBlock
                       (PatLine (Patterns (Pattern 3))
-                        then (Return true))
+                        then (Deeg true))
                       (PatLine (Patterns (Pattern (WildCard)))
-                        then (Return false)))))))))',
+                        then (Deeg false)))))))))',
   programPM2: '(Program (Block
                 (VarDec \'listMatch\' of type:undefined =
                   (FunctionDef params:(Params (l)) type:undefined (Block
                     (Match l with (PatBlock
                       (PatLine (Patterns (Pattern head) | (Pattern tail))
-                        then (Return head))
+                        then (Deeg head))
                       (PatLine (Patterns (Pattern (WildCard type:int)) | (Pattern tail))
-                        then (Return true))
+                        then (Deeg true))
                       (PatLine (Patterns (Pattern (WildCard)) | (Pattern tail))
-                        then (Return false)))))))))',
+                        then (Deeg false)))))))))',
   programEko1: '(Program (Block
                   (VarDec \'x\' of type:undefined = 100)
                   (VarAssign x modifier:+= value:2)
