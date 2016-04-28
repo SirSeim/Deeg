@@ -53,13 +53,29 @@ generator =
 
 
   IfStatement: (s) ->
-
+    emit "if (#{gen s.condition}) {"
+    indentLevel++
+    gen s.body
+    indentLevel--
+    if s.elseIfStatement
+      gen s.elseIfStatement
+    if s.elseStatement
+      gen elseStatement
+    emit '}'
 
   ElseIfStatement: (s) ->
-
+    emit "} else if (#{gen s.condition}) {"
+    indentLevel++
+    gen s.body
+    indentLevel--
+    if s.elseIfStatement
+      gen s.elseIfStatement
 
   ElseStatement: (s) ->
-
+    emit "} else {"
+    indentLevel++
+    gen s.body
+    indentLevel--
 
   WhileStatement: (s) ->
     emit "while (#{gen s.condition}) {"
@@ -82,7 +98,6 @@ generator =
 
 
   ForStatement: (s) ->
-
 
   StdFor: (s) ->
 
