@@ -112,10 +112,19 @@ describe 'Entities', ->
           (new Binding 'hello', Type.STRING, 'three')]
         hi = new Dict hello
         hola = new List ['yo', 'yo', 'ma']
-        expect((new StdFor 'foo', Type.STRING, hi, hola).toString())
-          .to.eql('(StdFor foo:string in Dict {Binding hey [string] to one, Binding
-            wassup [string] to two, Binding hello [string] to three}, [yo, yo, ma])')
+        token = {
+          kind: 'id',
+          lexeme: 'foo'
+        }
+        expect((new StdFor [token], [Type.STRING], ['dict']).toString())
+          .to.eql('(StdFor foo:string in dict)')
         done()
+
+
+        # expect((new StdFor foo, Type.STRING, hi, hola).toString())
+        #   .to.eql('(StdFor foo:string in Dict {Binding hey [string] to one, Binding
+        #     wassup [string] to two, Binding hello [string] to three}, [yo, yo, ma])')
+        # done()
   
   # Maybe we don't need StdForIdExp.
   # describe 'StdForIdExp Entity', -> #this is not correct. entity declaration
