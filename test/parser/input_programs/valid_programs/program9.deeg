@@ -1,0 +1,3 @@
+print("hey") if true else print("bye")
+
+print("fired") if hired
