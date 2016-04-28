@@ -100,6 +100,14 @@ generator =
 
 
   ForStatement: (s) ->
+    Yee = []
+    iterable = convertToArray s.iterable
+    emit "(#{iterable}).forEach( function (#{makeVariable s.id}) {" , Yee
+    indentLevel++
+    Yee.push gen s.body
+    indentLevel--
+    emit '});', Yee
+    Yee.join '\n'
 
 
   StdFor: (s) ->
