@@ -73,6 +73,18 @@ module.exports = {
               (VarAssign x modifier:%= value:5)
               (VarAssign x modifier:++ value:null)
               (VarAssign x modifier:-- value:null)))',
+  program8: '(Program (Block
+              (VarDec \'addComplex\' of type:undefined =
+                (FunctionDef params:(Params (a,b)) type:undefined
+                  (Return (BinaryOp + a b))))
+              (VarDec \'pointless\' of type:undefined =
+                (FunctionDef params:(Params (a,b)) type:undefined (Block
+                  (FunctionCall print params:(a))
+                  (FunctionCall print params:(b)))))
+              (FunctionCall print params:((FunctionCall
+                addComplex params:((StringLiteral 61, 64, 64),
+                  (StringLiteral 72, 65, 64, 75, 63, 65)))))
+              (FunctionCall print params:(undefined))))',
   programPM1: '(Program (Block
                 (VarDec \'varMatch\' of type:undefined =
                   (FunctionDef params:(Params (x)) type:undefined (Block
