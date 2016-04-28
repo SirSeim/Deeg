@@ -20,4 +20,8 @@ module.exports = {
       }());
     }());
   }());''',
+
+  program2: '''(function () {
+      return console.log("Hello, World!")
+    }())'''
 }
