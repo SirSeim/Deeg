@@ -26,14 +26,14 @@ VariableExpression = require "#{__dirname}/../entities/variableexpression.coffee
 Args = require "#{__dirname}/../entities/args.coffee"
 ExpList = require "#{__dirname}/../entities/explist.coffee"
 
-FunctionExp = require "#{__dirname}/../entities/functionexp.coffee"
-Function = require "#{__dirname}/../entities/function.coffee"
+FunctionDef = require "#{__dirname}/../entities/functiondef.coffee"
+FunctionCall = require "#{__dirname}/../entities/functioncall.coffee"
 Params = require "#{__dirname}/../entities/params.coffee"
 ParamList = require "#{__dirname}/../entities/paramlist.coffee"
 
 TrailingIf = require "#{__dirname}/../entities/trailingif.coffee"
 FieldAccess = require "#{__dirname}/../entities/fieldaccess.coffee"
-IterableItem = require "#{__dirname}/../entities/iterableitem.coffee"
+# IterableItem = require "#{__dirname}/../entities/iterableitem.coffee"
 Range = require "#{__dirname}/../entities/range.coffee"
 IntegerLiteral = require "#{__dirname}/../entities/integerliteral.coffee"
 FloatLiteral = require "#{__dirname}/../entities/floatliteral.coffee"
@@ -68,13 +68,13 @@ module.exports = [
   VariableExpression,
   Args,
   ExpList,
-  FunctionExp,
-  Function,
+  FunctionDef,
+  FunctionCall,
   Params,
   ParamList,
   TrailingIf,
   FieldAccess,
-  IterableItem,
+  # IterableItem,
   Range,
   IntegerLiteral,
   FloatLiteral,
