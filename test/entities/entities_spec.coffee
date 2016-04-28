@@ -104,38 +104,20 @@ describe 'Entities', ->
         expect((Type.UNKNOWN).toString()).to.eql('¯\_(ツ)_/¯')
         done()
 
-  # describe 'ForStatement Entity', ->
-  #   context 'when constructing a for statement', ->
-  #     it 'constructs and toStrings correctly', (done) ->
-  #       it = new IterableItem
-  #       expect((new ForStatement it, 'body').toString()).to.eql('it then body')
-  #       done()
-
   describe 'StdFor Entity', ->
     context 'when constructing a standard for', ->
       it 'constructs and toStrings correctly', (done) ->
-<<<<<<< HEAD
         hello = new BindingList [(new Binding 'hey', Type.STRING, 'one'),
           (new Binding 'wassup', Type.STRING, 'two'),
           (new Binding 'hello', Type.STRING, 'three')]
         hi = new Dict hello
         hola = new List ['yo', 'yo', 'ma']
         expect((new StdFor 'foo', Type.STRING, hi, hola).toString())
-          .to.eql('(StdFor foo:string in Dict {Binding hey [string] to one,
-          Binding wassup [string] to two, Binding hello [string] to three}, [yo, yo, ma])')
-        done()
-        
-=======
-        token = {
-          kind: 'id',
-          lexeme: 'foo'
-        }
-        expect((new StdFor [token], ['int'], ['dict']).toString())
-          .to.eql('(StdFor foo:int in dict)')
+          .to.eql('(StdFor foo:string in Dict {Binding hey [string] to one, Binding
+            wassup [string] to two, Binding hello [string] to three}, [yo, yo, ma])')
         done()
   
   # Maybe we don't need StdForIdExp.
->>>>>>> adc22f697fe2a5bab7f3d7d252a54eec9299530d
   # describe 'StdForIdExp Entity', -> #this is not correct. entity declaration
   # is not finished
   #   context 'when constructing a standard for id expression', ->
@@ -215,23 +197,14 @@ describe 'Entities', ->
       it 'constructs and toStrings correctly', (done) ->
         expect((new ReturnStatement true).toString()).to.eql('(Return true)')
         done()
-<<<<<<< HEAD
-#HALP. works but should we actually define a class
-  describe 'ClassDefinition Entity', ->
-    context 'when constructing a class definition', ->
-      it 'constructs and toStrings correctly', (done) ->
-        expect((new ClassDefinition 'Hello', 'Body', 'Greeting').toString())
-          .to.eql('Class Hello extends Greeting: Body')
-        done()
-=======
+
 # #HALP
 #   describe 'ClassDefinition Entity', ->
 #     context 'when constructing a class definition', ->
 #       it 'constructs and toStrings correctly', (done) ->
-#         expect((new ClassDefinition 'Hqello', 'Body', 'Greeting')
+#         expect((new ClassDefinition 'Hello', 'Body', 'Greeting')
 #           .toString()).to.eql('Class Hello extends Greeting: Body')
 #         done()
->>>>>>> adc22f697fe2a5bab7f3d7d252a54eec9299530d
 
   describe 'VariableDeclaration Entity', ->
     context 'when constructing a variable declaration', ->
@@ -249,7 +222,7 @@ describe 'Entities', ->
   # describe 'VariableAssignment Entity', ->
   #   context 'when constructing a variable assignment', ->
   #     it 'constructs and toStrings correctly', (done) ->
-  #       token = 
+  #       token =
   #       expect((new VariableAssignment token, 3 ).toString())
   #         .to.eql('(VarAssign token value: 3)')
   #       done()
