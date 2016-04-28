@@ -60,7 +60,7 @@ generator =
     if s.elseIfStatement
       gen s.elseIfStatement
     if s.elseStatement
-      gen elseStatement
+      gen s.elseStatement
     emit '}'
 
   ElseIfStatement: (s) ->
