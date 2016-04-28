@@ -13,12 +13,11 @@ LETTER = XRegExp '[\\p{L}]'
 DIGIT = XRegExp '[\\p{Nd}]'
 QUOTES = XRegExp '\"|\''
 WORD_CHAR = XRegExp '[\\p{L}\\p{Nd}_]'
-KEYWORDS = ///
-  (make|to|deeg|end|thru|till|by|exists|and|or|unless|if|else|then|not|
-  true|false|for|while|does|count|counts|match|with)
-///
+KEYWORDS = ['make','to','deeg','end','thru','till','by','exists','and',
+  'or','unless','if','else','then','not','true','false','for','while',
+  'does','count','counts','match','with','in','class','extends']
 TWOCHAROPS = XRegExp '<=|==|>=|!=|\\*\\*|\\+\\+|--|\\+=|-=|\\/=|\\*=|%=|>>'
-ONECHAROPS = XRegExp '[\\+\\-\\*\\/\\(\\)\\,\\=\\<\\>\\%_|]'
+ONECHAROPS = XRegExp '[\\-\\/\\[\\]+*(),=<>%_|{}!]'
 SPACE = XRegExp '\\s'
 DOT = XRegExp '[.]'
 TYPE = XRegExp ':'
@@ -99,7 +98,7 @@ scan = (line, lineNumber, state) ->
     else if LETTER.test line[pos]
       pos++ while WORD_CHAR.test(line[pos]) and pos < line.length
       word = line.substring start, pos
-      emit (if KEYWORDS.test word then word else 'id'), word
+      emit (if word in KEYWORDS then word else 'id'), word
 
     # Numeric literals
     else if DIGIT.test line[pos]

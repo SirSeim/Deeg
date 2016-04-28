@@ -6,7 +6,6 @@ class MatchStatement
 
   toString: -> "(Match #{@matchee} with #{@patBlock})"
 
-
   # analyze: (context) ->
   	
   # optimize: -> this

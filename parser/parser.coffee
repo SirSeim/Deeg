@@ -32,15 +32,15 @@ VariableExpression = require "#{__dirname}/../entities/variableexpression.coffee
 Args = require "#{__dirname}/../entities/args.coffee"
 ExpList = require "#{__dirname}/../entities/explist.coffee"
 
-FunctionExp = require "#{__dirname}/../entities/functionexp.coffee"
-Function = require "#{__dirname}/../entities/function.coffee"
+FunctionCall = require "#{__dirname}/../entities/functioncall.coffee"
+FunctionDef = require "#{__dirname}/../entities/functiondef.coffee"
 Params = require "#{__dirname}/../entities/params.coffee"
 ParamList = require "#{__dirname}/../entities/paramlist.coffee"
 
 TrailingIf = require "#{__dirname}/../entities/trailingif.coffee"
 VariableReference = require "#{__dirname}/../entities/variablereference.coffee"
 FieldAccess = require "#{__dirname}/../entities/fieldaccess.coffee"
-IterableItem = require "#{__dirname}/../entities/iterableitem.coffee"
+# IterableItem = require "#{__dirname}/../entities/iterableitem.coffee" # DOESN'T EXIST
 Range = require "#{__dirname}/../entities/range.coffee"
 IntegerLiteral = require "#{__dirname}/../entities/integerliteral.coffee"
 FloatLiteral = require "#{__dirname}/../entities/floatliteral.coffee"
@@ -73,6 +73,7 @@ parseProgram = ->
 parseBlock = ->
   statements = []
   loop
+    break if exists ['EOF', 'end', 'else']
     statements.push parseStatement() # What if there's `newline` before the Stmt
     match 'newline'
     break if exists ['EOF', 'end', 'else']
@@ -104,7 +105,11 @@ parseClassDefinition = ->
     match 'extends'
     parentId = match 'id'
 
-  body = parseBlock()
+  if exists 'newline'
+    match 'newline'
+    body = parseBlock()
+  else
+    body = parseStatement()
 
   match 'end'
   new ClassDefinition(id, body, parentId)
@@ -118,6 +123,8 @@ parseIfStatement = ->
     body = parseBlock()
   else
     body = parseStatement()
+    if exists 'newline'
+      match 'newline'
   if exists('else') and exists 'if', 1
     elseIfStatement = parseElseIfStatement()
   if exists 'else'
@@ -135,7 +142,9 @@ parseElseIfStatement = ->
     body = parseBlock()
   else
     body = parseStatement()
-  if exists 'else if'
+    if exists 'newline'
+      match 'newline'
+  if exists('else') and exists 'if', 1
     elseIfStatement = parseElseIfStatement()
   new ElseIfStatement(condition, body, elseIfStatement)
 
@@ -146,6 +155,8 @@ parseElseStatement = ->
     body = parseBlock()
   else
     body = parseStatement()
+    if exists 'newline'
+      match 'newline'
   new ElseStatement(body)
 
 
@@ -221,37 +232,45 @@ parseForStatement = ->
   new ForStatement(forIterate, body)
 
 determineForType = ->
-  if exists 'id' and optionalTypeCheck() # true if StdFor
+  if exists('id') and (exists('type', 1) or exists('in', 1)) # true if StdFor
     # DOES NOT WORK because we can only check one token ahead right now
-    parseStdFor()
+    return parseStdFor()
   else if exists 'id'
-    parseCountsFor()
+    return parseCountsFor()
   else if exists 'count'
-    parseCountFor()
+    return parseCountFor()
   else
     message = "Expected \"id\" or \"count\" but found \"#{tokens[0].kind}\""
     error message, tokens[0]
 
 parseStdFor = -> # use array of ids to range
-  id = match 'id'
-  type = optionalTypeMatch()
+  id = []
+  type = []
+  range = []
+  id.push match 'id'
+  type.push optionalTypeMatch()
   match 'in'
-  range = parseExpression()
-  if exists 'and'
-    additionalList = parseStdForIdExp()
-  new StdFor(id, type, range, additionalList)
-
-parseStdForIdExp = ->
-  idList = []
-  expList = []
-  typeList = []
-  while exists 'and'
-    match 'and'
-    idList.push match 'id'
-    typeList.push optionalTypeMatch()
+  range.push parseExpression()
+  while exists ','
+    match ','
+    id.push match 'id'
+    type.push optionalTypeMatch()
     match 'in'
-    expList.push parseExpression()
-  new StdForIdExp(idList, typeList, expList)
+    range.push parseExpression()
+  new StdFor(id, type, range)
+
+# NOT USED ANYMORE
+# parseStdForIdExp = ->
+#   idList = []
+#   expList = []
+#   typeList = []
+#   while exists ','
+#     match ','
+#     idList.push match 'id'
+#     typeList.push optionalTypeMatch()
+#     match 'in'
+#     expList.push parseExpression()
+#   new StdForIdExp(idList, typeList, expList)
 
 parseCountsFor = ->
   id = match 'id'
@@ -304,7 +323,7 @@ parseExpression = ->
     # Does not support full Deeg grammer for complex VarExp
     parseVariableAssignment()
   else if exists('(') and areParams()
-    parseFunctionExp()
+    parseFunctionDef()
   else
     parseExp0()
 
@@ -358,7 +377,7 @@ parseVariableAssignment = ->
     match '++'
     value = null
     modifier = '++'
-  else if exists '--'
+  else
     match '--'
     value = null
     modifier = '--'
@@ -367,25 +386,25 @@ parseVariableAssignment = ->
 parseVariableExpression = ->
   id = match 'id'
   depth = []
-  while exists ['.', '[', '(']
-    if exists '.'
-      match '.'
-      depth.push parseExp8()
-    else if exists '['
-      match '['
-      exp3 = parseExp3()
-      match ']'
-    else if exists '('
-      depth.push parseArgs()
-      if exists '.'
-        match '.'
-        depth.push parseExp8()
-      else if exists '['
-        match '['
-        depth.push parseExp3()
-        match ']'
-      else
-        reportError 'Invalid property/array following function call', tokens[0]
+  # while exists ['.', '[', '(']
+  #   if exists '.'
+  #     match '.'
+  #     depth.push parseExp8()
+  #   else if exists '['
+  #     match '['
+  #     exp3 = parseExp3()
+  #     match ']'
+  #   else if exists '('
+  #     depth.push parseArgs()
+  #     if exists '.'
+  #       match '.'
+  #       depth.push parseExp8()
+  #     else if exists '['
+  #       match '['
+  #       depth.push parseExp3()
+  #       match ']'
+  #     else
+  #       reportError 'Invalid property/array following function call', tokens[0]
   new VariableExpression(id, depth)
 
 parseArgs = ->
@@ -415,7 +434,7 @@ parseExpList = ->
     match 'newline'
   new ExpList(expArray)
 
-parseFunctionExp = ->
+parseFunctionDef = ->
   params = parseParams()
   type = optionalTypeMatch()
   match 'does'
@@ -425,7 +444,7 @@ parseFunctionExp = ->
   else
     body = parseStatement()
   match 'end'
-  new Function(params, type, body)
+  new FunctionDef(params, type, body)
 
 parseParams = ->
   match '('
@@ -483,17 +502,17 @@ parseExp0 = -> # the trailing if and possible else
 parseExp1 = -> # the or
   left = parseExp2()
   while exists 'or'
-    match 'or'
+    op = match 'or'
     right = parseExp2()
-    left = new BinaryExpression('or', left, right)
+    left = new BinaryExpression(op, left, right)
   left
 
 parseExp2 = -> # the and
   left = parseExp3()
   while exists 'and'
-    match 'and'
+    op = match 'and'
     right = parseExp3()
-    left = new BinaryExpression('and', left, right)
+    left = new BinaryExpression(op, left, right)
   left
 
 parseExp3 = -> # the relops
@@ -557,10 +576,11 @@ parseExp9 = -> # property, set, args
       input = new FieldAccess(input, parseExp10())
     while exists '['
       match '['
-      input = new IterableItem(input, parseExp4())
+      reportError 'IterableItem not implemented', match()
+      # input = new IterableItem(input, parseExp4())
       match ']'
     while exists '('
-      input = new FunctionExp(input, parseArgs())
+      input = new FunctionCall(input, parseArgs())
   input
 
 parseExp10 = -> # literals, id, expression in parens

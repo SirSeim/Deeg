@@ -21,6 +21,7 @@ class BooleanLiteral
   toString: -> @token.lexeme
 
   analyze: (context) ->
+    # must be a boolean
     @token.lexeme = Type.BOOL
 
   optimize: -> this

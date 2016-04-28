@@ -2,59 +2,58 @@ chai = require 'chai'
 expect = chai.expect
 
 
-Program = require '#{__dirname}/../../entities/program.coffee'
-Block = require '#{__dirname}/../../entities/block.coffee'
-Type = require '#{__dirname}/../../entities/type.coffee'
+Program = require "#{__dirname}/../../entities/program.coffee"
+Block = require "#{__dirname}/../../entities/block.coffee"
+Type = require "#{__dirname}/../../entities/type.coffee"
 
-ForStatement = require '#{__dirname}/../../entities/forstatement.coffee'
-StdFor = require '#{__dirname}/../../entities/stdfor.coffee'
-StdForIdExp = require '#{__dirname}/../../entities/stdforidexp.coffee'
-CountFor = require '#{__dirname}/../../entities/countfor.coffee'
-CountsFor = require '#{__dirname}/../../entities/countsfor.coffee'
-IfStatement = require '#{__dirname}/../../entities/ifstatement.coffee'
-ElseIfStatement = require '#{__dirname}/../../entities/elseifstatement.coffee'
-ElseStatement = require '#{__dirname}/../../entities/elsestatement.coffee'
+ForStatement = require "#{__dirname}/../../entities/forstatement.coffee"
+StdFor = require "#{__dirname}/../../entities/stdfor.coffee"
+StdForIdExp = require "#{__dirname}/../../entities/stdforidexp.coffee"
+CountFor = require "#{__dirname}/../../entities/countfor.coffee"
+CountsFor = require "#{__dirname}/../../entities/countsfor.coffee"
+IfStatement = require "#{__dirname}/../../entities/ifstatement.coffee"
+ElseIfStatement = require "#{__dirname}/../../entities/elseifstatement.coffee"
+ElseStatement = require "#{__dirname}/../../entities/elsestatement.coffee"
 
-# MatchStatement = require '#{__dirname}/../../entities/matchstatement.coffee'
+# MatchStatement = require "#{__dirname}/../../entities/matchstatement.coffee"
 #     this file doesn't exist yet
-# PatBlock = require '#{__dirname}/../../entities/patblock.coffee'
-# PatLine = require '#{__dirname}/../../entities/patline.coffee'
-# Patterns = require '#{__dirname}/../../entities/patterns.coffee'
-# Pattern = require '#{__dirname}/../../entities/pattern.coffee'
+# PatBlock = require "#{__dirname}/../../entities/patblock.coffee"
+# PatLine = require "#{__dirname}/../../entities/patline.coffee"
+# Patterns = require "#{__dirname}/../../entities/patterns.coffee"
+# Pattern = require "#{__dirname}/../../entities/pattern.coffee"
 
-WhileStatement = require '#{__dirname}/../../entities/whilestatement.coffee'
-ReturnStatement = require '#{__dirname}/../../entities/returnstatement.coffee'
-ClassDefinition = require '#{__dirname}/../../entities/classdefinition.coffee'
+WhileStatement = require "#{__dirname}/../../entities/whilestatement.coffee"
+ReturnStatement = require "#{__dirname}/../../entities/returnstatement.coffee"
+ClassDefinition = require "#{__dirname}/../../entities/classdefinition.coffee"
 
-VariableDeclaration = require '#{__dirname}/../../entities/variabledeclaration.coffee'
-VariableAssignment = require '#{__dirname}/../../entities/variableassignment.coffee'
-VariableExpression = require '#{__dirname}/../../entities/variableexpression.coffee'
-Args = require '#{__dirname}/../../entities/args.coffee'
-ExpList = require '#{__dirname}/../../entities/explist.coffee'
+VariableDeclaration = require "#{__dirname}/../../entities/variabledeclaration.coffee"
+VariableAssignment = require "#{__dirname}/../../entities/variableassignment.coffee"
+VariableExpression = require "#{__dirname}/../../entities/variableexpression.coffee"
+Args = require "#{__dirname}/../../entities/args.coffee"
+ExpList = require "#{__dirname}/../../entities/explist.coffee"
 
-FunctionExp = require '#{__dirname}/../../entities/functionexp.coffee'
-Params = require '#{__dirname}/../../entities/params.coffee'
-ParamList = require '#{__dirname}/../../entities/paramlist.coffee'
+FunctionCall = require "#{__dirname}/../../entities/functioncall.coffee"
+FunctionDef = require "#{__dirname}/../../entities/functiondef.coffee"
+Params = require "#{__dirname}/../../entities/params.coffee"
+ParamList = require "#{__dirname}/../../entities/paramlist.coffee"
 
-TrailingIf = require '#{__dirname}/../../entities/trailingif.coffee'
-VariableReference = require '#{__dirname}/../../entities/variablereference.coffee'
-FieldAccess = require '#{__dirname}/../../entities/fieldaccess.coffee'
-IterableItem = require '#{__dirname}/../../entities/iterableitem.coffee'
-Range = require '#{__dirname}/../../entities/range.coffee'
-IntegerLiteral = require '#{__dirname}/../../entities/integerliteral.coffee'
-FloatLiteral = require '#{__dirname}/../../entities/floatliteral.coffee'
-BooleanLiteral = require '#{__dirname}/../../entities/booleanliteral.coffee'
-StringLiteral = require '#{__dirname}/../../entities/stringliteral.coffee'
+TrailingIf = require "#{__dirname}/../../entities/trailingif.coffee"
+VariableReference = require "#{__dirname}/../../entities/variablereference.coffee"
+FieldAccess = require "#{__dirname}/../../entities/fieldaccess.coffee"
+# IterableItem = require "#{__dirname}/../../entities/iterableitem.coffee" DOESN'T EXIST
+Range = require "#{__dirname}/../../entities/range.coffee"
+IntegerLiteral = require "#{__dirname}/../../entities/integerliteral.coffee"
+FloatLiteral = require "#{__dirname}/../../entities/floatliteral.coffee"
+BooleanLiteral = require "#{__dirname}/../../entities/booleanliteral.coffee"
+StringLiteral = require "#{__dirname}/../../entities/stringliteral.coffee"
 
-List = require '#{__dirname}/../../entities/list.coffee'
-Dict = require '#{__dirname}/../../entities/dict.coffee'
-BindingList = require '#{__dirname}/../../entities/bindinglist.coffee'
-Binding = require '#{__dirname}/../../entities/binding.coffee'
-# Function = require '#{__dirname}/../../entities/function.coffee'
-# i have no idea how this differs from FunctionExp
+List = require "#{__dirname}/../../entities/list.coffee"
+Dict = require "#{__dirname}/../../entities/dict.coffee"
+BindingList = require "#{__dirname}/../../entities/bindinglist.coffee"
+Binding = require "#{__dirname}/../../entities/binding.coffee"
 
-BinaryExpression = require '#{__dirname}/../../entities/binaryexpression.coffee'
-UnaryExpression = require '#{__dirname}/../../entities/unaryexpression.coffee'
+BinaryExpression = require "#{__dirname}/../../entities/binaryexpression.coffee"
+UnaryExpression = require "#{__dirname}/../../entities/unaryexpression.coffee"
 
 
 describe 'Entities', ->
@@ -108,13 +107,14 @@ describe 'Entities', ->
   # describe 'ForStatement Entity', ->
   #   context 'when constructing a for statement', ->
   #     it 'constructs and toStrings correctly', (done) ->
-  #       it = new IterableItem 
+  #       it = new IterableItem
   #       expect((new ForStatement it, 'body').toString()).to.eql('it then body')
   #       done()
 
   describe 'StdFor Entity', ->
     context 'when constructing a standard for', ->
       it 'constructs and toStrings correctly', (done) ->
+<<<<<<< HEAD
         hello = new BindingList [(new Binding 'hey', Type.STRING, 'one'),
           (new Binding 'wassup', Type.STRING, 'two'),
           (new Binding 'hello', Type.STRING, 'three')]
@@ -125,6 +125,17 @@ describe 'Entities', ->
           Binding wassup [string] to two, Binding hello [string] to three}, [yo, yo, ma])')
         done()
         
+=======
+        token = {
+          kind: 'id',
+          lexeme: 'foo'
+        }
+        expect((new StdFor [token], ['int'], ['dict']).toString())
+          .to.eql('(StdFor foo:int in dict)')
+        done()
+  
+  # Maybe we don't need StdForIdExp.
+>>>>>>> adc22f697fe2a5bab7f3d7d252a54eec9299530d
   # describe 'StdForIdExp Entity', -> #this is not correct. entity declaration
   # is not finished
   #   context 'when constructing a standard for id expression', ->
@@ -142,7 +153,11 @@ describe 'Entities', ->
   describe 'CountsFor Entity', ->
     context 'when constructing a counts for', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new CountsFor 'foo', 2).toString()).to.eql('(For foo counts 2)')
+        token = {
+          kind: 'id',
+          lexeme: 'foo'
+        }
+        expect((new CountsFor token, 2).toString()).to.eql('(For foo counts 2)')
         done()
 
   describe 'IfStatement Entity', ->
@@ -200,6 +215,7 @@ describe 'Entities', ->
       it 'constructs and toStrings correctly', (done) ->
         expect((new ReturnStatement true).toString()).to.eql('(Return true)')
         done()
+<<<<<<< HEAD
 #HALP. works but should we actually define a class
   describe 'ClassDefinition Entity', ->
     context 'when constructing a class definition', ->
@@ -207,6 +223,15 @@ describe 'Entities', ->
         expect((new ClassDefinition 'Hello', 'Body', 'Greeting').toString())
           .to.eql('Class Hello extends Greeting: Body')
         done()
+=======
+# #HALP
+#   describe 'ClassDefinition Entity', ->
+#     context 'when constructing a class definition', ->
+#       it 'constructs and toStrings correctly', (done) ->
+#         expect((new ClassDefinition 'Hqello', 'Body', 'Greeting')
+#           .toString()).to.eql('Class Hello extends Greeting: Body')
+#         done()
+>>>>>>> adc22f697fe2a5bab7f3d7d252a54eec9299530d
 
   describe 'VariableDeclaration Entity', ->
     context 'when constructing a variable declaration', ->
@@ -330,7 +355,7 @@ describe 'Entities', ->
   describe 'List Entity', ->
     context 'when constructing a list', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((new List [5,6,7,8]).toString()).to.eql('[5, 6, 7, 8]')
+        expect((new List ['5','6','7','8']).toString()).to.eql('[5,6,7,8]')
         done()
     context 'when constructing a single element list', ->
       it 'constructs and toStrings correctly', (done) ->

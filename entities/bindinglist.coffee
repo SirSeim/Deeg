@@ -20,6 +20,7 @@ class BindingList
     "#{(@bindingArray).join(', ')}"
 
   analyze: (context) ->
+    # for each binding in the array, analyze yoself
     for binding in @bindingArray
       @bindingArray[binding].analyze context
 

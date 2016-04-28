@@ -1,0 +1,2 @@
+make friends_list = ["Bob", "Donna", "Shaggy"]
+make grades_list:List = [99, 95, 90, 96]
