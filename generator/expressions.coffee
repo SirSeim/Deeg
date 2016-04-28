@@ -39,12 +39,10 @@ IntegerLiteral = require "#{__dirname}/../entities/integerliteral.coffee"
 FloatLiteral = require "#{__dirname}/../entities/floatliteral.coffee"
 BooleanLiteral = require "#{__dirname}/../entities/booleanliteral.coffee"
 StringLiteral = require "#{__dirname}/../entities/stringliteral.coffee"
-
 List = require "#{__dirname}/../entities/list.coffee"
 Dict = require "#{__dirname}/../entities/dict.coffee"
 BindingList = require "#{__dirname}/../entities/bindinglist.coffee"
 Binding = require "#{__dirname}/../entities/binding.coffee"
-
 BinaryExpression = require "#{__dirname}/../entities/binaryexpression.coffee"
 UnaryExpression = require "#{__dirname}/../entities/unaryexpression.coffee"
 
