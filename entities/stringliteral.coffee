@@ -7,6 +7,7 @@ class StringLiteral
   toString: -> "(StringLiteral #{@value.lexeme.join(', ')})"
 
   analyze: (context) ->
+    # obviously
     @type = Type.STRING
 
   length: ->
