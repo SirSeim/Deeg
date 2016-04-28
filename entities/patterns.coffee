@@ -9,9 +9,9 @@ class Patterns
 
 
   analyze: (context) ->
-  	@head.analyze context
-  	for tail in @tails 
-  		tail.analyze context
+    @head.analyze context
+  	# for tail in @tails
+  	# 	tail.analyze context
   	
   	
   # optimize: -> this
