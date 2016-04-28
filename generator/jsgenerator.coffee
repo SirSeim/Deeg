@@ -1,4 +1,4 @@
-_ = requirerequire 'underscore'
+_ = require 'underscore'
 HashMap = require('hashmap').HashMap
 DeegEntities = require '#{__dirname}/entities/deegentities.coffee'
 ReturnStatement = require '#{__dirname}/entities/returnstatement.coffee'
