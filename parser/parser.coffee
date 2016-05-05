@@ -240,8 +240,8 @@ determineForType = ->
   else if exists 'count'
     return parseCountFor()
   else
-    message = "Expected \"id\" or \"count\" but found \"#{tokens[0].kind}\""
-    error message, tokens[0]
+    message = "Expected 'id' or 'count' but found '#{tokens[0].kind}'"
+    reportError message, tokens[0]
 
 parseStdFor = -> # use array of ids to range
   id = []
@@ -481,16 +481,15 @@ parseParamList = ->
   new ParamList(paramList)
 
 parseExp0 = -> # the trailing if and possible else
-  direction = parseExp1()
+  action = parseExp1()
   if exists 'if'
     match 'if'
     condition = parseExp1()
     if exists 'else'
       match 'else'
-      instruction = parseExp1()
-    direction = new TrailingIf(direction, condition, instruction)
-    match 'end'
-  direction
+      other = parseExp1()
+    action = new TrailingIf(action, condition, other)
+  action
 
 parseExp1 = -> # the or
   left = parseExp2()

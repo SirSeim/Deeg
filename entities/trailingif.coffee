@@ -14,22 +14,20 @@ error = require "#{__dirname}/../error/error.coffee"
 
 class TrailingIf
 
-  constructor: (@direction, @condition, @instruction) ->
+  constructor: (@truthAction, @condition, @elseAction) ->
 
   toString: ->
-    res = "#{@direction} if #{@condition}"
-    if @instruction
-      res += " else #{@instruction}"
-    res
+    "(TrailingIf #{@truthAction} if
+        #{@condition}#{if @elseAction then ' else ' + @elseAction else ''})"
 
   analyze: (context) ->
     # analyze the initial expression
-    @direction.analyze context
+    @truthAction.analyze context
     # make sure the condition is valid
     @condition.analyze context
     # if there's an else, analyze the instruction that follows
-    if @instruction
-      @instruction.analyze context
+    if @elseAction
+      @elseAction.analyze context
 
   optimize: -> this
 
