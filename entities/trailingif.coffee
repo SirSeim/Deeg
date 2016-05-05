@@ -3,10 +3,11 @@ error = require "#{__dirname}/../error/error.coffee"
 
 class TrailingIf
 
-  constructor: (@direction, @condition, @instruction) ->
+  constructor: (@truthAction, @condition, @elseAction) ->
 
   toString: ->
-    "blank if blank else blank" #disclaimer: this is incorrect
+    "(TrailingIf #{@truthAction} if
+        #{@condition}#{if @elseAction then ' else ' + @elseAction else ''})"
 
   optimize: -> this
 

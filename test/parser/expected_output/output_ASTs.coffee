@@ -85,6 +85,24 @@ module.exports = {
                 addComplex params:((StringLiteral 61, 64, 64),
                   (StringLiteral 72, 65, 64, 75, 63, 65)))))
               (FunctionCall print params:(undefined))))',
+  program9: '(Program (Block
+              (TrailingIf (FunctionCall
+                  print params:((StringLiteral 68, 65, 79))) if true else
+                (FunctionCall print params:((StringLiteral 62, 79, 65))))
+              (TrailingIf (FunctionCall
+                print params:((StringLiteral 66, 69, 72, 65, 64))) if hired)))',
+  program10: '(Program (Block
+                (If (BinaryOp or (FunctionCall run params:(undefined))
+                    (FunctionCall walk params:(undefined))) then (Block
+                  (FunctionCall print params:((StringLiteral 6d, 6f, 76, 69, 6e, 67))))
+                (else (Block (FunctionCall
+                  print params:((StringLiteral 6c, 61, 7a, 79))))))
+                (TrailingIf (FunctionCall print
+                    params:((StringLiteral 6d, 6f, 76, 69, 6e, 67)))
+                  if (BinaryOp or (FunctionCall run params:(undefined))
+                    (FunctionCall walk params:(undefined)))
+                  else (FunctionCall print
+                    params:((StringLiteral 6c, 61, 7a, 79))))))',
   programPM1: '(Program (Block
                 (VarDec \'varMatch\' of type:undefined =
                   (FunctionDef params:(Params (x)) type:undefined (Block

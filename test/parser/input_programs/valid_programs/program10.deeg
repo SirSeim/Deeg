@@ -1,0 +1,7 @@
+if run() or walk() then
+    print("moving")
+else
+    print("lazy")
+end
+
+print("moving") if run() or walk() else print("lazy")
