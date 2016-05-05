@@ -17,7 +17,7 @@ module.exports = (program, callback) ->
   programOutput = gen program
   callback error, programOutput
 
-module.exports.makeFakeVariable = () ->
+module.exports.makeFakeVariable = ->
   fakeVar = new VariableReference { 'lexeme' : "#{++fakeVarCounter}", 'kind':'ID'}
 
 indentPadding = 4
@@ -157,7 +157,8 @@ generator =
 
   ParamList: (p) ->
     gen '('
-    for param in p.paramList
+    # for param in p.paramList
+      
 
   Binding: (b) ->
 
