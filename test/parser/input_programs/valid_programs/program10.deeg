@@ -3,3 +3,5 @@ if run() or walk() then
 else
     print("lazy")
 end
+
+print("moving") if run() or walk() else print("lazy")

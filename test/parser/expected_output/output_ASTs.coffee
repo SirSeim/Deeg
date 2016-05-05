@@ -96,7 +96,13 @@ module.exports = {
                     (FunctionCall walk params:(undefined))) then (Block
                   (FunctionCall print params:((StringLiteral 6d, 6f, 76, 69, 6e, 67))))
                 (else (Block (FunctionCall
-                  print params:((StringLiteral 6c, 61, 7a, 79))))))))',
+                  print params:((StringLiteral 6c, 61, 7a, 79))))))
+                (TrailingIf (FunctionCall print
+                    params:((StringLiteral 6d, 6f, 76, 69, 6e, 67)))
+                  if (BinaryOp or (FunctionCall run params:(undefined))
+                    (FunctionCall walk params:(undefined)))
+                  else (FunctionCall print
+                    params:((StringLiteral 6c, 61, 7a, 79))))))',
   programPM1: '(Program (Block
                 (VarDec \'varMatch\' of type:undefined =
                   (FunctionDef params:(Params (x)) type:undefined (Block
