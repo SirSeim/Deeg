@@ -27,5 +27,6 @@ scan argv._[0], (errors, tokens) ->
       console.log program.toString()
       return
 
-    analyzeErrors = program.analyze()
+    analyzeErrors = []
+    program.analyze analyzeErrors
     return (console.log err for err in analyzeErrors) if analyzeErrors.length > 0
