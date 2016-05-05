@@ -1,17 +1,19 @@
 module.exports = {
-  program1: '(Program (Block (VarDec \'x\' of type:undefined = 3)))',
-  program2: '(Program (Block (VarDec \'fibonacci\' of type:undefined =
+  program1: '(Program (Block (VarDec \'x\' = 3)))',
+
+  program2: '(Program (Block (VarDec \'fibonacci\' =
               (FunctionDef params:(Params (x)) type:undefined (Block
-                (VarDec \'a\' of type:undefined = 0)
-                (VarDec \'b\' of type:undefined = 1)
-                (VarDec \'c\' of type:undefined = null)
+                (VarDec \'a\' = 0)
+                (VarDec \'b\' = 1)
+                (VarDec \'c\')
                 (If (BinaryOp < x 3) then (Deeg 1))
                 (While (BinaryOp > x 0) then (Block
-                  (VarAssign c value:(BinaryOp + a b))
-                  (VarAssign a value:b)
-                  (VarAssign b value:c)
-                  (VarAssign x modifier:-- value:null)))
+                  (VarAssign c = value:(BinaryOp + a b))
+                  (VarAssign a = value:b)
+                  (VarAssign b = value:c)
+                  (VarAssign x modifier:-- = value:null)))
                 (Deeg c))))))',
+
   program3: '(Program (Block
               (If true then (Block
                 (FunctionCall print params:((StringLiteral 68, 65, 6c, 6c, 6f))))
@@ -34,16 +36,19 @@ module.exports = {
               (else (FunctionCall decalc params:(undefined))))
               (If true then (FunctionCall print params:((StringLiteral
                 53, 75, 68, 68, 20, 44, 75, 64, 65, 21))))))',
+
   program4: '(Program (Block
-              (VarDec \'gcd\' of type:undefined =
-                (FunctionDef params:(Params (a,b)) type:undefined (Block
-                  (If (BinaryOp == b 0) then (Deeg a))
-                  (Deeg (FunctionCall gcd params:(b, (BinaryOp % a b)))))))))',
+              (VarDec \'gcd\' = (FunctionDef params:(Params (a,b))
+                  type:undefined (Block
+                (If (BinaryOp == b 0) then (Deeg a))
+                (Deeg (FunctionCall gcd params:(b, (BinaryOp % a b)))))))))',
+
   program5: '(Program (Block (BinaryOp ** 3 (BinaryOp + 4 5))
                       (UnaryOp - (BinaryOp ** 2 (BinaryOp + 4 5)))
                       (BinaryOp ** 3 (BinaryOp ** 4 5))
                       (BinaryOp ** 2 (BinaryOp ** 1 (BinaryOp + (UnaryOp - 3) 1)))
                       (BinaryOp ** 2 (UnaryOp - (BinaryOp ** 3 (UnaryOp - 4))))))',
+
   program6: '(Program (Block
               ((StdFor cat:undefined in cat_array) then (Block
                 (FunctionCall print params:((BinaryOp +
@@ -64,33 +69,37 @@ module.exports = {
               (While is_running then (Block
                 (FunctionCall runFaster params:(undefined))))
               (While true then (FunctionCall dive params:(undefined)))))',
+
   program7: '(Program (Block
-              (VarDec \'x\' of type:undefined = 5)
-              (VarAssign x modifier:+= value:5)
-              (VarAssign x modifier:-= value:5)
-              (VarAssign x modifier:/= value:5)
-              (VarAssign x modifier:*= value:5)
-              (VarAssign x modifier:%= value:5)
-              (VarAssign x modifier:++ value:null)
-              (VarAssign x modifier:-- value:null)))',
+              (VarDec \'x\' = 5)
+              (VarAssign x modifier:+= = value:5)
+              (VarAssign x modifier:-= = value:5)
+              (VarAssign x modifier:/= = value:5)
+              (VarAssign x modifier:*= = value:5)
+              (VarAssign x modifier:%= = value:5)
+              (VarAssign x modifier:++ = value:null)
+              (VarAssign x modifier:-- = value:null)))',
+
   program8: '(Program (Block
-              (VarDec \'addComplex\' of type:undefined =
-                (FunctionDef params:(Params (a,b)) type:undefined
-                  (Deeg (BinaryOp + a b))))
-              (VarDec \'pointless\' of type:undefined =
-                (FunctionDef params:(Params (a,b)) type:undefined (Block
-                  (FunctionCall print params:(a))
-                  (FunctionCall print params:(b)))))
+              (VarDec \'addComplex\' = (FunctionDef
+                  params:(Params (a,b)) type:undefined
+                (Deeg (BinaryOp + a b))))
+              (VarDec \'pointless\' = (FunctionDef
+                  params:(Params (a,b)) type:undefined (Block
+                (FunctionCall print params:(a))
+                (FunctionCall print params:(b)))))
               (FunctionCall print params:((FunctionCall
-                addComplex params:((StringLiteral 61, 64, 64),
-                  (StringLiteral 72, 65, 64, 75, 63, 65)))))
-              (FunctionCall print params:(undefined))))',
+                  addComplex params:((StringLiteral 61, 64, 64),
+                    (StringLiteral 72, 65, 64, 75, 63, 65)))))
+                (FunctionCall print params:(undefined))))',
+
   program9: '(Program (Block
               (TrailingIf (FunctionCall
                   print params:((StringLiteral 68, 65, 79))) if true else
                 (FunctionCall print params:((StringLiteral 62, 79, 65))))
               (TrailingIf (FunctionCall
                 print params:((StringLiteral 66, 69, 72, 65, 64))) if hired)))',
+
   program10: '(Program (Block
                 (If (BinaryOp or (FunctionCall run params:(undefined))
                     (FunctionCall walk params:(undefined))) then (Block
@@ -103,53 +112,53 @@ module.exports = {
                     (FunctionCall walk params:(undefined)))
                   else (FunctionCall print
                     params:((StringLiteral 6c, 61, 7a, 79))))))',
+
   programPM1: '(Program (Block
-                (VarDec \'varMatch\' of type:undefined =
+                (VarDec \'varMatch\' =
                   (FunctionDef params:(Params (x)) type:undefined (Block
                     (Match x with (PatBlock
-                      (PatLine (Patterns (Pattern 3))
-                        then (Deeg true))
-                      (PatLine (Patterns (Pattern (WildCard)))
-                        then (Deeg false)))))))))',
+                      (PatLine (Patterns (Pattern 3)) then (Deeg true))
+                      (PatLine (Patterns (Pattern (WildCard ))) then
+                        (Deeg false)))))))))',
+
   programPM2: '(Program (Block
-                (VarDec \'listMatch\' of type:undefined =
-                  (FunctionDef params:(Params (l)) type:undefined (Block
-                    (Match l with (PatBlock
-                      (PatLine (Patterns (Pattern head) | (Pattern tail))
-                        then (Deeg head))
-                      (PatLine (Patterns (Pattern (WildCard type:int)) | (Pattern tail))
-                        then (Deeg true))
-                      (PatLine (Patterns (Pattern (WildCard)) | (Pattern tail))
-                        then (Deeg false)))))))))',
+                (VarDec \'listMatch\' = (FunctionDef
+                    params:(Params (l)) type:undefined (Block
+                  (Match l with (PatBlock
+                    (PatLine (Patterns
+                      (Pattern head) | (Pattern tail)) then (Deeg head))
+                    (PatLine (Patterns (Pattern
+                      (WildCard  type:int)) | (Pattern tail)) then (Deeg true))
+                    (PatLine (Patterns (Pattern
+                      (WildCard )) | (Pattern tail)) then (Deeg false)))))))))',
+
   programEko1: '(Program (Block
-                  (VarDec \'x\' of type:undefined = 100)
-                  (VarAssign x modifier:+= value:2)
-                  (VarAssign x modifier:-= value:3)
-                  (VarAssign x modifier:%= value:12)
-                  (VarDec \'y\' of type:undefined = 1000)
-                  (VarAssign y modifier:*= value:12)
-                  (VarAssign y modifier:/= value:23)
-                  (VarAssign y modifier:++ value:null)))',
+                  (VarDec \'x\' = 100)
+                  (VarAssign x modifier:+= = value:2)
+                  (VarAssign x modifier:-= = value:3)
+                  (VarAssign x modifier:%= = value:12)
+                  (VarDec \'y\' = 1000)
+                  (VarAssign y modifier:*= = value:12)
+                  (VarAssign y modifier:/= = value:23)
+                  (VarAssign y modifier:++ = value:null)))',
 
   programEko2: '(Program (Block
                   (Class circle extends shapes: (Block ))
                   (Class square extends circle:
-                      (VarDec \'value\' of type:undefined =
-                        (StringLiteral 77, 74, 66)))
+                    (VarDec \'value\' = (StringLiteral 77, 74, 66)))
                   (Class rectangle extends shapes: (Block
-                      (VarDec \'value\' of type:undefined =
-                        (StringLiteral 6e, 69, 63, 65))))))',
+                    (VarDec \'value\' = (StringLiteral 6e, 69, 63, 65))))))',
 
   programEko3: '(Program (Block
-                  (VarDec \'x\' of type:undefined = 32)
+                  (VarDec \'x\' = 32)
                   (If (BinaryOp and (BinaryOp < x 10) (BinaryOp > x 45)) then
-                    (FunctionCall print params:((StringLiteral 65, 72, 72, 6f, 72)))
-                  (else
-                    (FunctionCall print
-                      params:((StringLiteral 57, 6f, 6f, 68, 6f, 6f)))))))',
+                    (FunctionCall
+                      print params:((StringLiteral 65, 72, 72, 6f, 72)))
+                  (else (FunctionCall
+                    print params:((StringLiteral 57, 6f, 6f, 68, 6f, 6f)))))))',
 
   programEko4: '(Program (Block
-                  (VarDec \'friends_list\' of type:undefined =
+                  (VarDec \'friends_list\' =
                     [(StringLiteral 42, 6f, 62),
                     (StringLiteral 44, 6f, 6e, 6e, 61),
                     (StringLiteral 53, 68, 61, 67, 67, 79)])

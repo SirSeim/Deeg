@@ -18,7 +18,7 @@ class VariableAssignment
 
   toString: ->
     "(VarAssign #{@id}
-        #{if @modifier then 'modifier:'+@modifier+' ' else ''} value:#{@value})"
+        #{if @modifier then 'modifier:'+@modifier+' ' else ''}= value:#{@value})"
 
   analyzer: (context) ->
     # check if there's a modifier or value, then analyze
