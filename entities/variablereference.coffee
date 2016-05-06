@@ -21,7 +21,6 @@ class VariableReference
     @referent = context.lookupVariable @token
     # type of referent is the type of this variable
     @type = @referent.type
-    console.log @referent
 
   optimize: ->
     this

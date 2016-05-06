@@ -25,5 +25,7 @@ class Args
 
   optimize: -> this
 
+  length: -> @expList.length()
+
 
 module.exports = Args

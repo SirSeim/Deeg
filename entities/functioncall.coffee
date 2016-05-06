@@ -22,7 +22,6 @@ class FunctionCall
 
   analyze: (context) ->
     location = EntityUtils.findLocation @name
-    console.log location
     # analyze id
     @name.analyze context
     # analyze each argument
@@ -46,7 +45,7 @@ class FunctionCall
     msg = "#{@name.token.lexeme}() takes exactly
              #{args.length} arguments
              (#{@params.length} given)"
-    context.reportError msg, location unless (@params.length is args.length)
+    context.reportError msg, location unless (@params.length() is args.length)
 
   optimize: -> this
 

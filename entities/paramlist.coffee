@@ -25,7 +25,6 @@ class ParamList
       param.analyze context
 
   optimize: -> this
-
   
 
 module.exports = ParamList
