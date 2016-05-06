@@ -34,4 +34,10 @@ class AnalysisContext
     else
       @parent.lookupVariable token
 
+  reportError: (msg, location) ->
+    if @parent
+      @parent.reportError msg, location
+    else
+      @errors.push error msg, location
+
 exports.initialContext = AnalysisContext.initialContext
