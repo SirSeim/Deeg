@@ -141,7 +141,7 @@ generator =
 
   VariableDeclaration: (v) ->
     emit "var #{makeVariable v.id} = "
-    emit "#{gen v.value}#{if !(v.value == FunctionDef)? then ";"}"
+    emit "#{gen v.value}#{if !(v.value == FunctionDef)? then ";\n"}"
 
 
   VariableAssignment: (v) ->
@@ -159,6 +159,7 @@ generator =
 
   FunctionDef: (f) ->
     emit "function (#{gen f.params}) {"
+    emit '\n'
     indentLevel++
     gen f.body
     emitLevel--
@@ -168,13 +169,11 @@ generator =
     emit "#{f.name}(#{emit f.params})"
 
   Params: (p) ->
-
+    gen p.paramList
 
   ParamList: (p) ->
-    gen '('
-    # for param in p.paramList
+    emit p.paramList.toString()
       
-
   Binding: (b) ->
 
 
