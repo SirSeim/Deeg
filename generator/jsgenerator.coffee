@@ -60,7 +60,7 @@ generator =
     emit '\n'
 
   ClassDefinition: (c) ->
-
+    emit 'test'
 
   IfStatement: (s) ->
     emit "if (#{gen s.condition}) {"
@@ -98,7 +98,7 @@ generator =
     indentLevel--
     emit '}'
 
-  MatchStatement: (s) ->
+  ###MatchStatement: (s) ->
 
 
   PatBlock: (pb) ->
@@ -110,7 +110,7 @@ generator =
   Patterns: (patterns) ->
 
 
-  Pattern: (p) ->
+  Pattern: (p) ->###
 
 
   ForStatement: (s) ->
@@ -123,10 +123,10 @@ generator =
 
 
   StdFor: (s) ->
-
+    emit 'test'
 
   StdForIdExp: (s) ->
-
+    emit 'test'
 
   CountsFor: (s) ->
     index = makeVariable s.id
@@ -151,13 +151,13 @@ generator =
     emit '\n'
 
   VariableExpression: (v) ->
-
+    emit 'test'
 
   Args: (a) ->
-
+    emit 'test'
 
   ExpList: (e) ->
-
+    emit 'test'
 
   FunctionDef: (f) ->
     emit "function (#{gen f.params}) {"
@@ -177,10 +177,10 @@ generator =
     emit p.paramList.toString()
       
   Binding: (b) ->
-
+    emit 'test'
 
   Exp: (e) ->
-
+    emit 'test'
 
   IntegerLiteral: (literal) ->
     emit literal.toString()
@@ -190,10 +190,10 @@ generator =
     emit literal.toString()
 
   VariableReference: (v) ->
-
+    emit 'test'
 
   UnaryExpression: (e) ->
-
+    emit 'test'
 
   BinaryExpression: (e) ->
     emit "( #{gen e.left} #{makeOp e.op.lexeme} #{gen e.right} )"
