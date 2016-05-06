@@ -8,7 +8,7 @@ ExpressionSet = require './expressions.coffee'
 
 map = null
 lastId = 0
-fakeVarCounter = 0
+varCounter = 0
 error = []
 
 module.exports = (program, callback) ->
@@ -17,8 +17,8 @@ module.exports = (program, callback) ->
   programOutput = gen program
   callback error, programOutput
 
-module.exports.makeFakeVariable = ->
-  fakeVar = new VariableReference { 'lexeme' : "#{++fakeVarCounter}", 'kind':'ID'}
+module.exports.makeVariable = ->
+  variable = new VariableReference { 'lexeme' : "#{++varCounter}", 'kind':'ID'}
 
 indentPadding = 4
 indentLevel = 0
@@ -35,10 +35,10 @@ makeVariable = do (lastId = 0, map = new HashMap()) ->
     map.set v, ++lastId if not map.has v
     '_v' + map.get v
 
-index = 0
+indexCounter = 0
 makeIndex = () ->
-  "_i" + index
-  index++
+  "_i" + indexCounter
+  indexCounter++
 
 gen = (e) ->
   generator[e.constructor.name](e)
@@ -48,6 +48,7 @@ generator =
   Program: (program) ->
     indentLevel = 0
     emit '(function () {'
+    emit '\n'
     gen program.block
     emit '}());'
 
@@ -61,6 +62,7 @@ generator =
 
   IfStatement: (s) ->
     emit "if (#{gen s.condition}) {"
+    emit '\n'
     indentLevel++
     gen s.body
     indentLevel--
@@ -72,6 +74,7 @@ generator =
 
   ElseIfStatement: (s) ->
     emit "} else if (#{gen s.condition}) {"
+    emit '\n'
     indentLevel++
     gen s.body
     indentLevel--
@@ -80,12 +83,14 @@ generator =
 
   ElseStatement: (s) ->
     emit "} else {"
+    emit '\n'
     indentLevel++
     gen s.body
     indentLevel--
 
   WhileStatement: (s) ->
     emit "while (#{gen s.condition}) {"
+    emit '\n'
     indentLevel++
     gen s.body
     indentLevel--
@@ -108,6 +113,7 @@ generator =
 
   ForStatement: (s) ->
     gen s.forIterate
+    emit '\n'
     indexLevel++
     gen s.body
     indexLevel--
@@ -115,7 +121,7 @@ generator =
 
 
   StdFor: (s) ->
-    
+
 
   StdForIdExp: (s) ->
 
@@ -134,11 +140,13 @@ generator =
 
 
   VariableDeclaration: (v) ->
-    emit "var #{makeVariable v} = #{gen v.value};"
+    emit "var #{makeVariable v.id} = #{gen v.value}#{if !(v.value == FunctionDef)? then ";"}"
+    emit '\n'
 
 
   VariableAssignment: (v) ->
-    emit "#{gen v.id} = #{gen v.value}#{if !v.modifier? then gen v.modifier}"
+    emit "#{makeVariable v.id} = #{gen v.value}#{if !v.modifier? then gen v.modifier}"
+    emit '\n'
 
   VariableExpression: (v) ->
 
@@ -150,7 +158,7 @@ generator =
 
 
   FunctionDef: (f) ->
-    emit "var #{makeVariable f} = function (#{gen f.params}) {"
+    emit "function (#{gen f.params}) {"
     indentLevel++
     gen f.body
     emitLevel--
