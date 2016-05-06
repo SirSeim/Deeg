@@ -10,6 +10,7 @@ map = null
 lastId = 0
 varCounter = 0
 error = []
+programOutput = ''
 
 module.exports = (program, callback) ->
   map = new HashMap()
@@ -25,7 +26,7 @@ indentLevel = 0
 
 emit = (line) ->
   pad = indentPadding * indentLevel
-  console.log(Array(pad+1).join(' ') + line)
+  programOutput += (Array(pad+1).join(' ') + line)
 
 makeOp = (op) ->
   {'!': '!', and: '&&', or: '||', '==': '===', '!=': '!=='}[op] or op
@@ -56,6 +57,7 @@ generator =
     indentLevel++
     gen statement for statement in block.statements
     indentLevel--
+    emit '\n'
 
   ClassDefinition: (c) ->
 
@@ -141,7 +143,7 @@ generator =
 
   VariableDeclaration: (v) ->
     emit "var #{makeVariable v.id} = "
-    emit "#{gen v.value}#{if !(v.value == FunctionDef)? then ";\n"}"
+    emit "#{gen v.value}#{if !(v.value == 'FunctionDef')? then ";\n"}"
 
 
   VariableAssignment: (v) ->
