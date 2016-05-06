@@ -107,18 +107,15 @@ generator =
 
 
   ForStatement: (s) ->
-    Yee = []
-    iterable = convertToArray s.iterable
-    emit "(#{iterable}).forEach( function (#{makeVariable s.id}) {" , Yee
-    indentLevel++
-    Yee.push gen s.body
-    indentLevel--
-    emit '});', Yee
-    Yee.join '\n'
+    gen s.forIterate
+    indexLevel++
+    gen s.body
+    indexLevel--
+    emit '}'
 
 
   StdFor: (s) ->
-
+    
 
   StdForIdExp: (s) ->
 
@@ -126,18 +123,10 @@ generator =
   CountsFor: (s) ->
     index = makeVariable s.id
     emit "for (var #{index} = 0; index < #{s.tally}; #{index} += 1) {"
-    indentLevel++
-    gen s.body
-    indexLevel--
-    emit '}'
 
   CountFor: (s) ->
     index = makeIndex
     emit "for (var #{index} = 0; index < #{s.tally}; #{index} += 1) {"
-    indexLevel++
-    gen s.body
-    indexLevel--
-    emit '}'
 
 
   ReturnStatement: (s) ->
@@ -163,7 +152,7 @@ generator =
   FunctionDef: (f) ->
     emit "var #{makeVariable f} = function (#{gen f.params}) {"
     indentLevel++
-    emit f.body
+    gen f.body
     emitLevel--
     emit '}'
 
