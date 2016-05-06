@@ -124,7 +124,7 @@ generator =
 
 
   CountsFor: (s) ->
-    index = makeVariable s.id;
+    index = makeVariable s.id
     emit "for (var #{index} = 0; index < #{s.tally}; #{index} += 1) {"
     indentLevel++
     gen s.body
