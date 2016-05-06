@@ -14,6 +14,7 @@ argv = require 'yargs'
 
 scan = require "#{__dirname}/scanner/scanner.coffee"
 parse = require "#{__dirname}/parser/parser.coffee"
+generate = require "#{__dirname}/generator/#{argv.target}generator.coffee"
 
 scan argv._[0], (errors, tokens) ->
   return (console.log err for err in errors) if errors.length > 0
@@ -30,3 +31,7 @@ scan argv._[0], (errors, tokens) ->
     analyzeErrors = []
     program.analyze analyzeErrors
     return (console.log err for err in analyzeErrors) if analyzeErrors.length > 0
+
+    generate program, (errors, output) ->
+      return (console.log err for err in errors) if errors.length > 0
+      console.log output
