@@ -35,6 +35,11 @@ makeVariable = do (lastId = 0, map = new HashMap()) ->
     map.set v, ++lastId if not map.has v
     '_v' + map.get v
 
+index = 0
+makeIndex = () ->
+  "_i" + index
+  index++
+
 gen = (e) ->
   generator[e.constructor.name](e)
 
@@ -81,7 +86,9 @@ generator =
 
   WhileStatement: (s) ->
     emit "while (#{gen s.condition}) {"
+    indentLevel++
     gen s.body
+    indentLevel--
     emit '}'
 
   MatchStatement: (s) ->
@@ -117,9 +124,20 @@ generator =
 
 
   CountsFor: (s) ->
-
+    index = makeVariable s.id;
+    emit "for (var #{index} = 0; index < #{s.tally}; #{index} += 1) {"
+    indentLevel++
+    gen s.body
+    indexLevel--
+    emit '}'
 
   CountFor: (s) ->
+    index = makeIndex
+    emit "for (var #{index} = 0; index < #{s.tally}; #{index} += 1) {"
+    indexLevel++
+    gen s.body
+    indexLevel--
+    emit '}'
 
 
   ReturnStatement: (s) ->
