@@ -1,4 +1,4 @@
-Type = require "#{__dirname}/./type.coffee"
+Type = require "#{__dirname}/type.coffee"
 
 class Patterns
 
@@ -8,8 +8,12 @@ class Patterns
     #{@head}#{if @tails then' | '+tail for tail in @tails else ''})"
 
 
-  # analyze: (context) ->
-  	
-  # optimize: -> this
+  analyze: (context) ->
+    @head.analyze context
+    for tail in @tails
+      tail.analyze context
+    
+    
+  optimize: -> this
 
 module.exports = Patterns

@@ -1,4 +1,4 @@
-Type = require "#{__dirname}/./type.coffee"
+Type = require "#{__dirname}/type.coffee"
 
 class PatLine
 
@@ -8,8 +8,9 @@ class PatLine
   toString: -> "(PatLine #{@patterns}#{conditional}then #{@instruction})"
 
 
-  # analyze: (context) ->
+  analyze: (context) ->
+    @condition.analyze context
   	
-  # optimize: -> this
+  optimize: -> this
 
 module.exports = PatLine

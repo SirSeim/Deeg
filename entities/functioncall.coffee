@@ -9,7 +9,8 @@
  #  //
  # (/
 
-Type = require "#{__dirname}/./type.coffee"
+Type = require "#{__dirname}/type.coffee"
+EntityUtils = require "#{__dirname}/entityutilities.coffee"
 error = require "#{__dirname}/../error/error.coffee"
 
 class FunctionCall
@@ -28,23 +29,23 @@ class FunctionCall
       arg.analyze context
 
     # variable should refer to a function
-    @mustBeFunction location
+    @mustBeFunction location, context
     # must have the correct number of args provided
-    @mustHaveCorrectNumberOfArgs location
+    @mustHaveCorrectNumberOfArgs location, context
     @type = Type.UNKNOWN # shrug
 
-  mustBeFunction: (location) ->
+  mustBeFunction: (location, context) ->
     error = "#{@name.type} is not callable"
     @name.type.mustBeCompatibleWith [Type.FUNCTION],
                                     error,
                                     location
 
-  mustHaveCorrectNumberOfArgs: (location) ->
+  mustHaveCorrectNumberOfArgs: (location, context) ->
     args = @name.referent.value.params
     msg = "#{@name.token.lexeme}() takes exactly
              #{args.length} arguments
              (#{@params.length} given)"
-    error msg, location unless (@params.length is args.length)
+    context.reportError msg, location unless (@params.length() is args.length)
 
   optimize: -> this
 

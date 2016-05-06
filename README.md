@@ -466,8 +466,8 @@ end                                                     }
 [travis-img]: https://travis-ci.org/SirSeim/Deeg.svg?branch=master
 [travis-url]: https://travis-ci.org/SirSeim/Deeg?branch=master
 
-[codecov-img]: https://codecov.io/github/SirSeim/Deeg/coverage.svg?branch=master
-[codecov-url]: https://codecov.io/github/SirSeim/Deeg?branch=master
+[codecov-img]: https://codecov.io/gh/SirSeim/Deeg/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/SirSeim/Deeg
 
 [dependency-img]:https://img.shields.io/david/SirSeim/Deeg/master.svg
 [dependency-url]:https://david-dm.org/SirSeim/Deeg

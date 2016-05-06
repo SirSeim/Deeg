@@ -10,7 +10,7 @@
  # (/
 
 error = require "#{__dirname}/../error/error.coffee"
-Type = require "#{__dirname}/../entities/type.coffee"
+Type = require "#{__dirname}/type.coffee"
 EntityUtils = require "#{__dirname}/./entityutilities.coffee"
 
 class CountFor

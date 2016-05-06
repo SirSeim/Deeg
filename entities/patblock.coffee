@@ -1,4 +1,4 @@
-Type = require "#{__dirname}/./type.coffee"
+Type = require "#{__dirname}/type.coffee"
 
 class PatBlock
 
@@ -7,8 +7,9 @@ class PatBlock
   toString: -> "(PatBlock #{@patLines.join(' ')})"
 
 
-  # analyze: (context) ->
-  	
-  # optimize: -> this
+  analyze: (context) ->
+    @patlines.analyze context
+    
+  optimize: -> this
 
 module.exports = PatBlock

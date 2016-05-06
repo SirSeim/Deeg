@@ -18,9 +18,9 @@ class Program
   toString: ->
     "(Program #{@block})"
 
-  analyze: ->
+  analyze: (errors) ->
     # get the train moving, blocks have child blocks
-    @block.analyze initialContext()
+    @block.analyze initialContext errors
 
   optimize: ->
     @block = @block.optimize()

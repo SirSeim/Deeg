@@ -2,7 +2,7 @@
 # teascript has a class_type.coffee file that extends type
 # shrug -Josh
 
-Type = require "#{__dirname}/./type"
+Type = require "#{__dirname}/type.coffee"
 VariableReference = require "#{__dirname}/./variablereference.coffee"
 EntityUtils = require "#{__dirname}/./entityutilities.coffee"
 

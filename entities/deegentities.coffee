@@ -6,8 +6,8 @@ class DeegEntities
       inDeeg: true
       value:
         params: [value: token: 'str']
-        type: Type.FUNC
-      type: Type.FUNC
+        type: Type.FUNCTION
+      type: Type.FUNCTION
       generateCode: (args) ->
         "console.log( #{args} );"
 

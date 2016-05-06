@@ -1,6 +1,17 @@
-Type = require "#{__dirname}/./type.coffee"
-IntegerLiteral = require "#{__dirname}/./integerliteral.coffee"
-BooleanLiteral = require "#{__dirname}/./booleanliteral.coffee"
+ #  ___________________        ____....-----....____
+ # (________________LL_)   ==============================
+ #     ______\   \_______.--'.  `---..._____...---'
+ #     `-------..__            ` ,/
+ #     ___         `-._ -  -  - |
+ #    ( /        /     `-------'
+ #     / __ (   /_
+ #   _/_(_)/_)_/ /_
+ #  //
+ # (/
+
+Type = require "#{__dirname}/type.coffee"
+IntegerLiteral = require "#{__dirname}/integerliteral.coffee"
+BooleanLiteral = require "#{__dirname}/booleanliteral.coffee"
 
 class UnaryExpression
 
@@ -10,19 +21,21 @@ class UnaryExpression
     "(UnaryOp #{@op.lexeme} #{@operand})"
 
   analyze: (context) ->
+    # make sure the operand is legit
     @operand.analyze context
+    # make sure the operands get along with the operators :)
     switch @op.lexeme
       when 'not'
-        mustBoolean = 'The "not" operator requires a boolean operand'
-        @operand.type.mustBeBoolean mustBoolean, @op
+        errmsg = 'The "not" operator requires a boolean operand'
+        @operand.type.mustBeBoolean errmsg, @op
         @type = Type.BOOL
       when '!'
-        mustBoolean = 'The "!" operator requires a boolean operand'
-        @operand.type.mustBeBoolean mustBoolean, @op
+        errmsg = 'The "!" operator requires a boolean operand'
+        @operand.type.mustBeBoolean errmsg, @op
         @type = Type.BOOL
       when '-'
-        mustBoolean = 'The "negation" operator requires an integer operand'
-        @operand.type.mustBeInteger mustBoolean, @op
+        errmsg = 'The "negation" operator requires an integer operand'
+        @operand.type.mustBeInteger errmsg, @op
         @type = Type.INT
 
   optimize: ->
