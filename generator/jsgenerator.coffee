@@ -140,8 +140,8 @@ generator =
 
 
   VariableDeclaration: (v) ->
-    emit "var #{makeVariable v.id} = #{gen v.value}#{if !(v.value == FunctionDef)? then ";"}"
-    emit '\n'
+    emit "var #{makeVariable v.id} =" 
+    emit "#{gen v.value}#{if !(v.value == FunctionDef)? then ";"}"
 
 
   VariableAssignment: (v) ->
