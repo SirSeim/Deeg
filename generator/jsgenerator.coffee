@@ -37,8 +37,8 @@ makeOp = (op) ->
   {'!': '!', and: '&&', or: '||', '==': '===', '!=': '!=='}[op] or op
 
 makeVariable = (v) ->
-    map.set v, ++lastId if not map.has v
-    '_v' + map.get v
+  map.set v, ++lastId if not map.has v
+  '_v' + map.get v
 
 indexCounter = 0
 makeIndex = () ->
