@@ -186,11 +186,15 @@ generator =
     return
 
   Args: (a, indent) ->
-    emit 'test', indent
+    gen a.expList, indent
     return
 
   ExpList: (e, indent) ->
-    emit 'test', indent
+    first = true
+    for exp in e.expArray
+      emit ', ', false if not first
+      gen exp, false
+      first = false
     return
 
   FunctionDef: (f, indent) ->
@@ -214,7 +218,8 @@ generator =
     return
 
   ParamList: (p, indent) ->
-    emit p.paramList.toString(), indent
+    for param in p.paramList
+      gen param, false
     return
       
   Binding: (b, indent) ->
@@ -232,6 +237,13 @@ generator =
 
   BooleanLiteral: (literal, indent) ->
     emit literal.toString(), indent
+    return
+
+  StringLiteral: (literal, indent) ->
+    emit '"', false
+    for char in literal.value.lexeme
+      emit String.fromCharCode(parseInt(char, 16)), false
+    emit '"', false
     return
 
   VariableReference: (v, indent) ->

@@ -5,19 +5,19 @@ module.exports = {
     var _v2 = 45;
 
     if (( test >= 3 )) {
-    print(test)
+    print("A is big")
 
     } else if (( test <= 45 )) {
-    print(test)
+    print("B is small")
 
     } else {
-    print(test)
+    print("False!")
 
     }
 
     }());''',
 
   program2: '''(function () {
-      return console.log("Hello, World!")
-    }())'''
+    print("Hello, World!")
+    }());'''
 }
