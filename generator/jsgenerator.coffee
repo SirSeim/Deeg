@@ -6,33 +6,37 @@ Type = require '#{__dirname}/../../entities/type.coffee'
 VariableReference = require '#{__dirname}/../../entities/variablereference.coffee'
 ExpressionSet = require './expressions.coffee'
 
-map = null
+map = new HashMap()
 lastId = 0
 varCounter = 0
 error = []
 programOutput = ''
 
-module.exports = (program, callback) ->
+module.exports = (program, indent=true, callback) ->
   map = new HashMap()
   lastId = 0
-  programOutput = gen program
+  varCounter = 0
+  error = []
+  programOutput = ''
+  gen program, indent
   callback error, programOutput
 
-module.exports.makeVariable = ->
-  variable = new VariableReference { 'lexeme' : "#{++varCounter}", 'kind':'ID'}
+# module.exports.makeVariable = ->
+#   variable = new VariableReference { 'lexeme' : "#{++varCounter}", 'kind':'ID'}
 
 indentPadding = 4
 indentLevel = 0
 
-emit = (line) ->
-  pad = indentPadding * indentLevel
-  programOutput += (Array(pad+1).join(' ') + line)
+emit = (line, indent=true) ->
+  if indent
+    pad = indentPadding * indentLevel
+    programOutput += Array(pad+1).join(' ')
+  programOutput += line
 
 makeOp = (op) ->
   {'!': '!', and: '&&', or: '||', '==': '===', '!=': '!=='}[op] or op
 
-makeVariable = do (lastId = 0, map = new HashMap()) ->
-  (v) ->
+makeVariable = (v) ->
     map.set v, ++lastId if not map.has v
     '_v' + map.get v
 
@@ -41,62 +45,76 @@ makeIndex = () ->
   "_i" + indexCounter
   indexCounter++
 
-gen = (e) ->
-  generator[e.constructor.name](e)
+gen = (e, indent=true) ->
+  generator[e.constructor.name](e, indent)
 
 generator =
 
-  Program: (program) ->
+  Program: (program, indent) ->
     indentLevel = 0
-    emit '(function () {'
-    emit '\n'
-    gen program.block
-    emit '}());'
+    emit '(function () {\n', indent
+    gen program.block, indent
+    emit '}());', indent
+    return
 
-  Block: (block) ->
+  Block: (block, indent) ->
     indentLevel++
-    gen statement for statement in block.statements
+    for statement in block.statements
+      gen statement, indent
+      emit '\n', false
+    # gen statement for statement in block.statements
     indentLevel--
-    emit '\n'
+    return
 
-  ClassDefinition: (c) ->
-    emit 'test'
+  ClassDefinition: (c, indent) ->
+    emit 'test', indent
+    return
 
-  IfStatement: (s) ->
-    emit "if (#{gen s.condition}) {"
-    emit '\n'
+  IfStatement: (s, indent) ->
+    emit 'if (', indent
+    gen s.condition, false
+    emit ') {\n', false
     indentLevel++
-    gen s.body
+    gen s.body, indent
     indentLevel--
     if s.elseIfStatement
-      gen s.elseIfStatement
+      emit '\n', false
+      gen s.elseIfStatement, indent
     if s.elseStatement
-      gen s.elseStatement
-    emit '}'
+      emit '\n', false
+      gen s.elseStatement, indent
+    emit '}\n', indent
+    return
 
-  ElseIfStatement: (s) ->
-    emit "} else if (#{gen s.condition}) {"
-    emit '\n'
+  ElseIfStatement: (s, indent) ->
+    emit '} else if (', indent
+    gen s.condition, false
+    emit ') {\n', false
     indentLevel++
-    gen s.body
+    gen s.body, indent
     indentLevel--
     if s.elseIfStatement
-      gen s.elseIfStatement
+      emit '\n', false
+      gen s.elseIfStatement, indent
+    return
 
-  ElseStatement: (s) ->
-    emit "} else {"
-    emit '\n'
+  ElseStatement: (s, indent) ->
+    emit '} else {\n', indent
     indentLevel++
-    gen s.body
+    gen s.body, indent
     indentLevel--
+    emit '\n', false
+    return
 
-  WhileStatement: (s) ->
-    emit "while (#{gen s.condition}) {"
-    emit '\n'
+  WhileStatement: (s, indent) ->
+    emit 'while ('
+    gen s.condition, false
+    emit ') {\n', false
     indentLevel++
-    gen s.body
+    gen s.body, indent
     indentLevel--
-    emit '}'
+    emit '}', indent
+    return
 
   ###MatchStatement: (s) ->
 
@@ -113,87 +131,121 @@ generator =
   Pattern: (p) ->###
 
 
-  ForStatement: (s) ->
-    gen s.forIterate
-    emit '\n'
+  ForStatement: (s, indent) ->
+    gen s.forIterate, indent
+    emit '\n', false
     indexLevel++
-    gen s.body
+    gen s.body, indent
     indexLevel--
-    emit '}'
+    emit '}', indent
+    return
 
 
-  StdFor: (s) ->
-    emit 'test'
+  StdFor: (s, indent) ->
+    emit 'test', indent
+    return
 
-  StdForIdExp: (s) ->
-    emit 'test'
+  StdForIdExp: (s, indent) ->
+    emit 'test', indent
+    return
 
-  CountsFor: (s) ->
+  CountsFor: (s, indent) ->
     index = makeVariable s.id
-    emit "for (var #{index} = 0; index < #{s.tally}; #{index} += 1) {"
+    emit "for (var #{index} = 0; index < #{s.tally}; #{index} += 1) {", indent
 
-  CountFor: (s) ->
+  CountFor: (s, indent) ->
     index = makeIndex
-    emit "for (var #{index} = 0; index < #{s.tally}; #{index} += 1) {"
+    emit "for (var #{index} = 0; index < #{s.tally}; #{index} += 1) {", indent
+    return
 
+  ReturnStatement: (s, indent) ->
+    emit 'return ', indent
+    gen s.value, false
+    emit ';', false
+    return
 
-  ReturnStatement: (s) ->
-    emit "return #{gen s.value};"
+  VariableDeclaration: (v, indent) ->
+    emit "var #{makeVariable v.id} = ", indent
+    gen v.value, false
+    emit ";\n", false
+    return
 
+  VariableAssignment: (v, indent) ->
+    emit "#{makeVariable v.id} ", indent
+    if v.modifier
+      gen v.modifier, false
+    else
+      emit '= ', false
+    if v.value
+      gen v.value, false
+    emit 'd;\n', false
+    return
 
-  VariableDeclaration: (v) ->
-    emit "var #{makeVariable v.id} = "
-    emit "#{gen v.value}#{if !(v.value == 'FunctionDef')? then ";\n"}"
+  VariableExpression: (v, indent) ->
+    emit 'test', indent
+    return
 
+  Args: (a, indent) ->
+    emit 'test', indent
+    return
 
-  VariableAssignment: (v) ->
-    emit "#{makeVariable v.id} = #{gen v.value}#{if !v.modifier? then gen v.modifier}"
-    emit '\n'
+  ExpList: (e, indent) ->
+    emit 'test', indent
+    return
 
-  VariableExpression: (v) ->
-    emit 'test'
-
-  Args: (a) ->
-    emit 'test'
-
-  ExpList: (e) ->
-    emit 'test'
-
-  FunctionDef: (f) ->
-    emit "function (#{gen f.params}) {"
-    emit '\n'
+  FunctionDef: (f, indent) ->
+    emit 'function (', indent
+    gen f.params, false
+    emit ') {\n', false
     indentLevel++
-    gen f.body
+    gen f.body, indent
     emitLevel--
-    emit '}'
+    emit '}', indent
+    return
 
-  FunctionCall: (f) ->
-    emit "#{f.name}(#{emit f.params})"
+  FunctionCall: (f, indent) ->
+    emit "#{f.name}(", indent
+    gen f.params, false
+    emit ')', false
+    return
 
-  Params: (p) ->
-    gen p.paramList
+  Params: (p, indent) ->
+    gen p.paramList, indent
+    return
 
-  ParamList: (p) ->
-    emit p.paramList.toString()
+  ParamList: (p, indent) ->
+    emit p.paramList.toString(), indent
+    return
       
-  Binding: (b) ->
-    emit 'test'
+  Binding: (b, indent) ->
+    emit 'test', indent
+    return
 
-  Exp: (e) ->
-    emit 'test'
+  Exp: (e, indent) ->
+    emit 'test', indent
+    return
 
-  IntegerLiteral: (literal) ->
-    emit literal.toString()
+  IntegerLiteral: (literal, indent) ->
+    emit literal.toString(), indent
+    return
 
 
-  BooleanLiteral: (literal) ->
-    emit literal.toString()
+  BooleanLiteral: (literal, indent) ->
+    emit literal.toString(), indent
+    return
 
-  VariableReference: (v) ->
-    emit 'test'
+  VariableReference: (v, indent) ->
+    emit 'test', indent
+    return
 
-  UnaryExpression: (e) ->
-    emit 'test'
+  UnaryExpression: (e, indent) ->
+    emit 'test', indent
+    return
 
-  BinaryExpression: (e) ->
-    emit "( #{gen e.left} #{makeOp e.op.lexeme} #{gen e.right} )"
+  BinaryExpression: (e, indent) ->
+    emit '( ', indent
+    gen e.left, false
+    emit " #{makeOp e.op.lexeme} ", false
+    gen e.right, false
+    emit ' )', false
+    return
