@@ -32,6 +32,6 @@ scan argv._[0], (errors, tokens) ->
     program.analyze analyzeErrors
     return (console.log err for err in analyzeErrors) if analyzeErrors.length > 0
 
-    generate program, (errors, output) ->
+    generate program, true, (errors, output) ->
       return (console.log err for err in errors) if errors.length > 0
       console.log output

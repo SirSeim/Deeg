@@ -17,13 +17,13 @@ describe 'Generator', ->
           scan "#{validPrograms}/#{name}", (err, tokens) ->
             parse tokens, (err, program) ->
               program.analyze []
-              generate program, (err, output) ->
+              generate program, false, (err, output) ->
                 expect(err).to.eql []
                 done()
         it 'outputs the correct javascript', (done) ->
           scan "#{validPrograms}/#{name}", (err, tokens) ->
             parse tokens, (err, program) ->
               program.analyze []
-              generate program, (err, output) ->
+              generate program, false, (err, output) ->
                 expect(output).to.eql expectedOutput[name.split('.')[0]]
                 done()
