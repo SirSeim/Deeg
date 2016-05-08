@@ -18,6 +18,8 @@ module.exports = (program, indent=true, callback) ->
   varCounter = 0
   error = []
   programOutput = ''
+  indentPadding = 4
+  indentLevel = 0
   gen program, indent
   callback error, programOutput
 
@@ -59,8 +61,15 @@ generator =
 
   Block: (block, indent) ->
     indentLevel++
+    # console.log block.statements
     for statement in block.statements
+      console.log statement
       gen statement, indent
+      # if programOutput.slice(-1) == '\n'
+      #   if programOutput.slice(-2) != ';\n'
+      #     emit ';', false
+      # else if programOutput.slice(-1) != ';'
+      #   emit ';', false
       emit '\n', false
     # gen statement for statement in block.statements
     indentLevel--
@@ -203,7 +212,7 @@ generator =
     emit ') {\n', false
     indentLevel++
     gen f.body, indent
-    emitLevel--
+    indentLevel--
     emit '}', indent
     return
 
