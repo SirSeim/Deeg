@@ -44,7 +44,7 @@ class FunctionCall
     args = @name.referent.value.params
     msg = "#{@name.token.lexeme}() takes exactly
              #{args.length} arguments
-             (#{@params.length} given)"
+             (#{@params.length()} given)"
     context.reportError msg, location unless (@params.length() is args.length)
 
   optimize: -> this
