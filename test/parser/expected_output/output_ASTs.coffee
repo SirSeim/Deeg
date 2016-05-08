@@ -162,7 +162,7 @@ module.exports = {
                     [(StringLiteral 42, 6f, 62),
                     (StringLiteral 44, 6f, 6e, 6e, 61),
                     (StringLiteral 53, 68, 61, 67, 67, 79)])
-                  (VarDec \'grades_list\' of type:[object Object] =
+                  (VarDec \'grades_list\' of type:List =
                     [99, 95, 90, 96])))',
 
   programEko5: '(Program (Block (FunctionCall print params:((StringLiteral 73, 64)))
