@@ -101,7 +101,7 @@ describe 'Entities', ->
         done()
     context 'when constructing an unknown type', ->
       it 'constructs and toStrings correctly', (done) ->
-        expect((Type.UNKNOWN).toString()).to.eql('¯\_(ツ)_/¯')
+        expect((Type.UNKNOWN).toString()).to.eql('¯\\_(ツ)_/¯')
         done()
 
   describe 'StdFor Entity', ->
