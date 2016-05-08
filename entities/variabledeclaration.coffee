@@ -27,10 +27,22 @@ class VariableDeclaration
   analyze: (context) ->
     # make sure variable hasn't been declared
     context.variableMustNotBeAlreadyDeclared @id
+    @value.analyze context
+    if !@type?
+      @type = @value.type
+    else
+      @typesMustMatch context
     # add that shit
     context.addVariable @id.lexeme, this
 
   optimize: -> this
+
+  typesMustMatch: (context) ->
+    error = "#{@type} does not match #{@value.type}"
+    @type.mustBeCompatibleWith [@value.type],
+                                error,
+                                @id
+
 
 VariableDeclaration.UNKNOWN =
   new VariableDeclaration '<unknown>', Type.UNKNOWN
