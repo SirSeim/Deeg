@@ -14,7 +14,7 @@ class Type
   @LIST = new Type 'List'
   @DICT = new Type 'Dict'
   @FUNCTION = new Type 'Function'
-  @UNKNOWN = new Type '¯\_(ツ)_/¯'
+  @UNKNOWN = new Type '¯\\_(ツ)_/¯'
 
   toString: -> @name
 
