@@ -16,7 +16,7 @@ class WildCard
   constructor: (@type) ->
 
   toString: ->
-    "(WildCard #{if @type then ' type:'+@type.lexeme else ''})"
+    "(WildCard #{if @type then ' type:'+@type else ''})"
 
   analyze: (context) -> this
 
