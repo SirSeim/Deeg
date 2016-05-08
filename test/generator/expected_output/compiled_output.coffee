@@ -19,5 +19,13 @@ module.exports = {
 
   program2: '''(function () {
     print("Hello, World!")
+    }());''',
+
+  program3: '''(function () {
+    var _v1 = function (_v2) {
+    print(_v2)
+    }
+    
+    _v1("fail")
     }());'''
 }

@@ -1,0 +1,4 @@
+make error = (msg) does
+    print(msg)
+end
+error("fail")
