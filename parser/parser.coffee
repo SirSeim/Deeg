@@ -310,7 +310,23 @@ parseReturnStatement = ->
 
 optionalTypeMatch = ->
   if exists 'type'
-    match()
+    type = match()
+    if type.lexeme is 'int'
+      Type.INT
+    else if type.lexeme is 'bool'
+      Type.BOOL
+    else if type.lexeme is 'float'
+      Type.FLOAT
+    else if type.lexeme is 'string'
+      Type.STRING
+    else if type.lexeme is 'List'
+      Type.LIST
+    else if type.lexeme is 'Dict'
+      Type.DICT
+    else if type.lexeme is 'Function'
+      Type.FUNCTION
+    else
+      Type.UNKNOWN
 
 # NO LONGER USED
 # optionalTypeCheck = ->
